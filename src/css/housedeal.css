@@ -1,0 +1,165 @@
+/* #002efda2  */
+
+#filter-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+}
+#search-filter {
+  width: 100%;
+  height: 50px;
+  border: none;
+  padding: 1rem 1rem;
+}
+#search-filter:focus {
+  outline: none;
+}
+#filter-btn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #002efda2;
+
+  font-size: 1.2rem;
+  color: #fff;
+}
+#main-section {
+  width: 100%;
+  display: flex;
+  height: 88vh;
+  flex-direction: row;
+}
+#around-infra {
+  padding: 2rem 0;
+}
+#around-infra h2 {
+  margin-bottom: 1rem;
+}
+#info-detail {
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 2rem;
+  flex: 1;
+  overflow-y: auto;
+  height: 100%;
+}
+#info-detail h1 {
+  text-align: center;
+}
+#info-detail img {
+  width: 80%;
+}
+.detail-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid lightgray;
+}
+.detail-info div {
+  margin: 2rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: 100%;
+}
+#moreBtn {
+  background-color: #002efda2;
+  width: 100%;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 0.5rem;
+}
+#map {
+  flex: 2;
+  height: 100%;
+}
+#main-list {
+  flex: 1;
+  height: 100%;
+}
+
+#main-list {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid lightgray;
+}
+#main-list h1 {
+  padding: 1rem 1rem;
+}
+.test {
+  height: 100%;
+  background-color: lightgray;
+  flex: 0.3;
+}
+.list-item {
+  display: flex;
+  width: 100%;
+  height: 200px;
+  padding: 1rem 1rem;
+  position: relative;
+}
+.list-item:hover {
+  box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.2);
+}
+.press_like {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 20px;
+}
+
+.customoverlay {
+  background-color: white;
+  border: 1px solid skyblue;
+  padding: 0.3rem 0.3rem;
+  border-radius: 30px;
+}
+
+#list-item-container {
+  height: 100%;
+  overflow-y: auto;
+}
+.list-item-detail {
+  margin-left: 0.5rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0.7;
+}
+.list-item-detail h3 {
+  color: rgb(34, 34, 34);
+  flex-wrap: wrap;
+  font-family: SpoqaHanSans;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 23px;
+  text-align: left;
+}
+.list-item-detail h5 {
+  display: flex;
+  flex-wrap: wrap;
+}
+.list-item-detail-info {
+  color: rgb(34, 34, 34);
+  font-family: SpoqaHanSans;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+.list-item-detail-info label {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 2;
+}
+.list-item-detail-info label:last-child {
+  color: rgb(117, 117, 117);
+}
