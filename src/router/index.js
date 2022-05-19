@@ -107,12 +107,12 @@ const routes = [
       },
       {
         path: "write",
-        name: "write",
+        name: "noticewrite",
         component: NoticeWrite,
       },
       {
         path: "detail/:notice_no",
-        name: "detail",
+        name: "noticedetail",
         component: NoticeDetail,
       },
     ],
@@ -125,17 +125,17 @@ const routes = [
     children: [
       {
         path: "list",
-        name: "list",
+        name: "housedeallist",
         component: HousedealList,
       },
       {
         path: "detail/:id",
-        name: "detail",
+        name: "housedealdetail",
         component: HousedealDetail,
       },
       {
         path: "commercial",
-        name: "commercial",
+        name: "housedealcommercial",
         component: CommercialInfo,
       },
     ],

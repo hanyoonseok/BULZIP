@@ -8,6 +8,4 @@
 export default {};
 </script>
 
-<style>
-@import "@/css/user.css";
-</style>
+<style scoped src="@/css/user.css"></style>

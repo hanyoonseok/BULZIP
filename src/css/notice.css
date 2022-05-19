@@ -22,21 +22,22 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .page-container h1 {
   padding-bottom: 20px;
   width: 100%;
   border-bottom: 1px solid lightgray;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.notice-router{
-    font-size: 24px;
-    color:#292929;
-    margin-left: 12px;
+.notice-router {
+  font-size: 24px;
+  color: #292929;
+  margin-left: 12px;
 }
 
 .notice-list-container {
@@ -45,12 +46,20 @@
   width: 100%;
 }
 
+@keyframes show {
+  from {
+    transform: translate(0, -10%);
+  }
+  to {
+    transform: translate(0, 10%);
+  }
+}
 .notice-item p {
   margin: 0 3rem;
   width: 85%;
   line-height: 2;
   border-bottom: 1px solid lightgray;
-  /* display:none; */
+  animation: show 0.5s forwards;
 }
 
 .notice-item-intro {

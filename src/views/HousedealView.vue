@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-container">
     <router-view></router-view>
   </div>
 </template>
@@ -8,6 +8,4 @@
 export default {};
 </script>
 
-<style>
-@import "@/css/housedeal.css";
-</style>
+<style scoped src="@/css/housedeal.css"></style>

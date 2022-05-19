@@ -1,0 +1,30 @@
+[
+  {
+    "qna_id": 1,
+    "qna_title": "qna 1번에 대한 타이틀",
+    "qna_content": "qna 1번에 대한 ㅋ톤ㅌ[ㄴ츠",
+    "user_id": "admin",
+    "qna_date": "2022-05-19"
+  },
+  {
+    "qna_id": 2,
+    "qna_title": "qna 2번에 대한 타이틀",
+    "qna_content": "qna 2번에 대한 ㅋ톤ㅌ[ㄴ츠",
+    "user_id": 2,
+    "qna_date": "2022-05-29"
+  },
+  {
+    "qna_id": 3,
+    "qna_title": "qna 3번에 대한 타이틀",
+    "qna_content": "qna 3번에 대한 ㅋ톤ㅌ[ㄴ츠",
+    "user_id": 3,
+    "qna_date": "2022-05-39"
+  },
+  {
+    "qna_id": 4,
+    "qna_title": "qna 4번에 대한 타이틀",
+    "qna_content": "qna 4번에 대한 ㅋ톤ㅌ[ㄴ츠",
+    "user_id": 4,
+    "qna_date": "2022-05-49"
+  }
+]

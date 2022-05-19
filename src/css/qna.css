@@ -7,63 +7,6 @@
   display: flex;
   align-items: center;
 }
-/* header */
-#main-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 90px;
-  height: 100%;
-  background-color: #292929;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#main-header ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#main-header li {
-  width: 90px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-.header-top-area li {
-  color: #292929;
-  background-color: #fdb814;
-  border-bottom: 1px solid #292929;
-}
-.header-top-area li:hover {
-  animation: btnHover 0.2s forwards;
-}
-
-.header-top-area img {
-  width: 80px;
-  height: 100px;
-}
-
-.header-bottom-area li {
-  color: lightgray;
-}
-
-@keyframes btnHover {
-  to {
-    background-color: #292929;
-    color: #d9ddd0;
-    font-weight: bold;
-  }
-}
-.center-area-btn:hover {
-  animation: btnHover 0.3s forwards;
-}
 
 /* body */
 .page-container {
@@ -74,12 +17,22 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .page-container h1 {
   padding-bottom: 20px;
   width: 100%;
   border-bottom: 1px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qna-router {
+  font-size: 24px;
+  color: #292929;
+  margin-left: 12px;
 }
 
 .qna-list-container {
@@ -92,8 +45,17 @@
   padding-left: 2rem;
 }
 
+@keyframes show {
+  from {
+    transform: translate(0, -3%);
+  }
+  to {
+    transform: translate(0, 3%);
+  }
+}
 .qna-detail-container {
   margin: 0 6rem 0 3rem;
+  animation: show 0.5s forwards;
 }
 
 .qna-item p {
@@ -182,14 +144,16 @@
 }
 
 .reply-btn {
+  float: right;
   width: 50px;
   padding: 0.5rem;
   border-radius: 8px;
-  margin-top: 8px;
   background-color: transparent;
   color: #292929;
   font-weight: bold;
   border: 2px solid #292929;
+  font-size: 12px;
+  margin-left: 2px;
 }
 
 @keyframes btnclick {
@@ -202,4 +166,20 @@
 }
 .reply-btn:hover {
   animation: btnclick 0.3s forwards;
+}
+
+.qna-textarea {
+  width: 100%;
+  height: 300px;
+  padding: 0.5rem;
+  font-size: 20px;
+  resize: none;
+}
+
+.qna-input {
+  flex: 10;
+  flex-wrap: wrap;
+  font-size: 20px;
+  height: 48px;
+  width: 100%;
 }

@@ -1,5 +1,11 @@
 /* #002efda2  */
 
+.main-container {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
 #filter-container {
   width: 100%;
   display: flex;
@@ -30,15 +36,10 @@
 #main-section {
   width: 100%;
   display: flex;
-  height: 88vh;
+  height: 100%;
   flex-direction: row;
 }
-#around-infra {
-  padding: 2rem 0;
-}
-#around-infra h2 {
-  margin-bottom: 1rem;
-}
+
 #info-detail {
   flex-direction: column;
   align-items: center;
@@ -47,24 +48,10 @@
   overflow-y: auto;
   height: 100%;
 }
-#info-detail h1 {
-  text-align: center;
-}
 #info-detail img {
   width: 80%;
 }
-.detail-info {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid lightgray;
-}
-.detail-info div {
-  margin: 2rem 0;
-  font-size: 1.2rem;
-  font-weight: bold;
-  width: 100%;
-}
+
 #moreBtn {
   background-color: #002efda2;
   width: 100%;
@@ -74,11 +61,11 @@
   padding: 0.5rem;
 }
 #map {
-  flex: 2;
+  width: 100%;
   height: 100%;
 }
 #main-list {
-  flex: 1;
+  width: 500px;
   height: 100%;
 }
 
@@ -87,9 +74,7 @@
   flex-direction: column;
   border-left: 1px solid lightgray;
 }
-#main-list h1 {
-  padding: 1rem 1rem;
-}
+
 .test {
   height: 100%;
   background-color: lightgray;
@@ -98,14 +83,21 @@
 .list-item {
   display: flex;
   width: 100%;
-  height: 200px;
+  height: 160px;
   padding: 1rem 1rem;
   position: relative;
 }
-.list-item:hover {
-  box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.2);
+@keyframes bgcolor {
+  from {
+  }
+  to {
+    background-color: lightgray;
+  }
 }
-.press_like {
+.list-item:hover {
+  animation: bgcolor 0.3s forwards;
+}
+.likebtn {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -136,30 +128,15 @@
   flex-wrap: wrap;
   font-family: SpoqaHanSans;
   font-size: 18px;
-  font-weight: bold;
   line-height: 23px;
   text-align: left;
 }
 .list-item-detail h5 {
   display: flex;
   flex-wrap: wrap;
+  font-weight: bold;
 }
-.list-item-detail-info {
-  color: rgb(34, 34, 34);
-  font-family: SpoqaHanSans;
+.list-item-detail label {
+  color: #aaa;
   font-size: 14px;
-  line-height: 18px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-}
-.list-item-detail-info label {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 2;
-}
-.list-item-detail-info label:last-child {
-  color: rgb(117, 117, 117);
 }

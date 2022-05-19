@@ -64,23 +64,6 @@ export default {
         });
       }
     },
-    updateNotice() {
-      http
-        .put("/notice/update", {
-          notice_no: this.item.notice_no,
-          notice_writer: this.item.notice_writer,
-          notice_date: new Date(),
-          notice_content: this.notice_content,
-          notice_title: this.notice_title,
-          user_id: this.user_id,
-        })
-        .then((resp) => {
-          if (resp.data === "success") {
-            alert("수정되었습니다.");
-            //location.href = "/notice/list";
-          }
-        });
-    },
     goDetail() {
       this.$router.push(`/notice/detail/${this.item.notice_no}`);
     },
@@ -90,5 +73,4 @@ export default {
   },
 };
 </script>
-
-<style></style>
+<style scoped src="@/css/notice.css"></style>

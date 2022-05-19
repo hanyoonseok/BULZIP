@@ -20,6 +20,4 @@
 export default {};
 </script>
 
-<style>
-@import "@/css/notice.css";
-</style>
+<style scoped src="@/css/notice.css"></style>

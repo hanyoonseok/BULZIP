@@ -1,0 +1,37 @@
+[
+  {
+    "comment_id": 1,
+    "qna_id": 1,
+    "user_id": "admin",
+    "comment_content": "코멘트 1번에 대한 코멘트 몬텐츠",
+    "comment_date": "2022-05-19"
+  },
+  {
+    "comment_id": 6,
+    "qna_id": 1,
+    "user_id": "asfvc",
+    "comment_content": "코멘트 1번에 dsafasdfdsdaf대한 코멘트 몬텐츠",
+    "comment_date": "2022-05-19"
+  },
+  {
+    "comment_id": 2,
+    "qna_id": 2,
+    "user_id": "1번닉네임",
+    "comment_content": "코멘트2번에 대한 코멘트 몬텐츠",
+    "comment_date": "2022-05-19"
+  },
+  {
+    "comment_id": 3,
+    "qna_id": 3,
+    "user_id": "1번닉네임",
+    "comment_content": "코멘트3번에 대한 코멘트 몬텐츠",
+    "comment_date": "2022-05-19"
+  },
+  {
+    "comment_id": 4,
+    "qna_id": 4,
+    "user_id": "1번닉네임",
+    "comment_content": "코멘트4번에 대한 코멘트 몬텐츠",
+    "comment_date": "2022-05-19"
+  }
+]

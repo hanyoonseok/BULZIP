@@ -1,10 +1,35 @@
 <template>
-  <div>
-    글 제목 <br />
-    <input type="text" id="qna_title" v-model="title" /> <br />
-    글 내용 <br />
-    <input type="text" id="qna_content" v-model="content" /><br />
-    <button @click="createQna">글쓰기</button>
+  <div class="qna-list-container">
+    <div class="qna-item">
+      <div class="qna-item-intro">
+        <font-awesome-icon
+          :icon="'angle-down'"
+          class="qna-item-logo"
+        ></font-awesome-icon>
+      </div>
+      <p>
+        <input
+          type="text"
+          v-model="title"
+          class="qna-input"
+          placeholder="제목"
+        />
+        <b>{{ loginInfo.userId }}</b
+        ><br />
+        <textarea
+          v-model="content"
+          class="qna-textarea"
+          placeholder="내용"
+        ></textarea>
+        <button
+          @click="createQna"
+          class="reply-btn"
+          style="float: right; margin-top: 20px"
+        >
+          작성
+        </button>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -16,18 +41,24 @@ export default {
     return {
       title: "",
       content: "",
+      loginInfo: {
+        user_id: "",
+      },
     };
+  },
+  created() {
+    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+    this.loginInfo = loginInfo;
   },
   methods: {
     createQna() {
-      const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-
       http
         .post(`/qna/insert`, {
           qna_title: this.title,
           qna_content: this.content,
-          user_id: loginInfo.id,
-          user_password: loginInfo.password,
+          user_id: this.loginInfo.userId,
+          user_password: this.loginInfo.password,
+          qna_date: new Date(),
         })
         .then((resp) => {
           console.log(resp);
@@ -38,4 +69,4 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped src="@/css/qna.css"></style>

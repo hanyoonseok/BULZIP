@@ -10,6 +10,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  z-index:999;
 }
 
 #main-header ul {
@@ -19,7 +20,9 @@
   padding: 0 !important;
   margin: 0 !important;
 }
-
+.li {
+  cursor: pointer;
+}
 #main-header .li {
   width: 90px;
   height: 80px;
@@ -58,9 +61,14 @@
   animation: btnHover 0.3s forwards;
 }
 
-@keyframes textHover{
-  
+@keyframes textHover {
+  from {
+  }
+  to {
+    line-height: 2.4;
+    font-weight: bold;
+  }
 }
-.header-bottom-area .li:hover > .header-hover-text{
+.header-bottom-area .li:hover > .header-hover-text {
   animation: textHover 0.3s forwards;
 }

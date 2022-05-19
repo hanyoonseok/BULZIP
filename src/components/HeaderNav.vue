@@ -25,11 +25,11 @@
       <ul>
         <router-link to="/user/login" class="li"
           ><font-awesome-icon icon="user"></font-awesome-icon
-          ><b class="header-hover-text">Login</b></router-link
+          ><label class="header-hover-text">Login</label></router-link
         >
         <router-link to="/user/detail" class="li"
           ><font-awesome-icon icon="pen-to-square"></font-awesome-icon
-          >Edit</router-link
+          ><label class="header-hover-text">Edit</label></router-link
         >
       </ul>
     </section>
@@ -61,6 +61,4 @@ export default {
 };
 </script>
 
-<style>
-@import "@/css/header.css";
-</style>
+<style scoped src="@/css/header.css"></style>

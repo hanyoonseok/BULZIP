@@ -8,17 +8,9 @@ export default new Vuex.Store({
   state: {
     comment: {},
     comments: [],
-    // qna: {},
-    // qnas: [],
   },
   getters: {},
   mutations: {
-    // GET_QNAS(state, payload) {
-    //   state.qnas = payload;
-    // },
-    // GET_QNA(state, payload) {
-    //   state.qna = payload;
-    // },
     GET_COMMENTS(state, payload) {
       state.comments = payload;
     },
@@ -43,18 +35,6 @@ export default new Vuex.Store({
         context.commit("GET_COMMENT", resp.data);
       });
     },
-    // getQnas(context, payload) {
-    //   http.get(`/qna/list`).then((resp) => {
-    //     console.log(resp, payload);
-    //     context.commit("GET_QNAS", resp.data); //다음 진행 단계(mutation)에 결과물 보고
-    //   });
-    // },
-    // getQna(context, payload) {
-    //   http.get(`/qna/detail/` + payload).then((resp) => {
-    //     console.log(resp);
-    //     context.commit("GET_QNA", resp.data);
-    //   });
-    // },
   },
   modules: {},
 });
