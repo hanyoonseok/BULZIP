@@ -1,22 +1,33 @@
 <template>
-  <article id="main-list">
-    <form id="filter-container" v-on:submit.prevent="search">
-      <input
-        type="text"
-        class="form-control"
-        id="search-filter"
-        placeholder="구, 동, 아파트 명"
-        v-model="keyword"
-      />
-      <button id="filter-btn" type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
-    </form>
-    <div id="list-item-container">
-      <HouseItem v-for="(item, i) in items" :key="i" :item="item" />>
-      <button id="moreBtn" v-if="keyword === ''" @click="getList">
-        더보기<i class="fa-solid fa-caret-down"></i>
-      </button>
+  <article id="main-list-container">
+    <div class="main-list" v-if="status === 0">
+      <form id="filter-container" v-on:submit.prevent="search">
+        <input
+          type="text"
+          class="form-control"
+          id="search-filter"
+          placeholder="구, 동, 아파트 명"
+          v-model="keyword"
+        />
+        <button id="filter-btn" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+      <div id="list-item-container">
+        <HouseItem
+          v-for="(item, i) in items"
+          :key="i"
+          :item="item"
+          @selectOne="selectOne"
+        />
+        <button id="moreBtn" v-if="keyword === ''" @click="getList">
+          더보기<i class="fa-solid fa-caret-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <div v-if="status > 0">
+      <div>test</div>
     </div>
   </article>
 </template>
@@ -59,6 +70,9 @@ export default {
       const keyword = this.keyword;
       this.items = [];
       this.getList(keyword);
+    },
+    selectOne(selectedItem) {
+      this.status = selectedItem.no;
     },
   },
   props: {
