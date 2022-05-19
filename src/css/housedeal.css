@@ -1,5 +1,7 @@
 /* #002efda2  */
-
+*{
+  color:#292929;
+}
 .main-container {
   width: 100%;
   height: 100%;
@@ -28,7 +30,7 @@
   border: none;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  background-color: #002efda2;
+  background-color: #fdb814;
 
   font-size: 1.2rem;
   color: #fff;

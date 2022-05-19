@@ -51,7 +51,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  animation: motion 0.7s linear 0s infinite alternate;
+  /* animation: motion 0.7s linear 0s infinite alternate; */
 }
 
 .ballon:after {

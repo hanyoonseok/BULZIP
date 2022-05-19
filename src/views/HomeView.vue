@@ -40,7 +40,7 @@
           :style="{
             'background-image': 'url(' + require('../assets/back4.jpg') + ')',
             top: '75%',
-            right: '500px',
+            right: '400px',
           }"
         ></div>
       </div>
@@ -156,7 +156,8 @@ export default {
   name: "HomeView",
   mounted() {
     //fullpage
-    "use strict";
+
+    ("use strict");
     /*[pan and well CSS scrolls]*/
     var pnls = document.querySelectorAll(".panel").length,
       scdir,

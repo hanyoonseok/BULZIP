@@ -1,15 +1,13 @@
 <template>
   <div id="mainDiv">
     <h2 class="mainDiv-title">유저 관리 페이지</h2>
-    <div class="form-group">
-      <input
-        type="text"
-        class="search-input"
-        v-model="keyword"
-        placeholder="아이디, 이름, 전화번호로 검색"
-        @keyup="searchUser"
-      />
-    </div>
+    <input
+      type="text"
+      class="search-input"
+      v-model="keyword"
+      placeholder="아이디, 이름, 전화번호로 검색"
+      @keyup="searchUser"
+    />
     <table class="table-striped">
       <thead>
         <th>DB_ID</th>

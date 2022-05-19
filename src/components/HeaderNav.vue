@@ -23,13 +23,27 @@
     </section>
     <section class="header-bottom-area">
       <ul>
-        <router-link to="/user/login" class="li"
+        <router-link to="/user/login" class="li" v-if="!loginInfo"
           ><font-awesome-icon icon="user"></font-awesome-icon
           ><label class="header-hover-text">Login</label></router-link
         >
-        <router-link to="/user/detail" class="li"
+        <li class="li" v-if="loginInfo" @click="logout">
+          <font-awesome-icon icon="right-from-bracket"></font-awesome-icon
+          ><label class="header-hover-text">Logout</label>
+        </li>
+        <router-link
+          :to="'/user/info/' + loginInfo.id"
+          class="li"
+          v-if="loginInfo"
           ><font-awesome-icon icon="pen-to-square"></font-awesome-icon
-          ><label class="header-hover-text">Edit</label></router-link
+          ><label class="header-hover-text">Profile</label></router-link
+        >
+        <router-link
+          to="/user/list"
+          class="li"
+          v-if="loginInfo && loginInfo.role === 1"
+          ><font-awesome-icon icon="address-book"></font-awesome-icon
+          ><label class="header-hover-text">Admin</label></router-link
         >
       </ul>
     </section>

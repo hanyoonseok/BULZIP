@@ -18,7 +18,6 @@
   width: 100%;
   height: 100%;
   padding: 60px 60px;
-  padding-left: 150px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -116,7 +115,6 @@
 
 .notice-item-logo {
   color: #fdb814;
-  padding-left: 1rem;
   font-size: 50px;
   flex: 1;
   height: 100%;

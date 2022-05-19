@@ -1,35 +1,15 @@
 <template>
-  <div id="loginform">
-    <form v-on:submit.prevent="update">
-      <div id="login-title-wrapper">
-        <img src="@/assets/logo.png" class="img_logo" alt="" />
-        <h2 class="modal-login-title">회원 정보</h2>
-      </div>
-
-      <div class="login-content">
-        아이디 :
-        <input
-          type="text"
-          class="member_login_input"
-          disabled
-          :value="user.userId"
-        /><br />
-        패스워드 :
-        <input
-          type="password"
-          class="member_login_input"
-          disabled
-          :value="user.password"
-        /><br />
-        이름 :
-        <input type="text" class="member_login_input" v-model="user.name" />
-        전화번호 :
-        <input type="text" class="member_login_input" v-model="user.phone" />
-      </div>
-
-      <input type="submit" value="수정" class="blueBtn-l" />
-    </form>
-    <button class="blueBtn-l" @click="deleteMe">회원 정보 삭제</button>
+  <div class="page-container">
+    <div class="left-container all-center">
+      <h1>REGIST</h1>
+      <input type="text" class="user-input" v-model="user.userId" disabled />
+      <input type="password" class="user-input" value="***" disabled />
+      <input type="text" class="user-input" v-model="user.name" />
+      <input type="text" class="user-input" v-model="user.phone" />
+      <button class="form-btn" @click="update">회원정보 수정</button>
+      <button class="form-btn" @click="deleteMe">회원정보 삭제</button>
+    </div>
+    <section class="right-container"></section>
   </div>
 </template>
 

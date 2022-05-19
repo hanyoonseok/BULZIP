@@ -35,7 +35,14 @@
       />
       <p class="text-danger" v-show="!pwresult">비밀번호가 일치하지 않습니다</p>
       <input
-        type="password"
+        type="text"
+        class="user-input"
+        placeholder="이름"
+        required
+        v-model="name"
+      />
+      <input
+        type="text"
         class="user-input"
         placeholder="전화번호"
         required
