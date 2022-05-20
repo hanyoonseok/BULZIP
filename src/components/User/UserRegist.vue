@@ -48,6 +48,9 @@
         required
         v-model="phone"
       />
+      <!-- 체크 박스 -->
+      <check-box></check-box>
+
       <input
         type="submit"
         class="form-btn"
@@ -70,8 +73,13 @@
 
 <script>
 import http from "@/api/http.js";
+import CheckBox from "@/components/User/item/CheckBox.vue";
 
 export default {
+  components: {
+    CheckBox,
+  },
+
   data() {
     return {
       userId: "",
