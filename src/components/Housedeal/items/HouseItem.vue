@@ -19,12 +19,6 @@ export default {
       http.get(`/housedeal/read/${no}`).then((resp) => {
         this.selectedItem = resp.data;
         this.$emit("selectOne", this.selectedItem);
-        // http
-        //   .get(`/housedeal/hospital/${resp.data.lat}/${resp.data.lng}`)
-        //   .then((resp) => {
-        //     console.log(resp.data);
-        //     this.hospitals = resp.data;
-        //   });
       });
     },
   },

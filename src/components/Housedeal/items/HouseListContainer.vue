@@ -28,6 +28,7 @@
 
     <div v-if="status > 0">
       <div>test</div>
+      <button @click="status = 0">1</button>
     </div>
   </article>
 </template>

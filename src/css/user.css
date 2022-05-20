@@ -66,12 +66,24 @@
 .form-btn {
   padding: 0.5rem 0.5rem;
   width: 16rem;
+  color: #292929;
   background-color: #fdb814;
   border: 2px solid #fdb814;
   border-radius: 12px;
   margin: 6px 6px;
   font-weight: bold;
   font-size: 1rem;
+}
+@keyframes btncolor {
+  from {
+  }
+  to {
+    background-color: #292929;
+    color: #fff;
+  }
+}
+.form-btn:hover {
+  animation: btncolor 0.3s forwards;
 }
 
 .small-text-container {
@@ -127,5 +139,5 @@ th {
   border-radius: 12px;
   width: 16rem;
   margin: 12px 0;
-  width:50%;
+  width: 50%;
 }

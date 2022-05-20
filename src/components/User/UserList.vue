@@ -18,7 +18,7 @@
         <th>구분</th>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id" @click="goDetail(user.id)">
+        <tr v-for="user in users" :key="user.id" @click="goDetail(user.userId)">
           <td>{{ user.id }}</td>
           <td>{{ user.userId }}</td>
           <td>{{ user.password }}</td>
@@ -58,8 +58,8 @@ export default {
         this.users = resp.data;
       });
     },
-    goDetail(id) {
-      this.$router.push(`/user/info/${id}`);
+    goDetail(userId) {
+      this.$router.push(`/user/info/${userId}`);
     },
   },
 };

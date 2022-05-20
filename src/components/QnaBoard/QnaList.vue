@@ -1,11 +1,6 @@
 <template>
   <div class="qna-list-container">
-    <QnaRow
-      v-for="(item, index) in items"
-      :key="index"
-      :qna="item"
-      @getNew="getList"
-    />
+    <QnaRow v-for="(item, index) in items" :key="index" :qna="item" />
   </div>
 </template>
 

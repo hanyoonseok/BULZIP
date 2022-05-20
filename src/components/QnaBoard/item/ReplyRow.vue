@@ -1,5 +1,5 @@
 <template>
-  <div class="reply-form-container">
+  <div class="reply-form-container" @click.stop="">
     <b class="vertical-center">{{ reply.user_id }}</b>
     <div class="vertical-center">
       <img src="@/assets/reply.png" />
@@ -11,24 +11,21 @@
         style="height: 100px"
         v-if="isOpen"
         v-model="content"
-        @click.stop=""
       ></textarea>
-      <button class="reply-btn" v-if="isOpen" @click.stop="updateReply">
-        수정
-      </button>
+      <button class="reply-btn" v-if="isOpen" @click="updateReply">수정</button>
     </div>
     <div v-if="!isOpen">
       <button
         class="reply-btn"
         v-if="reply.user_id === userInfo.userId"
-        @click.stop="isOpen = !isOpen"
+        @click="isOpen = !isOpen"
       >
         수정
       </button>
       <button
         class="reply-btn"
         v-if="reply.user_id === userInfo.userId"
-        @click.stop="deleteReply"
+        @click="deleteReply"
       >
         삭제
       </button>
@@ -48,25 +45,22 @@ export default {
   props: {
     reply: Object,
     userInfo: Object,
-    paramInfo: [],
   },
   created() {
+    console.log("receive reply row", this.reply);
     this.content = this.reply.comment_content;
   },
   methods: {
     deleteReply() {
+      console.log(this.reply.comment_id);
       http.delete(`/qna/reply/delete/${this.reply.comment_id}`).then((resp) => {
         if (resp.data === "success") {
           alert("삭제되었습니다.");
-          this.$emit("getNew", this.paramInfo);
+          this.$emit("getNew");
         }
       });
     },
     updateReply() {
-      console.log({
-        ...this.reply,
-        comment_content: this.content,
-      });
       http
         .put(`/qna/reply/update`, {
           ...this.reply,
@@ -75,7 +69,7 @@ export default {
         .then((resp) => {
           if (resp.data === "success") {
             alert("수정되었습니다.");
-            this.$emit("getNew", this.paramInfo);
+            this.$emit("getNew");
             this.isOpen = false;
           }
         });

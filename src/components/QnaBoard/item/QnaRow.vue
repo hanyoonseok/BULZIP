@@ -8,7 +8,7 @@
       <label class="qna-item-title vertical-center">{{ qna.qna_title }}</label>
       <label class="qna-item-date vertical-center">{{ qna.qna_date }}</label>
     </div>
-    <div class="qna-detail-container" v-if="isOpen">
+    <div class="qna-detail-container" v-if="isOpen" @click.stop="">
       <p>
         <b
           >{{ qna.user_id
@@ -21,7 +21,7 @@
           ><button
             class="reply-btn"
             v-if="this.userInfo.userId === qna.user_id"
-            @click.stop="goDetail()"
+            @click="goDetail()"
           >
             수정
           </button></b
@@ -33,17 +33,15 @@
           <textarea
             class="qna-textarea"
             style="height: 100px"
-            @click.stop=""
             v-model="content"
           ></textarea>
-          <button class="reply-btn" @click.stop="createReply">작성</button>
+          <button class="reply-btn" @click="createReply">작성</button>
         </div>
         <ReplyRow
           v-for="(item, i) in comments"
           :key="i"
           :reply="item"
           :userInfo="userInfo"
-          :paramInfo="paramInfo"
           @getNew="getComments"
         />
       </div>
@@ -66,7 +64,7 @@ export default {
     };
   },
   created() {
-    this.getComments(this.paramInfo);
+    this.getComments();
   },
   props: {
     qna: Object,
@@ -75,9 +73,10 @@ export default {
     ...mapState("userStore", ["isLogin", "userInfo"]),
   },
   methods: {
-    getComments(paramInfo) {
+    getComments() {
+      this.comments = [];
       http
-        .get(`/qna/reply/list/` + paramInfo[0] + `/` + paramInfo[1])
+        .get(`/qna/reply/list/` + this.paramInfo[0] + `/` + this.paramInfo[1])
         .then((resp) => {
           this.comments = resp.data.qnaReplyList;
         });
@@ -86,12 +85,6 @@ export default {
       this.isOpen = !this.isOpen;
     },
     createReply() {
-      console.log({
-        qna_id: this.qna.qna_id,
-        user_id: this.userInfo.userId,
-        comment_content: this.content,
-        comment_date: new Date(),
-      });
       http
         .post(`/qna/reply/insert`, {
           qna_id: this.qna.qna_id,
@@ -101,7 +94,7 @@ export default {
         })
         .then((resp) => {
           if (resp.data === "success") {
-            this.getComments(this.paramInfo);
+            this.getComments();
             this.content = "";
           }
         });
@@ -110,7 +103,7 @@ export default {
       http.get(`/qna/delete/${this.qna.qna_id}`).then((resp) => {
         alert("삭제되었습니다");
         console.log(resp);
-        this.$emit("getNew");
+        this.getComments();
       });
     },
     goDetail() {
