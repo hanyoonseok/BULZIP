@@ -6,14 +6,14 @@
         type="text"
         class="user-input"
         placeholder="아이디"
-        v-model="id"
+        v-model="user.id"
         required
       />
       <input
         type="password"
         class="user-input"
         placeholder="비밀번호"
-        v-model="pw"
+        v-model="user.pw"
         required
       />
       <p class="text-danger" v-show="!isValid">
@@ -35,28 +35,31 @@
 </template>
 
 <script>
-import http from "@/api/http.js";
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
     return {
-      id: "",
-      pw: "",
+      user: {
+        id: "",
+        pw: "",
+      },
       isValid: true,
     };
   },
+  computed: {
+    ...mapState("userStore", ["isLogin", "isLoginError"]),
+  },
   methods: {
+    ...mapActions("userStore", ["userConfirm", "getUserInfo"]),
     login() {
-      http.post(`/user/login/${this.id}/${this.pw}`).then((resp) => {
-        if (!resp.data) {
-          this.isValid = false;
-        } else {
-          alert("로그인 성공");
-          localStorage.setItem("loginInfo", JSON.stringify(resp.data));
-          location.href = "/";
-        }
-      });
-      return false;
+      this.userConfirm(this.user);
+      const token = sessionStorage.getItem("access-token");
+      console.log(token, this.isLogin);
+      if (this.isLogin) {
+        this.getUserInfo(token);
+        this.$router.push("/");
+      }
     },
   },
 };
