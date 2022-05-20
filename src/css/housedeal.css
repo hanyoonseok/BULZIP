@@ -1,4 +1,22 @@
-/* #002efda2  */
+.vertical-center{
+  display:flex;
+  align-items: center;
+}
+
+.all-center{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-col{
+  display:flex;
+  flex-direction: column;
+  width:100%;
+  height:100%;
+  overflow-y: auto;
+}
+/* house list container */
 * {
   color: #292929;
 }
@@ -39,19 +57,6 @@
   width: 100%;
   display: flex;
   height: 100%;
-  flex-direction: row;
-}
-
-#info-detail {
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 2rem;
-  flex: 1;
-  overflow-y: auto;
-  height: 100%;
-}
-#info-detail img {
-  width: 80%;
 }
 
 #moreBtn {
@@ -62,17 +67,14 @@
   border-radius: 20px;
   padding: 0.5rem;
 }
-#map {
-  width: 100%;
-  height: 100%;
-}
+
 #main-list-container {
-  width: 500px;
+  width: 350px;
   height: 100%;
 }
 
 .main-list {
-  width: 100%;
+  width: 350px;
   height: 100%;
 }
 
@@ -81,6 +83,13 @@
   flex-direction: column;
   border-left: 1px solid lightgray;
 }
+
+#list-item-container {
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* house item */
 
 .test {
   height: 100%;
@@ -111,17 +120,6 @@
   font-size: 20px;
 }
 
-.customoverlay {
-  background-color: white;
-  border: 1px solid skyblue;
-  padding: 0.3rem 0.3rem;
-  border-radius: 30px;
-}
-
-#list-item-container {
-  height: 100%;
-  overflow-y: auto;
-}
 .list-item-detail {
   margin-left: 0.5rem;
   display: flex;
@@ -147,3 +145,27 @@
   color: #aaa;
   font-size: 14px;
 }
+
+/* house detail */
+.header-section {
+  height: 50px;
+  width:100%;
+  padding:0.5rem 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position:relative;
+}
+
+.back-btn{
+  height:100%;
+  margin-right: 8px;
+}
+
+.article-detail{
+  width:100%;
+  padding:0.5rem 0.5rem;
+  background-color: black;
+}
+
+/* house like */

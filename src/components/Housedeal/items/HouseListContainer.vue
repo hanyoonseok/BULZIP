@@ -10,7 +10,7 @@
           v-model="keyword"
         />
         <button id="filter-btn" type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
         </button>
       </form>
       <div id="list-item-container">
@@ -26,16 +26,17 @@
       </div>
     </div>
 
-    <div v-if="status > 0">
-      <div>test</div>
-      <button @click="status = 0">1</button>
-    </div>
+    <HouseDetail v-if="status > 0" @backToList="status = 0" />
+
+    <HouseLike v-if="status < 0" />
   </article>
 </template>
 
 <script>
 import http from "@/api/http.js";
 import HouseItem from "@/components/Housedeal/items/HouseItem.vue";
+import HouseLike from "@/components/Housedeal/items/HouseLike.vue";
+import HouseDetail from "@/components/Housedeal/items/HouseDetail.vue";
 
 export default {
   data() {
@@ -61,7 +62,6 @@ export default {
         });
       } else {
         http.get(`/housedeal/list/${this.dataIdx}`).then((resp) => {
-          console.log(resp);
           this.items = this.items.concat(resp.data);
           this.dataIdx += 100;
         });
@@ -81,6 +81,8 @@ export default {
   },
   components: {
     HouseItem,
+    HouseLike,
+    HouseDetail,
   },
 };
 </script>
