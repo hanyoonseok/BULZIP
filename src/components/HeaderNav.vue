@@ -23,25 +23,27 @@
     </section>
     <section class="header-bottom-area">
       <ul>
-        <router-link to="/user/login" class="li" v-if="!loginInfo"
+        <router-link to="/user/login" class="li" v-if="!userInfo"
           ><font-awesome-icon icon="user"></font-awesome-icon
           ><label class="header-hover-text">Login</label></router-link
         >
-        <li class="li" v-if="loginInfo" @click="logout">
+        <router-link
+          :to="'/user/info/' + userInfo.userId"
+          class="li"
+          v-if="userInfo"
+          ><font-awesome-icon icon="user"></font-awesome-icon
+          ><label class="header-hover-text"
+            >{{ userInfo.userId }}님</label
+          ></router-link
+        >
+        <li class="li" v-if="userInfo" @click="logout">
           <font-awesome-icon icon="right-from-bracket"></font-awesome-icon
           ><label class="header-hover-text">Logout</label>
         </li>
         <router-link
-          :to="'/user/info/' + loginInfo.id"
-          class="li"
-          v-if="loginInfo"
-          ><font-awesome-icon icon="pen-to-square"></font-awesome-icon
-          ><label class="header-hover-text">Profile</label></router-link
-        >
-        <router-link
           to="/user/list"
           class="li"
-          v-if="loginInfo && loginInfo.role === 1"
+          v-if="userInfo && userInfo.role === 1"
           ><font-awesome-icon icon="address-book"></font-awesome-icon
           ><label class="header-hover-text">Admin</label></router-link
         >
@@ -51,25 +53,19 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
-  data() {
-    return {
-      loginInfo: null,
-    };
-  },
-  created() {
-    if (localStorage.getItem("loginInfo")) {
-      //로그인 되어있으면
-      const loginUser = JSON.parse(localStorage.getItem("loginInfo"));
-      this.loginInfo = loginUser;
-    }
+  computed: {
+    ...mapState("userStore", ["isLogin", "userInfo"]),
   },
   methods: {
+    ...mapMutations("userStore", ["SET_IS_LOGIN", "SET_USER_INFO"]),
     logout() {
-      localStorage.removeItem("loginInfo");
-      this.loginInfo = null;
-      alert("로그아웃 되었습니다");
-      location.href = "/";
+      this.SET_IS_LOGIN(false);
+      this.SET_USER_INFO(null);
+      sessionStorage.removeItem("access-token");
+      if (this.$route.path != "/") this.$router.push("/");
     },
   },
 };

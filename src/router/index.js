@@ -32,18 +32,32 @@ Vue.use(VueRouter);
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const onlyAuthUser = async (to, from, next) => {
   // console.log(store);
-  const checkUserInfo = store.getters["memberStore/checkUserInfo"];
-  const getUserInfo = store._actions["memberStore/getUserInfo"];
+  const checkUserInfo = store.getters["userStore/checkUserInfo"];
+  const getUserInfo = store._actions["userStore/getUserInfo"];
   let token = sessionStorage.getItem("access-token");
   if (checkUserInfo == null && token) {
     await getUserInfo(token);
   }
   if (checkUserInfo === null) {
     alert("로그인이 필요한 페이지입니다..");
-    next({ name: "signIn" });
-    // router.push({ name: "signIn" });
+    next("/user/login");
   } else {
-    // console.log("로그인 했다.");
+    next();
+  }
+};
+
+const onlyAdmin = async (to, from, next) => {
+  // console.log(store);
+  const checkUserInfo = store.getters["userStore/checkUserInfo"];
+  const getUserInfo = store._actions["userStore/getUserInfo"];
+  let token = sessionStorage.getItem("access-token");
+  if (checkUserInfo == null && token) {
+    await getUserInfo(token);
+  }
+  if (checkUserInfo.role !== 1) {
+    alert("관리자만 입장 가능한 페이지입니다..");
+    next("/");
+  } else {
     next();
   }
 };
@@ -115,7 +129,7 @@ const routes = [
       {
         path: "list",
         name: "userlist",
-        beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAdmin,
         component: UserList,
       },
     ],
@@ -134,13 +148,13 @@ const routes = [
       {
         path: "write",
         name: "noticewrite",
-        beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAdmin,
         component: NoticeWrite,
       },
       {
         path: "detail/:notice_no",
         name: "noticedetail",
-        beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAdmin,
         component: NoticeDetail,
       },
     ],

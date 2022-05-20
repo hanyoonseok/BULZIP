@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="left-container all-center">
-      <h1>REGIST</h1>
+      <h1>회원정보</h1>
       <input type="text" class="user-input" v-model="user.userId" disabled />
       <input type="password" class="user-input" value="***" disabled />
       <input type="text" class="user-input" v-model="user.name" />
@@ -15,6 +15,7 @@
 
 <script>
 import http from "@/api/http.js";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -22,8 +23,11 @@ export default {
       user: { id: "", userId: "", password: "", name: "", phone: "", role: "" },
     };
   },
+  computed: {
+    ...mapState("userStore", ["isLogin", "userInfo"]),
+  },
   created() {
-    http.get(`/user/detail/${this.$route.params.id}`).then((resp) => {
+    http.get(`/user/detail/${this.$route.params.userid}`).then((resp) => {
       if (!resp.data) {
         alert("정보 로드 실패");
       } else {

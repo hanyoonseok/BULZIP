@@ -27,9 +27,7 @@ const memberStore = {
   },
   actions: {
     async userConfirm({ commit }, user) {
-      console.log(user.id, user.pw);
       await http.post(`/user/login/${user.id}/${user.pw}`).then((response) => {
-        console.log(response);
         if (response.data.message === "success") {
           let token = response.data["access-token"];
           commit("SET_IS_LOGIN", true);
@@ -43,12 +41,11 @@ const memberStore = {
     },
     async getUserInfo({ commit }, token) {
       let decode_token = jwt_decode(token);
-      console.log(decode_token);
       await http
-        .get(`/user/info/${decode_token.userid}`)
+        .get(`/user/detail/${decode_token.userid}`)
         .then((response) => {
-          if (response.data.message === "success") {
-            commit("SET_USER_INFO", response.data.userInfo);
+          if (response.data) {
+            commit("SET_USER_INFO", response.data);
           } else {
             console.log("유저 정보 없음!!");
           }

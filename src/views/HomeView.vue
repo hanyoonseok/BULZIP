@@ -17,7 +17,7 @@
             벌써 찾았다, 내 집 <br />
             사용자 맞춤 주택 정보 제공 서비스
           </div>
-          <button class="center-area-btn">LOGIN</button>
+          <button class="center-area-btn" @click="goLogin">LOGIN</button>
         </div>
         <div
           class="ballon"
@@ -309,6 +309,11 @@ export default {
 
     roller.classList.add("original");
     clone.classList.add("clone");
+  },
+  methods: {
+    goLogin() {
+      this.$router.push("/user/login");
+    },
   },
 };
 </script>

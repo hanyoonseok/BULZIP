@@ -1,6 +1,11 @@
 <template>
   <div class="notice-list-container">
-    <NoticeRow v-for="(item, index) in items" :key="index" :item="item" />
+    <NoticeRow
+      v-for="(item, index) in items"
+      :key="index"
+      :item="item"
+      @getNew="getList"
+    />
   </div>
 </template>
 

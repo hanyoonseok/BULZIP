@@ -21,7 +21,6 @@ const qnaStore = {
       http
         .get(`/qna/reply/list/` + payload[1] + `/` + payload[0])
         .then((resp) => {
-          console.log(resp);
           context.commit("GET_COMMENTS", resp.data.qnaReplyList);
         });
     },

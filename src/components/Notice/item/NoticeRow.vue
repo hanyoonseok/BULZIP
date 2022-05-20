@@ -18,13 +18,13 @@
         >{{ item.notice_writer
         }}<button
           class="reply-btn"
-          v-if="this.loginInfo.role === 1"
+          v-if="this.userInfo.role === 1"
           @click="deleteNotice"
         >
           삭제</button
         ><button
           class="reply-btn"
-          v-if="this.loginInfo.role === 1"
+          v-if="this.userInfo.role === 1"
           @click.stop="goDetail"
         >
           수정
@@ -37,16 +37,20 @@
 
 <script>
 import http from "@/api/http.js";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       isOpen: false,
-      loginInfo: null,
+      title: "",
+      content: "",
     };
   },
+  computed: {
+    ...mapState("userStore", ["isLogin", "userInfo"]),
+  },
   created() {
-    this.loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
     this.title = this.item.notice_title;
     this.content = this.item.notice_content;
   },
@@ -55,12 +59,11 @@ export default {
       this.isOpen = !this.isOpen;
     },
     deleteNotice() {
-      const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-      if (loginInfo.role === 1) {
+      if (this.userInfo.role === 1) {
         http.get(`/notice/delete/${this.item.notice_no}`).then((resp) => {
-          alert("삭제되었습니다");
           console.log(resp);
-          location.href = "/notice/list";
+          alert("삭제되었습니다");
+          this.$emit("getNew");
         });
       }
     },

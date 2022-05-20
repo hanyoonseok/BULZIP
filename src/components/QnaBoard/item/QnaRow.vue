@@ -14,14 +14,14 @@
           >{{ qna.user_id
           }}<button
             class="reply-btn"
-            v-if="this.loginInfo.userId === qna.user_id"
-            @click="deleteQna(qna.qna_id)"
+            v-if="this.userInfo.userId === qna.user_id"
+            @click="deleteQna()"
           >
             삭제</button
           ><button
             class="reply-btn"
-            v-if="this.loginInfo.userId === qna.user_id"
-            @click.stop="goDetail(qna.qna_id)"
+            v-if="this.userInfo.userId === qna.user_id"
+            @click.stop="goDetail()"
           >
             수정
           </button></b
@@ -38,31 +38,14 @@
           ></textarea>
           <button class="reply-btn" @click.stop="createReply">작성</button>
         </div>
-        <div
-          class="reply-form-container"
+        <ReplyRow
           v-for="(item, i) in comments"
           :key="i"
-        >
-          <b class="vertical-center">{{ item.user_id }}</b>
-          <div class="vertical-center">
-            <img src="@/assets/reply.png" />
-            <label>
-              {{ item.comment_content }}
-            </label>
-          </div>
-          <div>
-            <button class="reply-btn" v-if="item.user_id === loginInfo.userId">
-              수정
-            </button>
-            <button
-              class="reply-btn"
-              v-if="item.user_id === loginInfo.userId"
-              @click.stop="deleteReply(item.comment_id)"
-            >
-              삭제
-            </button>
-          </div>
-        </div>
+          :reply="item"
+          :userInfo="userInfo"
+          :paramInfo="paramInfo"
+          @getNew="getComments"
+        />
       </div>
     </div>
   </div>
@@ -70,67 +53,72 @@
 
 <script>
 import http from "@/api/http.js";
-// import comment from "@/api/comment.json";
+import { mapState } from "vuex";
+import ReplyRow from "@/components/QnaBoard/item/ReplyRow.vue";
 
 export default {
   data() {
     return {
       isOpen: false,
-      loginInfo: null,
       content: "",
+      comments: [],
+      paramInfo: [1, this.qna.qna_id],
     };
+  },
+  created() {
+    this.getComments(this.paramInfo);
   },
   props: {
     qna: Object,
   },
-  created() {
-    const qna_id = this.qna.qna_id;
-    const p = 1;
-    const temp = [qna_id, p];
-    this.$store.dispatch("getComments", temp);
-
-    this.loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+  computed: {
+    ...mapState("userStore", ["isLogin", "userInfo"]),
   },
   methods: {
+    getComments(paramInfo) {
+      http
+        .get(`/qna/reply/list/` + paramInfo[0] + `/` + paramInfo[1])
+        .then((resp) => {
+          this.comments = resp.data.qnaReplyList;
+        });
+    },
     toggleItem() {
       this.isOpen = !this.isOpen;
     },
     createReply() {
+      console.log({
+        qna_id: this.qna.qna_id,
+        user_id: this.userInfo.userId,
+        comment_content: this.content,
+        comment_date: new Date(),
+      });
       http
         .post(`/qna/reply/insert`, {
           qna_id: this.qna.qna_id,
-          user_id: this.loginInfo.userId,
+          user_id: this.userInfo.userId,
           comment_content: this.content,
           comment_date: new Date(),
         })
         .then((resp) => {
           if (resp.data === "success") {
-            this.isOpen = false;
+            this.getComments(this.paramInfo);
+            this.content = "";
           }
         });
     },
-    deleteQna(qna_id) {
-      http.get(`/qna/delete/${qna_id}`).then((resp) => {
+    deleteQna() {
+      http.get(`/qna/delete/${this.qna.qna_id}`).then((resp) => {
         alert("삭제되었습니다");
         console.log(resp);
-        location.href = "/qna/list";
+        this.$emit("getNew");
       });
     },
-    goDetail(qna_id) {
-      this.$router.push(`/qna/detail/1/${qna_id}`);
-    },
-    deleteReply(no) {
-      http.delete(`/qna/reply/delete/${no}`).then((resp) => {
-        if (resp.data === "success") {
-          alert("삭제되었습니다.");
-        }
-      });
+    goDetail() {
+      this.$router.push(`/qna/detail/1/${this.qna.qna_id}`);
     },
   },
-  computed: {
-    comments() {
-      return this.$store.state.comments;
-    },
+  components: {
+    ReplyRow,
   },
 };
 </script>

@@ -14,7 +14,7 @@
           class="qna-input"
           placeholder="제목"
         />
-        <b>{{ loginInfo.userId }}</b
+        <b>{{ userInfo.userId }}</b
         ><br />
         <textarea
           v-model="content"
@@ -35,20 +35,17 @@
 
 <script>
 import http from "@/api/http.js";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       title: "",
       content: "",
-      loginInfo: {
-        user_id: "",
-      },
     };
   },
-  created() {
-    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-    this.loginInfo = loginInfo;
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
   },
   methods: {
     createQna() {
@@ -56,8 +53,8 @@ export default {
         .post(`/qna/insert`, {
           qna_title: this.title,
           qna_content: this.content,
-          user_id: this.loginInfo.userId,
-          user_password: this.loginInfo.password,
+          user_id: this.userInfo.userId,
+          user_password: this.userInfo.password,
           qna_date: new Date(),
         })
         .then((resp) => {

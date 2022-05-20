@@ -52,13 +52,15 @@ export default {
   },
   methods: {
     ...mapActions("userStore", ["userConfirm", "getUserInfo"]),
-    login() {
-      this.userConfirm(this.user);
+    async login() {
+      await this.userConfirm(this.user);
       const token = sessionStorage.getItem("access-token");
       console.log(token, this.isLogin);
       if (this.isLogin) {
-        this.getUserInfo(token);
+        await this.getUserInfo(token);
         this.$router.push("/");
+      } else {
+        this.isValid = false;
       }
     },
   },

@@ -54,13 +54,7 @@ export default {
       }
     },
     getAllUsers() {
-      const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-
-      if (loginInfo.role != 1) {
-        alert("관리자만 입장 가능한 페이지입니다.");
-        location.href = "/";
-      }
-      http.get(`/user/list/${loginInfo.role}`).then((resp) => {
+      http.get(`/user/list/1`).then((resp) => {
         this.users = resp.data;
       });
     },

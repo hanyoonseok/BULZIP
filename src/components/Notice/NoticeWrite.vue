@@ -21,6 +21,7 @@
 
 <script>
 import http from "@/api/http.js";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -29,33 +30,23 @@ export default {
       content: "",
     };
   },
-  created() {
-    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-    if (loginInfo.role !== 1) {
-      alert("관리자만 입장 가능합니다.");
-      history.push(-1);
-    }
+  computed: {
+    ...mapState("userStore", ["isLogin", "userInfo"]),
   },
   methods: {
     createNotice() {
-      const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
-      if (loginInfo.role === 1) {
-        http
-          .post(`/notice/write`, {
-            notice_title: this.title,
-            notice_content: this.content,
-            notice_writer: "운영자",
-            user_id: loginInfo.id,
-          })
-          .then((resp) => {
-            console.log(resp);
-            alert("작성이 완료되었습니다.");
-            this.$router.push("/notice/list");
-          });
-      } else {
-        alert("운영자가 아닙니다");
-        this.$router.push("/notice/list");
-      }
+      http
+        .post(`/notice/write`, {
+          notice_title: this.title,
+          notice_content: this.content,
+          notice_writer: "운영자",
+          user_id: this.userInfo.id,
+        })
+        .then((resp) => {
+          console.log(resp);
+          alert("작성이 완료되었습니다.");
+          this.$router.push("/notice/list");
+        });
     },
   },
 };
