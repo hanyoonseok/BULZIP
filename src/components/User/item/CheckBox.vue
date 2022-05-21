@@ -1,694 +1,691 @@
 <template>
   <!-- 체크박스 -->
-  <form method="get" action="">
-    <p>관심 상권 키워드 (10개 선택)</p>
-    <!-- 소매 : D-->
-    <div>대분류 : 소매</div>
-    <label
-      ><input
-        type="checkbox"
-        value="D01"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      음/식료품소매</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D02"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      선물/팬시/기념품</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D03"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      종합소매점</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D04"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      취미/오락관련소매</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D05"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      의복의류</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D06"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      가방/신발/액세서리</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D08"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      사무/문구/컴퓨터</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D09"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      애견/애완/동물</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D10"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      건강/미용식품</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D11"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      유아용품</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D13"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      책/서적/도서</label
-    >
+  <section class="checkbox-section">
+    <p class="checkbox-title">관심 상권 키워드 (10개 선택)</p>
+    <div class="checkbox-select-area">
+      <div
+        class="checkbox-select-item"
+        v-for="(item, index) in array"
+        :key="index"
+      >
+        {{ item }}
+      </div>
+    </div>
+    <div class="checkbox-division-container">
+      <div class="checkbox-division">
+        <div class="checkbox-division-title">소매</div>
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="음/식료품소매"
+          @change="toggle('D01')"
+          id="D01"
+        />
+        <label class="checkbox-btn" for="D01">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >음식료품소매<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="선물/팬시"
+          @change="toggle('D02')"
+          id="D02"
+        />
+        <label class="checkbox-btn" for="D02">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >선물팬시<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="종합소매"
+          @change="toggle('D03')"
+          id="D03"
+        />
+        <label class="checkbox-btn" for="D03"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >종합소매<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="취미/오락소매"
+          @change="toggle('D04')"
+          id="D04"
+        />
+        <label class="checkbox-btn" for="D04">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >취미오락소매<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="의복의류"
+          @change="toggle('D05')"
+          id="D05"
+        />
+        <label class="checkbox-btn" for="D05"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >의복의류<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="가방/신발/액세서리"
+          @change="toggle('D06')"
+          id="D06"
+        />
+        <label class="checkbox-btn" for="D06">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >가방/신발/액세서리<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="사무/문구/컴퓨터"
+          @change="toggle('D08')"
+          id="D08"
+        />
+        <label class="checkbox-btn" for="D08">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >사무/문구/컴퓨터<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="애견/애완/동물"
+          @change="toggle('D09')"
+          id="D09"
+        />
+        <label class="checkbox-btn" for="D09">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >애견/애완/동물<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="건강/미용식품"
+          @change="toggle('D10')"
+          id="D10"
+        />
+        <label class="checkbox-btn" for="D10">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >건강/미용식품<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="유아용품"
+          @change="toggle('D11')"
+          id="D11"
+        />
+        <label class="checkbox-btn" for="D11"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >유아용품<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="책/서적/도서"
+          @change="toggle('D13')"
+          id="D13"
+        />
+        <label class="checkbox-btn" for="D13">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >책/서적/도서<br />
 
-    <label
-      ><input
-        type="checkbox"
-        value="D14"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      운동/경기용품소매</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D16"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      화장품소매</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D20"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      의약/의료품소매</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="D21"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      철물/난방/건설자재소매</label
-    >
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="운동/경기용품소매"
+          @change="toggle('D14')"
+          id="D14"
+        />
+        <label class="checkbox-btn" for="D14">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >운동/경기용품소매<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="화장품소매"
+          @change="toggle('D16')"
+          id="D16"
+        />
+        <label class="checkbox-btn" for="D16"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >화장품소매<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="의약/의료품소매"
+          @change="toggle('D20')"
+          id="D20"
+        />
+        <label class="checkbox-btn" for="D20">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >의약/의료품소매<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="철물/난방소매"
+          @change="toggle('D21')"
+          id="D21"
+        />
+        <label class="checkbox-btn" for="D21">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >철물/난방소매<br />
+      </div>
+      <div class="checkbox-division">
+        <!-- 생활서비스 : F -->
+        <div class="checkbox-division-title">생활서비스</div>
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="미용/건강"
+          @change="toggle('F01')"
+          id="F01"
+        />
+        <label class="checkbox-btn" for="F01">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >미용/건강<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="세탁/가사서비스"
+          @change="toggle('F02')"
+          id="F02"
+        />
+        <label class="checkbox-btn" for="F02">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >세탁/가사서비스<br />
 
-    <!-- 생활서비스 : F -->
-    <div>대분류 : 생활서비스</div>
-    <label
-      ><input
-        type="checkbox"
-        value="F01"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      이/미용/건강</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="F02"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      세탁/가사서비스</label
-    >
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="사진"
+          @change="toggle('F06')"
+          id="F06"
+        />
+        <label class="checkbox-btn" for="F06"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >사진<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="대중목욕탕/휴게"
+          @change="toggle('F09')"
+          id="F09"
+        />
+        <label class="checkbox-btn" for="F09">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >대중목욕탕/휴게<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="개인서비스"
+          @change="toggle('F11')"
+          id="F11"
+        />
+        <label class="checkbox-btn" for="F11"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >개인서비스<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="주유소"
+          @change="toggle('F16')"
+          id="F16"
+        />
+        <label class="checkbox-btn" for="F16"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >주유소<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="실내운동시설"
+          @change="toggle('P02')"
+          id="P02"
+        />
+        <label class="checkbox-btn" for="P02"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >실내운동시설<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="실외운동시설"
+          @change="toggle('P03')"
+          id="P03"
+        />
+        <label class="checkbox-btn" for="P03"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >실외운동시설<br />
+      </div>
+      <div class="checkbox-division">
+        <!-- 관광/여가/오락 : N -->
+        <div class="checkbox-division-title">관광/여가/오락</div>
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="PC/오락/당구/볼링"
+          @change="toggle('N01')"
+          id="N01"
+        />
+        <label class="checkbox-btn" for="N01">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >PC/오락/당구/볼링<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="유흥/가무"
+          @change="toggle('N02')"
+          id="N02"
+        />
+        <label class="checkbox-btn" for="N02">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >유흥/가무<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="연극/영화/극장"
+          @change="toggle('N03')"
+          id="N03"
+        />
+        <label class="checkbox-btn" for="N03">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >연극/영화/극장<br />
 
-    <label
-      ><input
-        type="checkbox"
-        value="F06"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      사진</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="F09"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      대중목욕탕/휴게</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="F11"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      개인서비스</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="F16"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      주유소/충전소</label
-    >
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="스포츠/운동"
+          @change="toggle('N04')"
+          id="N04"
+        />
+        <label class="checkbox-btn" for="N04">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >스포츠/운동<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="요가/단전/마사지"
+          @change="toggle('N05')"
+          id="N05"
+        />
+        <label class="checkbox-btn" for="N05">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >요가/단전/마사지<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="놀이/여가/취미"
+          @change="toggle('N07')"
+          id="N07"
+        />
+        <label class="checkbox-btn" for="N07">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >놀이/여가/취미<br />
+      </div>
+    </div>
+    <div class="checkbox-division-container">
+      <div class="checkbox-division">
+        <!-- 숙박 : O -->
+        <div class="checkbox-division-title">숙박</div>
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="호텔/콘도"
+          @change="toggle('O01')"
+          id="O01"
+        />
+        <label class="checkbox-btn" for="O01">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >호텔/콘도<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="호텔/모텔"
+          @change="toggle('O02')"
+          id="O02"
+        />
+        <label class="checkbox-btn" for="O02">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >호텔/모텔<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="캠프/별장/펜션"
+          @change="toggle('O03')"
+          id="O03"
+        />
+        <label class="checkbox-btn" for="O03">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >캠프/별장/펜션<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="민박/하숙"
+          @change="toggle('O05')"
+          id="O05"
+        />
+        <label class="checkbox-btn" for="O05">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >민박/하숙<br />
+      </div>
+      <div class="checkbox-division">
+        <!-- 음식 : Q-->
+        <div class="checkbox-division-title">음식</div>
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="한식"
+          @change="toggle('Q01')"
+          id="Q01"
+        />
+        <label class="checkbox-btn" for="Q01"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >한식<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="중식"
+          @change="toggle('Q02')"
+          id="Q02"
+        />
+        <label class="checkbox-btn" for="Q02"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >중식<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="일식/수산물"
+          @change="toggle('Q03')"
+          id="Q03"
+        />
+        <label class="checkbox-btn" for="Q03">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >일식/수산물<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="분식"
+          @change="toggle('Q04')"
+          id="Q04"
+        />
+        <label class="checkbox-btn" for="Q04"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >분식<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="닭/오리요리"
+          @change="toggle('Q05')"
+          id="Q05"
+        />
+        <label class="checkbox-btn" for="Q05">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >닭/오리요리<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="양식"
+          @change="toggle('Q06')"
+          id="Q06"
+        />
+        <label class="checkbox-btn" for="Q06"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >양식<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="패스트푸드"
+          @change="toggle('Q07')"
+          id="Q07"
+        />
+        <label class="checkbox-btn" for="Q07"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >패스트푸드<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="제과제빵"
+          @change="toggle('Q08')"
+          id="Q08"
+        />
+        <label class="checkbox-btn" for="Q08"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >제과제빵<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="유흥주점"
+          @change="toggle('Q09')"
+          id="Q09"
+        />
+        <label class="checkbox-btn" for="Q09"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >유흥주점<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="별식/퓨전요리"
+          @change="toggle('Q10')"
+          id="Q10"
+        />
+        <label class="checkbox-btn" for="Q10">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >별식/퓨전요리<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="커피점/카페"
+          @change="toggle('Q12')"
+          id="Q12"
+        />
+        <label class="checkbox-btn" for="Q12">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >커피점/카페<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="음식배달"
+          @change="toggle('Q13')"
+          id="Q13"
+        />
+        <label class="checkbox-btn" for="Q13"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >음식배달<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="부페"
+          @change="toggle('Q15')"
+          id="Q15"
+        />
+        <label class="checkbox-btn" for="Q15"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >부페<br />
+      </div>
+      <div class="checkbox-division">
+        <!-- 학문/교육 : R-->
+        <div class="checkbox-division-title">학문/교육</div>
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="입시"
+          @change="toggle('R01')"
+          id="R01"
+        />
+        <label class="checkbox-btn" for="R01"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >입시<br />
 
-    <!-- 관광/여가/오락 : N -->
-    <div>대분류 : 관광/여가/오락</div>
-    <label
-      ><input
-        type="checkbox"
-        value="N01"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      PC/오락/당구/볼링등</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="N02"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      무도/유흥/가무</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="N03"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      연극/영화/극장</label
-    >
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="창업취업취미"
+          @change="toggle('R02')"
+          id="R02"
+        />
+        <label class="checkbox-btn" for="R02"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >창업취업취미<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="자격/국가고시"
+          @change="toggle('R03')"
+          id="R03"
+        />
+        <label class="checkbox-btn" for="R03">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >자격/국가고시<br />
 
-    <label
-      ><input
-        type="checkbox"
-        value="N04"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      스포츠/운동</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="N05"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      요가/단전/마사지</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="N07"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      놀이/여가/취미</label
-    >
-
-    <!-- 숙박 : O -->
-    <div>대분류 : 숙박</div>
-    <label
-      ><input
-        type="checkbox"
-        value="O01"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      호텔/콘도</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="O02"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      모텔/여관/여인숙</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="O03"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      캠프/별장/펜션</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="O05"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      민박/하숙</label
-    >
-
-    <!-- 스포츠 : P -->
-    <div>대분류 : 스포츠</div>
-    <label
-      ><input
-        type="checkbox"
-        value="P02"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      실내운동시설</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="P03"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      실외운동시설</label
-    >
-
-    <!-- 음식 : Q-->
-    <div>대분류 : 음식</div>
-    <label
-      ><input
-        type="checkbox"
-        value="Q01"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      한식</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q02"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      중식</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q03"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      일식/수산물</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q04"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      분식</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q05"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      닭/오리요리</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q06"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      양식</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q07"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      패스트푸드</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q08"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      제과제빵떡케익</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q09"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      유흥주점</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q10"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      별식/퓨전요리</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q12"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      커피점/카페</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q13"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      음식배달서비스</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="Q15"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      부페</label
-    >
-
-    <!-- 학문/교육 : R-->
-    <div>대분류 : 학문/교육</div>
-    <label
-      ><input
-        type="checkbox"
-        value="R01"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원-보습교습입시</label
-    >
-
-    <label
-      ><input
-        type="checkbox"
-        value="R02"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원-창업취업취미</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R03"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원-자격/국가고시</label
-    >
-
-    <label
-      ><input
-        type="checkbox"
-        value="R04"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원-어학</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R05"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원-음악미술무용</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R06"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원-컴퓨터</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R07"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원-예능취미체육</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R08"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      유아교육</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R09"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학원기타</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R10"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      도서관/독서실</label
-    >
-    <label
-      ><input
-        type="checkbox"
-        value="R13"
-        v-model="array"
-        true-value="1"
-        false-value="0"
-      />
-      학문교육기타</label
-    >
-
-    <p>
-      <input type="submit" value="Submit" />
-      <input type="reset" value="Reset" />
-    </p>
-  </form>
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="어학"
+          @change="toggle('R04')"
+          id="R04"
+        />
+        <label class="checkbox-btn" for="R04"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >어학<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="예체능"
+          @change="toggle('R05')"
+          id="R05"
+        />
+        <label class="checkbox-btn" for="R05"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >예체능<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="컴퓨터"
+          @change="toggle('R06')"
+          id="R06"
+        />
+        <label class="checkbox-btn" for="R06"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >컴퓨터<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="예능취미체육"
+          @change="toggle('R07')"
+          id="R07"
+        />
+        <label class="checkbox-btn" for="R07"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >예능취미체육<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="유아교육"
+          @change="toggle('R08')"
+          id="R08"
+        />
+        <label class="checkbox-btn" for="R08"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >유아교육<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="기타"
+          @change="toggle('R09')"
+          id="R09"
+        />
+        <label class="checkbox-btn" for="R09"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >기타<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="도서관/독서실"
+          @change="toggle('R10')"
+          id="R10"
+        />
+        <label class="checkbox-btn" for="R10">
+          <font-awesome-icon icon="check"></font-awesome-icon></label
+        >도서관/독서실<br />
+        <input
+          type="checkbox"
+          class="hide-checkbox"
+          v-model="array"
+          value="학문교육"
+          @change="toggle('R13')"
+          id="R13"
+        />
+        <label class="checkbox-btn" for="R13"
+          ><font-awesome-icon icon="check"></font-awesome-icon></label
+        >학문교육<br />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-import http from "@/api/http.js";
-
 export default {
   data() {
     return {
       array: [],
-      //   N01: "",
-      //   D06: "",
-      //   F11: "",
-      //   D10: "",
-      //   N07: "",
-      //   Q05: "",
-      //   F09: "",
-      //   R10: "",
-      //   O02: "",
-      //   N02: "",
-      //   O05: "",
-      //   Q10: "",
-      //   Q15: "",
-      //   Q04: "",
-      //   D08: "",
-      //   F06: "",
-      //   D02: "",
-      //   F02: "",
-      //   N04: "",
-      //   P02: "",
-      //   P03: "",
-      //   D09: "",
-      //   Q06: "",
-      //   N03: "",
-      //   N05: "",
-      //   D14: "",
-      //   R08: "",
-      //   D11: "",
-      //   Q09: "",
-      //   D01: "",
-      //   Q13: "",
-      //   D05: "",
-      //   D20: "",
-      //   F01: "",
-      //   Q03: "",
-      //   Q08: "",
-      //   D03: "",
-      //   F16: "",
-      //   Q02: "",
-      //   D13: "",
-      //   D21: "",
-      //   D04: "",
-      //   O03: "",
-      //   Q12: "",
-      //   Q07: "",
-      //   R13: "",
-      //   R01: "",
-      //   R04: "",
-      //   R07: "",
-      //   R05: "",
-      //   R03: "",
-      //   R02: "",
-      //   R06: "",
-      //   R09: "",
-      //   Q01: "",
-      //   O01: "",
-      //   D16: "",
     };
   },
   methods: {
-    createQna() {
-      http
-        .post(`/qna/insert`, {
-          qna_title: this.title,
-          qna_content: this.content,
-          user_id: this.userInfo.userId,
-          user_password: this.userInfo.password,
-          qna_date: new Date(),
-        })
-        .then((resp) => {
-          console.log(resp);
-          alert("작성이 완료되었습니다.");
-          this.$router.push("/qna/list");
-        });
+    toggle(key) {
+      this.$emit("toggle", key);
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped src="@/css/user.css"></style>
