@@ -67,6 +67,7 @@ export default {
         });
       }
     },
+
     search() {
       const keyword = this.keyword;
       this.items = [];

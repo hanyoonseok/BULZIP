@@ -53,6 +53,7 @@ export default {
       // 마커 클러스터러에 클릭이벤트를 등록합니다
       // 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
       // 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
+      // v-on:click 으로 아래 리스너 호출한다
       // kakao.maps.event.addListener(
       //   clusterer,
       //   "clusterclick",
