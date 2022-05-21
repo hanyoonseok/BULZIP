@@ -50,7 +50,12 @@ export default {
     };
   },
   created() {
-    this.getList(this.param);
+    if (this.$route.params.keyword) {
+      this.keyword = this.$route.params.keyword;
+      this.getList(this.keyword);
+    } else {
+      this.getList();
+    }
   },
   methods: {
     getList(keyword = "") {
