@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import BarChart from "@/components/Charts/BarChart.vue";
+import BarChart from "@/components/Charts/BarChart3.vue";
 export default {
   components: { BarChart },
 };
