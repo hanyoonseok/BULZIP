@@ -19,10 +19,10 @@
           class="hide-checkbox"
           v-model="array"
           value="음/식료품소매"
-          @change="toggle('D01')"
-          id="D01"
+          @change="toggle('keyword_D01')"
+          id="keyword_D01"
         />
-        <label class="checkbox-btn" for="D01">
+        <label class="checkbox-btn" for="keyword_D01">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >음식료품소매<br />
         <input
@@ -30,10 +30,10 @@
           class="hide-checkbox"
           v-model="array"
           value="선물/팬시"
-          @change="toggle('D02')"
-          id="D02"
+          @change="toggle('keyword_D02')"
+          id="keyword_D02"
         />
-        <label class="checkbox-btn" for="D02">
+        <label class="checkbox-btn" for="keyword_D02">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >선물팬시<br />
         <input
@@ -41,10 +41,10 @@
           class="hide-checkbox"
           v-model="array"
           value="종합소매"
-          @change="toggle('D03')"
-          id="D03"
+          @change="toggle('keyword_D03')"
+          id="keyword_D03"
         />
-        <label class="checkbox-btn" for="D03"
+        <label class="checkbox-btn" for="keyword_D03"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >종합소매<br />
         <input
@@ -52,10 +52,10 @@
           class="hide-checkbox"
           v-model="array"
           value="취미/오락소매"
-          @change="toggle('D04')"
-          id="D04"
+          @change="toggle('keyword_D04')"
+          id="keyword_D04"
         />
-        <label class="checkbox-btn" for="D04">
+        <label class="checkbox-btn" for="keyword_D04">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >취미오락소매<br />
         <input
@@ -63,10 +63,10 @@
           class="hide-checkbox"
           v-model="array"
           value="의복의류"
-          @change="toggle('D05')"
-          id="D05"
+          @change="toggle('keyword_D05')"
+          id="keyword_D05"
         />
-        <label class="checkbox-btn" for="D05"
+        <label class="checkbox-btn" for="keyword_D05"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >의복의류<br />
         <input
@@ -74,10 +74,10 @@
           class="hide-checkbox"
           v-model="array"
           value="가방/신발/액세서리"
-          @change="toggle('D06')"
-          id="D06"
+          @change="toggle('keyword_D06')"
+          id="keyword_D06"
         />
-        <label class="checkbox-btn" for="D06">
+        <label class="checkbox-btn" for="keyword_D06">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >가방/신발/액세서리<br />
         <input
@@ -85,10 +85,10 @@
           class="hide-checkbox"
           v-model="array"
           value="사무/문구/컴퓨터"
-          @change="toggle('D08')"
-          id="D08"
+          @change="toggle('keyword_D08')"
+          id="keyword_D08"
         />
-        <label class="checkbox-btn" for="D08">
+        <label class="checkbox-btn" for="keyword_D08">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >사무/문구/컴퓨터<br />
         <input
@@ -96,10 +96,10 @@
           class="hide-checkbox"
           v-model="array"
           value="애견/애완/동물"
-          @change="toggle('D09')"
-          id="D09"
+          @change="toggle('keyword_D09')"
+          id="keyword_D09"
         />
-        <label class="checkbox-btn" for="D09">
+        <label class="checkbox-btn" for="keyword_D09">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >애견/애완/동물<br />
         <input
@@ -107,10 +107,10 @@
           class="hide-checkbox"
           v-model="array"
           value="건강/미용식품"
-          @change="toggle('D10')"
-          id="D10"
+          @change="toggle('keyword_D10')"
+          id="keyword_D10"
         />
-        <label class="checkbox-btn" for="D10">
+        <label class="checkbox-btn" for="keyword_D10">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >건강/미용식품<br />
         <input
@@ -118,10 +118,10 @@
           class="hide-checkbox"
           v-model="array"
           value="유아용품"
-          @change="toggle('D11')"
-          id="D11"
+          @change="toggle('keyword_D11')"
+          id="keyword_D11"
         />
-        <label class="checkbox-btn" for="D11"
+        <label class="checkbox-btn" for="keyword_D11"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >유아용품<br />
         <input
@@ -129,10 +129,10 @@
           class="hide-checkbox"
           v-model="array"
           value="책/서적/도서"
-          @change="toggle('D13')"
-          id="D13"
+          @change="toggle('keyword_D13')"
+          id="keyword_D13"
         />
-        <label class="checkbox-btn" for="D13">
+        <label class="checkbox-btn" for="keyword_D13">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >책/서적/도서<br />
 
@@ -141,10 +141,10 @@
           class="hide-checkbox"
           v-model="array"
           value="운동/경기용품소매"
-          @change="toggle('D14')"
-          id="D14"
+          @change="toggle('keyword_D14')"
+          id="keyword_D14"
         />
-        <label class="checkbox-btn" for="D14">
+        <label class="checkbox-btn" for="keyword_D14">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >운동/경기용품소매<br />
         <input
@@ -152,10 +152,10 @@
           class="hide-checkbox"
           v-model="array"
           value="화장품소매"
-          @change="toggle('D16')"
-          id="D16"
+          @change="toggle('keyword_D16')"
+          id="keyword_D16"
         />
-        <label class="checkbox-btn" for="D16"
+        <label class="checkbox-btn" for="keyword_D16"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >화장품소매<br />
         <input
@@ -163,10 +163,10 @@
           class="hide-checkbox"
           v-model="array"
           value="의약/의료품소매"
-          @change="toggle('D20')"
-          id="D20"
+          @change="toggle('keyword_D20')"
+          id="keyword_D20"
         />
-        <label class="checkbox-btn" for="D20">
+        <label class="checkbox-btn" for="keyword_D20">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >의약/의료품소매<br />
         <input
@@ -174,10 +174,10 @@
           class="hide-checkbox"
           v-model="array"
           value="철물/난방소매"
-          @change="toggle('D21')"
-          id="D21"
+          @change="toggle('keyword_D21')"
+          id="keyword_D21"
         />
-        <label class="checkbox-btn" for="D21">
+        <label class="checkbox-btn" for="keyword_D21">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >철물/난방소매<br />
       </div>
@@ -189,10 +189,10 @@
           class="hide-checkbox"
           v-model="array"
           value="미용/건강"
-          @change="toggle('F01')"
-          id="F01"
+          @change="toggle('keyword_F01')"
+          id="keyword_F01"
         />
-        <label class="checkbox-btn" for="F01">
+        <label class="checkbox-btn" for="keyword_F01">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >미용/건강<br />
         <input
@@ -200,10 +200,10 @@
           class="hide-checkbox"
           v-model="array"
           value="세탁/가사서비스"
-          @change="toggle('F02')"
-          id="F02"
+          @change="toggle('keyword_F02')"
+          id="keyword_F02"
         />
-        <label class="checkbox-btn" for="F02">
+        <label class="checkbox-btn" for="keyword_F02">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >세탁/가사서비스<br />
 
@@ -212,10 +212,10 @@
           class="hide-checkbox"
           v-model="array"
           value="사진"
-          @change="toggle('F06')"
-          id="F06"
+          @change="toggle('keyword_F06')"
+          id="keyword_F06"
         />
-        <label class="checkbox-btn" for="F06"
+        <label class="checkbox-btn" for="keyword_F06"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >사진<br />
         <input
@@ -223,10 +223,10 @@
           class="hide-checkbox"
           v-model="array"
           value="대중목욕탕/휴게"
-          @change="toggle('F09')"
-          id="F09"
+          @change="toggle('keyword_F09')"
+          id="keyword_F09"
         />
-        <label class="checkbox-btn" for="F09">
+        <label class="checkbox-btn" for="keyword_F09">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >대중목욕탕/휴게<br />
         <input
@@ -234,10 +234,10 @@
           class="hide-checkbox"
           v-model="array"
           value="개인서비스"
-          @change="toggle('F11')"
-          id="F11"
+          @change="toggle('keyword_F11')"
+          id="keyword_F11"
         />
-        <label class="checkbox-btn" for="F11"
+        <label class="checkbox-btn" for="keyword_F11"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >개인서비스<br />
         <input
@@ -245,10 +245,10 @@
           class="hide-checkbox"
           v-model="array"
           value="주유소"
-          @change="toggle('F16')"
-          id="F16"
+          @change="toggle('keyword_F16')"
+          id="keyword_F16"
         />
-        <label class="checkbox-btn" for="F16"
+        <label class="checkbox-btn" for="keyword_F16"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >주유소<br />
         <input
@@ -256,10 +256,10 @@
           class="hide-checkbox"
           v-model="array"
           value="실내운동시설"
-          @change="toggle('P02')"
-          id="P02"
+          @change="toggle('keyword_P02')"
+          id="keyword_P02"
         />
-        <label class="checkbox-btn" for="P02"
+        <label class="checkbox-btn" for="keyword_P02"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >실내운동시설<br />
         <input
@@ -267,10 +267,10 @@
           class="hide-checkbox"
           v-model="array"
           value="실외운동시설"
-          @change="toggle('P03')"
-          id="P03"
+          @change="toggle('keyword_P03')"
+          id="keyword_P03"
         />
-        <label class="checkbox-btn" for="P03"
+        <label class="checkbox-btn" for="keyword_P03"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >실외운동시설<br />
       </div>
@@ -282,10 +282,10 @@
           class="hide-checkbox"
           v-model="array"
           value="PC/오락/당구/볼링"
-          @change="toggle('N01')"
-          id="N01"
+          @change="toggle('keyword_N01')"
+          id="keyword_N01"
         />
-        <label class="checkbox-btn" for="N01">
+        <label class="checkbox-btn" for="keyword_N01">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >PC/오락/당구/볼링<br />
         <input
@@ -293,10 +293,10 @@
           class="hide-checkbox"
           v-model="array"
           value="유흥/가무"
-          @change="toggle('N02')"
-          id="N02"
+          @change="toggle('keyword_N02')"
+          id="keyword_N02"
         />
-        <label class="checkbox-btn" for="N02">
+        <label class="checkbox-btn" for="keyword_N02">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >유흥/가무<br />
         <input
@@ -304,10 +304,10 @@
           class="hide-checkbox"
           v-model="array"
           value="연극/영화/극장"
-          @change="toggle('N03')"
-          id="N03"
+          @change="toggle('keyword_N03')"
+          id="keyword_N03"
         />
-        <label class="checkbox-btn" for="N03">
+        <label class="checkbox-btn" for="keyword_N03">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >연극/영화/극장<br />
 
@@ -316,10 +316,10 @@
           class="hide-checkbox"
           v-model="array"
           value="스포츠/운동"
-          @change="toggle('N04')"
-          id="N04"
+          @change="toggle('keyword_N04')"
+          id="keyword_N04"
         />
-        <label class="checkbox-btn" for="N04">
+        <label class="checkbox-btn" for="keyword_N04">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >스포츠/운동<br />
         <input
@@ -327,10 +327,10 @@
           class="hide-checkbox"
           v-model="array"
           value="요가/단전/마사지"
-          @change="toggle('N05')"
-          id="N05"
+          @change="toggle('keyword_N05')"
+          id="keyword_N05"
         />
-        <label class="checkbox-btn" for="N05">
+        <label class="checkbox-btn" for="keyword_N05">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >요가/단전/마사지<br />
         <input
@@ -338,10 +338,10 @@
           class="hide-checkbox"
           v-model="array"
           value="놀이/여가/취미"
-          @change="toggle('N07')"
-          id="N07"
+          @change="toggle('keyword_N07')"
+          id="keyword_N07"
         />
-        <label class="checkbox-btn" for="N07">
+        <label class="checkbox-btn" for="keyword_N07">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >놀이/여가/취미<br />
       </div>
@@ -355,10 +355,10 @@
           class="hide-checkbox"
           v-model="array"
           value="호텔/콘도"
-          @change="toggle('O01')"
-          id="O01"
+          @change="toggle('keyword_O01')"
+          id="keyword_O01"
         />
-        <label class="checkbox-btn" for="O01">
+        <label class="checkbox-btn" for="keyword_O01">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >호텔/콘도<br />
         <input
@@ -366,10 +366,10 @@
           class="hide-checkbox"
           v-model="array"
           value="호텔/모텔"
-          @change="toggle('O02')"
-          id="O02"
+          @change="toggle('keyword_O02')"
+          id="keyword_O02"
         />
-        <label class="checkbox-btn" for="O02">
+        <label class="checkbox-btn" for="keyword_O02">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >호텔/모텔<br />
         <input
@@ -377,10 +377,10 @@
           class="hide-checkbox"
           v-model="array"
           value="캠프/별장/펜션"
-          @change="toggle('O03')"
-          id="O03"
+          @change="toggle('keyword_O03')"
+          id="keyword_O03"
         />
-        <label class="checkbox-btn" for="O03">
+        <label class="checkbox-btn" for="keyword_O03">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >캠프/별장/펜션<br />
         <input
@@ -388,10 +388,10 @@
           class="hide-checkbox"
           v-model="array"
           value="민박/하숙"
-          @change="toggle('O05')"
-          id="O05"
+          @change="toggle('keyword_O05')"
+          id="keyword_O05"
         />
-        <label class="checkbox-btn" for="O05">
+        <label class="checkbox-btn" for="keyword_O05">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >민박/하숙<br />
       </div>
@@ -403,10 +403,10 @@
           class="hide-checkbox"
           v-model="array"
           value="한식"
-          @change="toggle('Q01')"
-          id="Q01"
+          @change="toggle('keyword_Q01')"
+          id="keyword_Q01"
         />
-        <label class="checkbox-btn" for="Q01"
+        <label class="checkbox-btn" for="keyword_Q01"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >한식<br />
         <input
@@ -414,10 +414,10 @@
           class="hide-checkbox"
           v-model="array"
           value="중식"
-          @change="toggle('Q02')"
-          id="Q02"
+          @change="toggle('keyword_Q02')"
+          id="keyword_Q02"
         />
-        <label class="checkbox-btn" for="Q02"
+        <label class="checkbox-btn" for="keyword_Q02"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >중식<br />
         <input
@@ -425,10 +425,10 @@
           class="hide-checkbox"
           v-model="array"
           value="일식/수산물"
-          @change="toggle('Q03')"
-          id="Q03"
+          @change="toggle('keyword_Q03')"
+          id="keyword_Q03"
         />
-        <label class="checkbox-btn" for="Q03">
+        <label class="checkbox-btn" for="keyword_Q03">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >일식/수산물<br />
         <input
@@ -436,10 +436,10 @@
           class="hide-checkbox"
           v-model="array"
           value="분식"
-          @change="toggle('Q04')"
-          id="Q04"
+          @change="toggle('keyword_Q04')"
+          id="keyword_Q04"
         />
-        <label class="checkbox-btn" for="Q04"
+        <label class="checkbox-btn" for="keyword_Q04"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >분식<br />
         <input
@@ -447,10 +447,10 @@
           class="hide-checkbox"
           v-model="array"
           value="닭/오리요리"
-          @change="toggle('Q05')"
-          id="Q05"
+          @change="toggle('keyword_Q05')"
+          id="keyword_Q05"
         />
-        <label class="checkbox-btn" for="Q05">
+        <label class="checkbox-btn" for="keyword_Q05">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >닭/오리요리<br />
         <input
@@ -458,10 +458,10 @@
           class="hide-checkbox"
           v-model="array"
           value="양식"
-          @change="toggle('Q06')"
-          id="Q06"
+          @change="toggle('keyword_Q06')"
+          id="keyword_Q06"
         />
-        <label class="checkbox-btn" for="Q06"
+        <label class="checkbox-btn" for="keyword_Q06"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >양식<br />
         <input
@@ -469,10 +469,10 @@
           class="hide-checkbox"
           v-model="array"
           value="패스트푸드"
-          @change="toggle('Q07')"
-          id="Q07"
+          @change="toggle('keyword_Q07')"
+          id="keyword_Q07"
         />
-        <label class="checkbox-btn" for="Q07"
+        <label class="checkbox-btn" for="keyword_Q07"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >패스트푸드<br />
         <input
@@ -480,10 +480,10 @@
           class="hide-checkbox"
           v-model="array"
           value="제과제빵"
-          @change="toggle('Q08')"
-          id="Q08"
+          @change="toggle('keyword_Q08')"
+          id="keyword_Q08"
         />
-        <label class="checkbox-btn" for="Q08"
+        <label class="checkbox-btn" for="keyword_Q08"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >제과제빵<br />
         <input
@@ -491,10 +491,10 @@
           class="hide-checkbox"
           v-model="array"
           value="유흥주점"
-          @change="toggle('Q09')"
-          id="Q09"
+          @change="toggle('keyword_Q09')"
+          id="keyword_Q09"
         />
-        <label class="checkbox-btn" for="Q09"
+        <label class="checkbox-btn" for="keyword_Q09"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >유흥주점<br />
         <input
@@ -502,10 +502,10 @@
           class="hide-checkbox"
           v-model="array"
           value="별식/퓨전요리"
-          @change="toggle('Q10')"
-          id="Q10"
+          @change="toggle('keyword_Q10')"
+          id="keyword_Q10"
         />
-        <label class="checkbox-btn" for="Q10">
+        <label class="checkbox-btn" for="keyword_Q10">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >별식/퓨전요리<br />
         <input
@@ -513,10 +513,10 @@
           class="hide-checkbox"
           v-model="array"
           value="커피점/카페"
-          @change="toggle('Q12')"
-          id="Q12"
+          @change="toggle('keyword_Q12')"
+          id="keyword_Q12"
         />
-        <label class="checkbox-btn" for="Q12">
+        <label class="checkbox-btn" for="keyword_Q12">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >커피점/카페<br />
         <input
@@ -524,10 +524,10 @@
           class="hide-checkbox"
           v-model="array"
           value="음식배달"
-          @change="toggle('Q13')"
-          id="Q13"
+          @change="toggle('keyword_Q13')"
+          id="keyword_Q13"
         />
-        <label class="checkbox-btn" for="Q13"
+        <label class="checkbox-btn" for="keyword_Q13"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >음식배달<br />
         <input
@@ -535,10 +535,10 @@
           class="hide-checkbox"
           v-model="array"
           value="부페"
-          @change="toggle('Q15')"
-          id="Q15"
+          @change="toggle('keyword_Q15')"
+          id="keyword_Q15"
         />
-        <label class="checkbox-btn" for="Q15"
+        <label class="checkbox-btn" for="keyword_Q15"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >부페<br />
       </div>
@@ -550,10 +550,10 @@
           class="hide-checkbox"
           v-model="array"
           value="입시"
-          @change="toggle('R01')"
-          id="R01"
+          @change="toggle('keyword_R01')"
+          id="keyword_R01"
         />
-        <label class="checkbox-btn" for="R01"
+        <label class="checkbox-btn" for="keyword_R01"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >입시<br />
 
@@ -562,10 +562,10 @@
           class="hide-checkbox"
           v-model="array"
           value="창업취업취미"
-          @change="toggle('R02')"
-          id="R02"
+          @change="toggle('keyword_R02')"
+          id="keyword_R02"
         />
-        <label class="checkbox-btn" for="R02"
+        <label class="checkbox-btn" for="keyword_R02"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >창업취업취미<br />
         <input
@@ -573,10 +573,10 @@
           class="hide-checkbox"
           v-model="array"
           value="자격/국가고시"
-          @change="toggle('R03')"
-          id="R03"
+          @change="toggle('keyword_R03')"
+          id="keyword_R03"
         />
-        <label class="checkbox-btn" for="R03">
+        <label class="checkbox-btn" for="keyword_R03">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >자격/국가고시<br />
 
@@ -585,10 +585,10 @@
           class="hide-checkbox"
           v-model="array"
           value="어학"
-          @change="toggle('R04')"
-          id="R04"
+          @change="toggle('keyword_R04')"
+          id="keyword_R04"
         />
-        <label class="checkbox-btn" for="R04"
+        <label class="checkbox-btn" for="keyword_R04"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >어학<br />
         <input
@@ -596,10 +596,10 @@
           class="hide-checkbox"
           v-model="array"
           value="예체능"
-          @change="toggle('R05')"
-          id="R05"
+          @change="toggle('keyword_R05')"
+          id="keyword_R05"
         />
-        <label class="checkbox-btn" for="R05"
+        <label class="checkbox-btn" for="keyword_R05"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >예체능<br />
         <input
@@ -607,10 +607,10 @@
           class="hide-checkbox"
           v-model="array"
           value="컴퓨터"
-          @change="toggle('R06')"
-          id="R06"
+          @change="toggle('keyword_R06')"
+          id="keyword_R06"
         />
-        <label class="checkbox-btn" for="R06"
+        <label class="checkbox-btn" for="keyword_R06"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >컴퓨터<br />
         <input
@@ -618,10 +618,10 @@
           class="hide-checkbox"
           v-model="array"
           value="예능취미체육"
-          @change="toggle('R07')"
-          id="R07"
+          @change="toggle('keyword_R07')"
+          id="keyword_R07"
         />
-        <label class="checkbox-btn" for="R07"
+        <label class="checkbox-btn" for="keyword_R07"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >예능취미체육<br />
         <input
@@ -629,10 +629,10 @@
           class="hide-checkbox"
           v-model="array"
           value="유아교육"
-          @change="toggle('R08')"
-          id="R08"
+          @change="toggle('keyword_R08')"
+          id="keyword_R08"
         />
-        <label class="checkbox-btn" for="R08"
+        <label class="checkbox-btn" for="keyword_R08"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >유아교육<br />
         <input
@@ -640,10 +640,10 @@
           class="hide-checkbox"
           v-model="array"
           value="기타"
-          @change="toggle('R09')"
-          id="R09"
+          @change="toggle('keyword_R09')"
+          id="keyword_R09"
         />
-        <label class="checkbox-btn" for="R09"
+        <label class="checkbox-btn" for="keyword_R09"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >기타<br />
         <input
@@ -651,10 +651,10 @@
           class="hide-checkbox"
           v-model="array"
           value="도서관/독서실"
-          @change="toggle('R10')"
-          id="R10"
+          @change="toggle('keyword_R10')"
+          id="keyword_R10"
         />
-        <label class="checkbox-btn" for="R10">
+        <label class="checkbox-btn" for="keyword_R10">
           <font-awesome-icon icon="check"></font-awesome-icon></label
         >도서관/독서실<br />
         <input
@@ -662,10 +662,10 @@
           class="hide-checkbox"
           v-model="array"
           value="학문교육"
-          @change="toggle('R13')"
-          id="R13"
+          @change="toggle('keyword_R13')"
+          id="keyword_R13"
         />
-        <label class="checkbox-btn" for="R13"
+        <label class="checkbox-btn" for="keyword_R13"
           ><font-awesome-icon icon="check"></font-awesome-icon></label
         >학문교육<br />
       </div>
