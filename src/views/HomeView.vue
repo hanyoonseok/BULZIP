@@ -51,38 +51,41 @@
       <div
         id="main-backgroundimg"
         :style="{
-          'background-image': 'url(' + require('../assets/back2.jpg') + ')',
+          'background-image': 'url(' + require('../assets/back.jpg') + ')',
         }"
       ></div>
       <div id="main-container">
         <div id="rolling-container">
           <h1>
             네가 찾던 집 <br />
-            여기 다 있다.
+            여기 다 있다.<br />
+            <label>키워드를 통한 매물 추천 서비스<br />관심 등록 서비스</label>
           </h1>
-          <div class="rollingbanner">
-            <div class="wrap">
-              <div class="roller">
-                <ul>
-                  <li class="kapi">
-                    <img src="@/assets/back.jpg" alt="" />
-                  </li>
-                  <li class="kospi">
-                    <img src="@/assets/back1.jpg" alt="" />
-                  </li>
-                  <li class="kapi">
-                    <img src="@/assets/back2.jpg" alt="" />
-                  </li>
-                  <li class="kospi">
-                    <img src="@/assets/back3.jpg" alt="" />
-                  </li>
-                  <li class="kapi">
-                    <img src="@/assets/back4.jpg" alt="" />
-                  </li>
-                  <li class="kospi">
-                    <img src="@/assets/back5.jpg" alt="" />
-                  </li>
-                </ul>
+          <div class="rolling-center-area">
+            <div class="rollingbanner">
+              <div class="wrap">
+                <div class="roller">
+                  <ul>
+                    <li class="kapi">
+                      <img src="@/assets/back.jpg" alt="" />
+                    </li>
+                    <li class="kospi">
+                      <img src="@/assets/back1.jpg" alt="" />
+                    </li>
+                    <li class="kapi">
+                      <img src="@/assets/back2.jpg" alt="" />
+                    </li>
+                    <li class="kospi">
+                      <img src="@/assets/back3.jpg" alt="" />
+                    </li>
+                    <li class="kapi">
+                      <img src="@/assets/back4.jpg" alt="" />
+                    </li>
+                    <li class="kospi">
+                      <img src="@/assets/back5.jpg" alt="" />
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -95,7 +98,7 @@
       <div
         id="main-backgroundimg"
         :style="{
-          'background-image': 'url(' + require('../assets/back7.jpg') + ')',
+          'background-image': 'url(' + require('../assets/back7.png') + ')',
         }"
       ></div>
       <div id="main-container">
@@ -118,22 +121,22 @@
           <div
             class="center-area"
             :style="{
-              'background-image': 'url(' + require('../assets/back6.jpg') + ')',
+              'background-image': 'url(' + require('../assets/back1.jpg') + ')',
             }"
           ></div>
         </div>
         <div
           class="ballon"
           :style="{
-            'background-image': 'url(' + require('../assets/back1.jpg') + ')',
-            top: '40px',
-            left: '160px',
+            'background-image': 'url(' + require('../assets/back.jpg') + ')',
+            top: '200px',
+            left: '250px',
           }"
         ></div>
         <div
           class="ballon"
           :style="{
-            'background-image': 'url(' + require('../assets/back6.jpg') + ')',
+            'background-image': 'url(' + require('../assets/back5.jpg') + ')',
             top: '10px',
             right: '160px',
           }"
@@ -143,7 +146,7 @@
           :style="{
             'background-image': 'url(' + require('../assets/back2.jpg') + ')',
             top: '75%',
-            right: '500px',
+            left: '700px',
           }"
         ></div>
       </div>

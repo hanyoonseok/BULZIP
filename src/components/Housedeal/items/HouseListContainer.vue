@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       selectedItem: null,
-      hospitals: [],
       items: [],
       dataIdx: 0,
       keyword: "",
@@ -71,6 +70,7 @@ export default {
           this.dataIdx += 100;
         });
       }
+      console.log(this.items);
     },
 
     search() {

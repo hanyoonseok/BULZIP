@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     searchUser() {
+      console.log(this.keyword);
       if (this.keyword === "") this.getAllUsers();
       else {
         http.get(`/user/search/${this.keyword}`).then((resp) => {

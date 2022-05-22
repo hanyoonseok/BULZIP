@@ -14,12 +14,12 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  -ms-filter: blur(3px);
-  filter: blur(3px);
-  opacity: 0.8;
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+  opacity: 0.6;
 }
 
 #main-container {
@@ -112,6 +112,7 @@ body {
 .center-area-mid {
   font-size: 20px;
   z-index: 1;
+  color:#292929
 }
 
 .center-area-btn {
@@ -121,18 +122,18 @@ body {
   border-radius: 12px;
   font-weight: bold;
   border: 2px solid #292929;
-  font-size: 18px;
+  font-size: 16px;
   color: #292929;
+  margin-right: 12px;
 }
 
 .center-area-text {
   margin-top: 20px;
   font-size: 24px;
-  color: #fff;
 }
 
 .center-area-text b {
-  color: #292929;
+  color: #fdb814;
 }
 
 @keyframes btnHover {
@@ -169,26 +170,44 @@ body {
 }
 
 /* 배너 컨테이너 */
+.rolling-center-area{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  border-radius: 300px;
+  background-color: #fff;
+  z-index:10;
+  margin-left: 20px;
+}
+
 #rolling-container {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
 }
 
 #rolling-container h1 {
-  font-size: 140px;
+  font-size: 80px;
   color: #fff;
   z-index: 10;
+  font-weight: bold;
 }
 
+#rolling-container h1 label{
+  font-size: 18px;
+  color:#eeeeee;
+}
 .rollingbanner {
-  width: 100%;
-  height: 240px;
+  width: 280px;
+  height: 280px;
   font-size: 0.875rem;
   color: #fff;
   letter-spacing: -0.075em;
+  border-radius:280px;
 }
 
 .rollingbanner > .wrap {
@@ -198,6 +217,7 @@ body {
   margin: 0 auto;
   box-sizing: border-box;
   overflow: hidden;
+  border-radius:200px;
 }
 
 /* 애니메이션하는 요소 */
@@ -208,7 +228,6 @@ body {
 .roller > ul {
   margin: 0;
   list-style: none;
-  padding: 9px 0;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -220,9 +239,9 @@ body {
 }
 
 .roller > ul > li > img {
-  width: 300px;
-  height: 100%;
-  border-radius: 20px;
+  width: 280px;
+  height: 280px;
+  border-radius: 280px;
 }
 
 /* 애니메이션 */

@@ -5,6 +5,8 @@
         type="text"
         class="kakao-station-input"
         placeholder="역 검색"
+        :value="keyword"
+        @input="changeKeyword"
         @keyup="searchStation"
       />
       <div class="kakao-station-list">
@@ -14,7 +16,8 @@
           :key="i"
           @click="selectStation(station)"
         >
-          {{ station }} <label class="kakao-station-line">2호선</label>
+          {{ station.station }}
+          <label class="kakao-station-line">{{ station.subway_line }}</label>
         </li>
       </div>
     </div>
@@ -29,17 +32,9 @@ export default {
   data() {
     return {
       keyword: "",
-      stations: [
-        "강남",
-        "역삼",
-        "서초",
-        "구리",
-        "용산",
-        "홍대",
-        "합정",
-        "압구정",
-        "고양",
-      ],
+      map: null,
+      stations: [],
+      selectedStation: null,
     };
   },
   mounted() {
@@ -53,7 +48,7 @@ export default {
         center: new kakao.maps.LatLng(37.5666805, 126.9784147),
         level: 3,
       };
-      var map = new kakao.maps.Map(container, options);
+      this.map = new kakao.maps.Map(container, options);
       //마커추가하려면 객체를 아래와 같이 하나 만든다.
       // var marker = new kakao.maps.Marker({
       //   position: map.getCenter(),
@@ -115,9 +110,44 @@ export default {
     },
 
     selectStation(station) {
-      console.log(station);
+      this.selectedStation = station;
+      this.stations = [];
+      this.setMapCenter();
     },
-    searchStation() {},
+    changeKeyword(e) {
+      this.keyword = e.target.value;
+    },
+    searchStation() {
+      if (this.keyword === "") {
+        this.stations = [];
+        return;
+      }
+      http.get(`/housedeal/subway/search/${this.keyword}`).then((resp) => {
+        this.stations = resp.data;
+      });
+    },
+    setMapCenter() {
+      console.log(this.selectedStation.lon, this.selectedStation.lat);
+      const coords = new kakao.maps.LatLng(
+        this.selectedStation.lat,
+        this.selectedStation.lon,
+      );
+      // const marker = new kakao.maps.Marker({
+      //   map: this.map,
+      //   position: coords,
+      // });
+      // markers.push(marker);
+      // const customOverlay = new kakao.maps.CustomOverlay({
+      //   map: map,
+      //   position: coords,
+      //   content: getOverlay(name),
+      //   yAnchor: 1.3,
+      // });
+      // customOverlay.setMap(map);
+
+      // overlays.push(customOverlay);
+      this.map.setCenter(coords);
+    },
   },
 };
 </script>

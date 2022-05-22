@@ -11,35 +11,46 @@
   left: 20px;
   background-color: rgba(255, 255, 255, 0.75);
   z-index: 99999;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  padding:1rem 1rem;
+  padding: 1rem 1rem;
   border-radius: 20px;
   overflow-y: auto;
 }
 
-.kakao-station-input{
-  width:100%;
+.kakao-station-input {
+  width: 100%;
   border-radius: 12px;
-  padding:0.3rem;
+  padding: 0.3rem;
 }
 
-
-.kakao-station-list{
-  display:flex;
+.kakao-station-list {
+  display: flex;
   flex-direction: column;
-  width:100%;
+  width: 100%;
   max-height: 300px;
   overflow-y: auto;
 }
 
-.kakao-station-item{
+.kakao-station-item {
   line-height: 2.5;
   font-weight: bold;
-  width:100%;
+  width: 100%;
   padding-left: 0.5rem;
+  border-radius: 8px;
 }
 
-.kakao-station-line{
-  color:gray;
+@keyframes itemhover {
+  from {
+  }
+  to {
+    background-color:#fdb814;
+  }
+}
+.kakao-station-item:hover {
+  animation: itemhover 0.3s forwards;
+}
+
+.kakao-station-line {
+  color: gray;
 }

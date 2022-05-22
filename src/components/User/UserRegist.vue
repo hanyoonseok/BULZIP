@@ -177,16 +177,19 @@ export default {
         })
         .then((resp) => {
           if (resp.data == "success") {
-            alert("회원가입 성공");
-            this.$router.push("/user/login");
+            this.checkbox.user_id = this.userId;
+            console.log("check ", this.checkbox);
+            http.post(`/user/keyword/insert`, this.checkbox).then((resp) => {
+              console.log(resp.data);
+              console.log(this.checkbox);
+              alert("회원가입 성공");
+              this.$router.push("/user/login");
+            });
           } else {
             alert(resp.data);
           }
         });
 
-      // http.post(`/user/checkbox`, this.checkbox).then((resp)=>{
-      //   console.log(resp.data);
-      // })
       return false;
     },
     checkId() {
