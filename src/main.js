@@ -9,6 +9,8 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$EventBus = new Vue();
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 

@@ -21,6 +21,28 @@
         </li>
       </div>
     </div>
+    <div class="kakao-keyword-container" v-if="isKeywordOpen">
+      <div class="between">
+        <h1>내 키워드</h1>
+        <font-awesome-icon
+          :icon="isKeywordDetailOpen ? 'angle-up' : 'angle-down'"
+          @click="isKeywordDetailOpen = !isKeywordDetailOpen"
+        ></font-awesome-icon>
+      </div>
+      <div class="kakao-keyword-list" v-if="isKeywordDetailOpen">
+        <div class="kakao-keyword-item">
+          <input
+            type="checkbox"
+            class="hide-checkbox"
+            @change="toggle('R09')"
+            id="R09"
+          />
+          <label class="checkbox-btn" for="R09"
+            ><font-awesome-icon icon="check"></font-awesome-icon></label
+          >기타
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -35,7 +57,14 @@ export default {
       map: null,
       stations: [],
       selectedStation: null,
+      isKeywordOpen: false,
+      isKeywordDetailOpen: false,
     };
+  },
+  created() {
+    this.$EventBus.$on("openKeywordTab", () => {
+      this.isKeywordOpen = true;
+    });
   },
   mounted() {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
@@ -147,6 +176,16 @@ export default {
 
       // overlays.push(customOverlay);
       this.map.setCenter(coords);
+    },
+    toggle(key) {
+      // if (this.checkbox[key] === 0) {
+      //   this.checkbox[key] = 1;
+      //   this.checkedCnt++;
+      // } else if (this.checkbox[key] === 1) {
+      //   this.checkbox[key] = 0;
+      //   this.checkedCnt--;
+      // }
+      console.log(key);
     },
   },
 };

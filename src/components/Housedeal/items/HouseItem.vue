@@ -14,10 +14,16 @@
 import http from "@/api/http.js";
 
 export default {
+  data() {
+    return {
+      selectedItem: null,
+    };
+  },
   methods: {
     selectOne(no) {
       http.get(`/housedeal/read/${no}`).then((resp) => {
         this.selectedItem = resp.data;
+        console.log(this.selectedItem);
         this.$emit("selectOne", this.selectedItem);
       });
     },

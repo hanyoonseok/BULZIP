@@ -11,8 +11,8 @@
 
 .container-col {
   display: flex;
+  width: 350px;
   flex-direction: column;
-  width: 100%;
   height: 100%;
   overflow-y: auto;
   background-color: #eeeeee;
@@ -158,7 +158,12 @@
   white-space: nowrap;
   position: relative;
   background-color: #fff;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.detail-main-img {
+  width: 100%;
+  height: 300px;
 }
 
 .back-btn {
@@ -178,14 +183,47 @@
 .detail-article {
   margin-top: 12px;
   width: 100%;
-  background-color: #fff;
 }
 
-.info-section{
+.info-section {
   width: 100%;
   background-color: #fff;
   border-top: 1px solid #eeeeee;
-  padding:1rem 1rem;
+  padding: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+}
+
+.info-hit-label {
+  font-weight: bold;
+  color: gray;
+}
+
+.info-price-title {
+  font-weight: bold;
+}
+
+.info-section-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-section-particle {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #292929;
+  font-weight: 650;
+}
+
+.info-section-particle-title {
+  font-weight: bold;
+  color: #3155b5;
+  font-size: 20px;
 }
 
 /* house like */

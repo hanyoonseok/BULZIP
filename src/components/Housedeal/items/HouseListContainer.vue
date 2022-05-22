@@ -1,6 +1,6 @@
 <template>
   <article id="main-list-container">
-    <div class="main-list" v-if="status === 0">
+    <div class="main-list" v-if="status === 0 && !selectedItem">
       <form id="filter-container" v-on:submit.prevent="search">
         <input
           type="text"
@@ -26,7 +26,11 @@
       </div>
     </div>
 
-    <HouseDetail v-if="status > 0" @backToList="status = 0" />
+    <HouseDetail
+      v-if="selectedItem"
+      @backToList="selectedItem = null"
+      :item="selectedItem"
+    />
 
     <HouseLike v-if="status < 0" />
   </article>
@@ -79,7 +83,8 @@ export default {
       this.getList(keyword);
     },
     selectOne(selectedItem) {
-      this.status = selectedItem.no;
+      this.selectedItem = selectedItem;
+      this.$EventBus.$emit("openKeywordTab");
     },
   },
   props: {

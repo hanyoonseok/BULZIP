@@ -44,7 +44,7 @@
   from {
   }
   to {
-    background-color:#fdb814;
+    background-color: #fdb814;
   }
 }
 .kakao-station-item:hover {
@@ -53,4 +53,75 @@
 
 .kakao-station-line {
   color: gray;
+}
+
+.kakao-keyword-container {
+  width: 200px;
+  min-height: 40px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.75);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0.75rem;
+  border-radius: 20px;
+  overflow-y: auto;
+}
+
+.kakao-keyword-container h1 {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kakao-keyword-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.hide-checkbox {
+  display: none;
+}
+
+.checkbox-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid #292929;
+  text-align: center;
+  margin-right: 2px;
+}
+
+.hide-checkbox + label {
+  cursor: pointer;
+  color: transparent;
+  vertical-align: middle;
+}
+
+.hide-checkbox:checked + label {
+  color: #292929;
+  background-color: #fdb814;
+}
+
+.hide-checkbox:checked + label svg {
+  padding-bottom: 20px;
+}
+
+.kakao-keyword-item{
+  display:flex;
+  align-items: center;
+  line-height: 2.5;
 }
