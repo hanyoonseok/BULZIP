@@ -22,8 +22,11 @@ import {
   Title,
   Tooltip,
   Legend,
+  // eslint-disable-next-line
   BarElement,
+  // eslint-disable-next-line
   CategoryScale,
+  // eslint-disable-next-line
   LinearScale,
 } from "chart.js";
 
@@ -31,8 +34,11 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
+  // eslint-disable-next-line
   BarElement,
+  // eslint-disable-next-line
   CategoryScale,
+  // eslint-disable-next-line
   LinearScale
 );
 
@@ -68,6 +74,7 @@ export default {
       type: Object,
       default: () => {},
     },
+    item: Object, // 여기에 아파트 매물 하나 들어있음.
   },
   data() {
     return {
