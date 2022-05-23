@@ -41,12 +41,18 @@
           </div>
         </div>
       </section>
+      <section>
+        <!--class="info-section vertical-center">-->
+        <bar-chart :item="item"></bar-chart>
+      </section>
     </article>
   </div>
 </template>
 
 <script>
+import BarChart from "@/components/Charts/BarChart.vue";
 export default {
+  components: { BarChart },
   data() {
     return {
       s1Open: true,
