@@ -72,13 +72,13 @@ export default {
         ne_Lat: 0,
       },
       // template
-      stationKeyword: "",
-      keywordValues: [],
-      stations: [],
-      selectedKeywords: {},
-      selectedStation: null,
-      isKeywordOpen: false,
-      isKeywordDetailOpen: false,
+      stationKeyword: "", //지하철 역 input
+      keywordValues: [], //내 키워드 체크박스 텍스트용 배열
+      stations: [], //역 검색시의 결과 역 리스트
+      selectedKeywords: {}, //내 키워드의 객체 형태 (선택반영)
+      selectedStation: null, //선택한 역
+      isKeywordOpen: false, //내 키워드 열렸는지 여부
+      isKeywordDetailOpen: false, //내 키워드에서 다운바 열렸는지 여부
     };
   },
   computed: {
@@ -95,13 +95,22 @@ export default {
       this.selectOneItem(selectedItem);
     });
 
-    this.selectedKeywords = this.userKeyword;
+    // this.selectedKeywords = this.userKeyword;
+    // const keys = Object.keys(this.userKeyword);
+    // keys.splice(0, 1);
+    // keys.splice(0, 1);
+    // this.keywordValues = keys.map((e) => {
+    //   const divByUnderBar = e.split("_");
+    //   return KEYWORD[divByUnderBar[1]];
+    // });
+
     const keys = Object.keys(this.userKeyword);
     keys.splice(0, 1);
     keys.splice(0, 1);
-    this.keywordValues = keys.map((e) => {
+    keys.forEach((e) => {
       const divByUnderBar = e.split("_");
-      return KEYWORD[divByUnderBar[1]];
+      this.keywordValues.push(KEYWORD[divByUnderBar[1]]);
+      if (this.userKeyword[e] === 1) this.selectedKeywords[e] = 1;
     });
   },
   mounted() {
@@ -149,34 +158,40 @@ export default {
       this.setNorthEast();
       console.log(this.range);
       this.setMapCenter({ lat: station.lat, lng: station.lon });
-      this.addMarker({ lat: station.lat, lng: station.lon });
+      this.addMarker(
+        { lat: station.lat, lng: station.lon },
+        station.station,
+        2,
+      );
+      //this.addMarker({ lat: station.lat, lng: station.lon });
 
       this.sendListByRange();
     },
     changeStationKeyword(e) {
-      stationKeyword = e.target.value;
+      this.stationKeyword = e.target.value;
     },
     searchStation() {
-      if (stationKeyword === "") {
+      if (this.stationKeyword === "") {
         this.stations = [];
         return;
       }
-      http.get(`/housedeal/subway/search/${stationKeyword}`).then((resp) => {
-        this.stations = resp.data;
-      });
+      http
+        .get(`/housedeal/subway/search/${this.stationKeyword}`)
+        .then((resp) => {
+          this.stations = resp.data;
+        });
     },
     getKeyByValue(val) {
       return Object.keys(KEYWORD).find((key) => KEYWORD[key] === val);
     },
     toggle(key) {
       console.log(key, this.selectedKeywords["keyword_" + key]);
-      if (this.selectedKeywords["keyword_" + key] === 0) {
+      if (!this.selectedKeywords["keyword_" + key]) {
         this.selectedKeywords["keyword_" + key] = 1;
       } else if (this.selectedKeywords["keyword_" + key] === 1) {
-        this.selectedKeywords["keyword_" + key] = 0;
+        delete this.selectedKeywords["keyword_" + key];
       }
 
-      // 여기에 api 요청 보내는 로직 넣으면 됨.
       console.log(this.selectedKeywords);
     },
     setMapCenter(pos) {
@@ -196,13 +211,32 @@ export default {
       this.range.ne_Lat = bounds.getNorthEast().getLat();
       this.range.ne_Lng = bounds.getNorthEast().getLng();
     },
-    addMarker(pos) {
-      const coords = new kakao.maps.LatLng(pos.lat, pos.lng);
-      const marker = new kakao.maps.Marker({
-        map: this.map,
-        position: coords,
+    addMarker(pos, name, type) {
+      var imageSrc = require(`@/assets/${
+          type === 0 ? "home" : type === 1 ? "shop" : "subway"
+        }.png`), // 마커이미지의 주소입니다
+        imageSize = new kakao.maps.Size(
+          type === 0 ? 100 : 70,
+          type === 0 ? 100 : 70,
+        ), // 마커이미지의 크기입니다
+        imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+      // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+      var markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption,
+        ),
+        markerPosition = new kakao.maps.LatLng(pos.lat, pos.lng); // 마커가 표시될 위치입니다
+
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        position: markerPosition,
+        image: markerImage, // 마커이미지 설정
       });
-      this.markers.push(marker);
+
+      // 마커가 지도 위에 표시되도록 설정합니다
+      marker.setMap(this.map);
     },
     sendListByRange() {
       const whereis = {};
@@ -215,7 +249,7 @@ export default {
       http.post(`/housedeal/boundry`, whereis).then((resp) => {
         this.$EventBus.$emit("getListByLatLng", resp.data);
         resp.data.forEach((e) => {
-          this.addMarker({ lat: e.lat, lng: e.lng });
+          this.addMarker({ lat: e.lat, lng: e.lng }, e.aptName, 0);
         });
       });
     },
@@ -236,8 +270,8 @@ export default {
     selectOneItem(selectedItem) {
       const myKeywords = {}; //{ ...this.userKeyword };
       this.setMapCenter({ lat: selectedItem.lat, lng: selectedItem.lng });
-      myKeywords.userKeyword = this.userKeyword;
-      console.log("userKeyword", this.userKeyword);
+      myKeywords.userKeyword = this.selectedKeywords;
+      console.log("myKeywords.userKeyword", myKeywords.userKeyword);
       myKeywords.sw_lat = this.range.sw_Lat;
       myKeywords.sw_lng = this.range.sw_Lng;
       myKeywords.ne_lat = this.range.ne_Lat;

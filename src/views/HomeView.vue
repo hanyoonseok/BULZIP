@@ -17,7 +17,12 @@
             벌써 찾았다, 내 집 <br />
             사용자 맞춤 주택 정보 제공 서비스
           </div>
-          <button class="center-area-btn" @click="goLogin">LOGIN</button>
+          <button class="center-area-btn" @click="goLogin" v-if="!userInfo">
+            LOGIN
+          </button>
+          <button class="center-area-btn" @click="goShop" v-if="userInfo">
+            매물 보기
+          </button>
         </div>
         <div
           class="ballon"
@@ -104,13 +109,13 @@
       <div id="main-container">
         <div class="center-big-area">
           <div class="center-area-mid">
-            <button class="center-area-btn">
+            <button class="center-area-btn" @click="goHome">
               <i class="fa-solid fa-house-chimney"></i>Home
             </button>
-            <button class="center-area-btn">
+            <button class="center-area-btn" @click="goShop">
               <i class="fa-solid fa-building"></i>Apartment
             </button>
-            <button class="center-area-btn">
+            <button class="center-area-btn" @click="goNotice">
               <i class="fa-solid fa-flag"></i>Notice
             </button>
             <div class="center-area-text">
@@ -155,8 +160,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "HomeView",
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
+  },
   mounted() {
     //fullpage
 
@@ -316,6 +325,15 @@ export default {
   methods: {
     goLogin() {
       this.$router.push("/user/login");
+    },
+    goShop() {
+      this.$router.push("/housedeal/list");
+    },
+    goNotice() {
+      this.$router.push("/notice/list");
+    },
+    goHome() {
+      location.href = "/";
     },
   },
 };
