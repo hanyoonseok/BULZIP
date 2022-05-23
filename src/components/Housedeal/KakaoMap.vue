@@ -9,7 +9,7 @@
         @input="changeKeyword"
         @keyup="searchStation"
       />
-      <div class="kakao-station-list">
+      <div class="kakao-station-list" v-if="stations">
         <li
           class="kakao-station-item"
           v-for="(station, i) in stations"
@@ -48,29 +48,48 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
 import http from "@/api/http.js";
+import { mapState } from "vuex";
 
 export default {
   name: "KakaoMap",
   data() {
     return {
+      // kakao
+      map: Object,
+      markers: [],
+      range: {
+        sw_Lat: 0,
+        sw_Lng: 0,
+        ne_Lng: 0,
+        ne_Lat: 0,
+      },
+      // template
       keyword: "",
-      map: null,
       stations: [],
       selectedStation: null,
       isKeywordOpen: false,
       isKeywordDetailOpen: false,
     };
   },
+  computed: {
+    ...mapState("userStore", ["userKeyword"]),
+  },
   created() {
     this.$EventBus.$on("openKeywordTab", () => {
       this.isKeywordOpen = true;
     });
+    this.$EventBus.$on("closeKeywordTab", () => {
+      this.isKeywordOpen = false;
+    });
+    this.$EventBus.$on("selectOneItem", (selectedItem) => {
+      this.selectOneItem(selectedItem);
+    });
   },
   mounted() {
+    //this.created();
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods: {
-    ////////////////////////////////////////////////////
     initMap() {
       var container = document.getElementById("map");
       var options = {
@@ -78,57 +97,17 @@ export default {
         level: 3,
       };
       this.map = new kakao.maps.Map(container, options);
-      //마커추가하려면 객체를 아래와 같이 하나 만든다.
-      // var marker = new kakao.maps.Marker({
-      //   position: map.getCenter(),
-      // });
-      // marker.setMap(map);
 
-      // ///////////////////클러스터 부분 ///////////////////
-      // // https://apis.map.kakao.com/web/sample/basicClusterer/
-      // var clusterer = new kakao.maps.MarkerClusterer({
-      //   map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-      //   averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-      //   minLevel: 10, // 클러스터 할 최소 지도 레벨
-      //   /////////////클릭 이벤트 추가//////////////////
-      //   disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
-      // });
-      // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
+      kakao.maps.event.addListener(this.map, "mouseup", () => {
+        // const latlng = mouseEvent.latLng;
+        // console.log(latlng.getLat(), latlng.getLng());
 
-      // 이부분에서 데이터를 가져와야함.........
-      // 거래 매물 데이터들을 positions 로 가져와야함.
-
-      // 데이터에서 좌표 값을 가지고 마커를 표시합니다
-      // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
-      // var markers = $(data.positions).map(function (i, position) {
-      //   return new kakao.maps.Marker({
-      //     position: new kakao.maps.LatLng(position.lat, position.lng), // 위도 경도 입력
-      //   });
-      // });
-
-      // // 클러스터러에 마커들을 추가합니다
-      // clusterer.addMarkers(markers);
-
-      // 마커 클러스터러에 클릭이벤트를 등록합니다
-      // 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
-      // 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
-      // v-on:click 으로 아래 리스너 호출한다
-      // kakao.maps.event.addListener(
-      //   clusterer,
-      //   "clusterclick",
-      //   function (cluster) {
-      //     // 현재 지도 레벨에서 1레벨 확대한 레벨
-      //     var level = map.getLevel() - 1;
-
-      //     // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
-      //     map.setLevel(level, { anchor: cluster.getCenter() });
-      //   }
-      // );
-      ////////////////////////////////////////////////////////
+        this.setSouthWest();
+        this.setNorthEast();
+        this.sendListByRange();
+        if (this.isKeywordOpen) this.sendCommercialByRange();
+      });
     },
-
-    //////////////////////////////////////////////////////
-
     addScript() {
       const script = document.createElement("script");
       /* global kakao */
@@ -139,9 +118,17 @@ export default {
     },
 
     selectStation(station) {
+      console.log(station);
       this.selectedStation = station;
       this.stations = [];
-      this.setMapCenter();
+      this.markers = [];
+      this.setSouthWest();
+      this.setNorthEast();
+      console.log(this.range);
+      this.setMapCenter({ lat: station.lat, lng: station.lon });
+      this.addMarker({ lat: station.lat, lng: station.lon });
+
+      this.sendListByRange();
     },
     changeKeyword(e) {
       this.keyword = e.target.value;
@@ -155,28 +142,6 @@ export default {
         this.stations = resp.data;
       });
     },
-    setMapCenter() {
-      console.log(this.selectedStation.lon, this.selectedStation.lat);
-      const coords = new kakao.maps.LatLng(
-        this.selectedStation.lat,
-        this.selectedStation.lon,
-      );
-      // const marker = new kakao.maps.Marker({
-      //   map: this.map,
-      //   position: coords,
-      // });
-      // markers.push(marker);
-      // const customOverlay = new kakao.maps.CustomOverlay({
-      //   map: map,
-      //   position: coords,
-      //   content: getOverlay(name),
-      //   yAnchor: 1.3,
-      // });
-      // customOverlay.setMap(map);
-
-      // overlays.push(customOverlay);
-      this.map.setCenter(coords);
-    },
     toggle(key) {
       // if (this.checkbox[key] === 0) {
       //   this.checkbox[key] = 1;
@@ -187,8 +152,169 @@ export default {
       // }
       console.log(key);
     },
+    setMapCenter(pos) {
+      console.log(pos);
+      const coords = new kakao.maps.LatLng(pos.lat, pos.lng);
+      this.map.setCenter(coords);
+      this.setSouthWest();
+      this.setNorthEast();
+    },
+    setSouthWest() {
+      var bounds = this.map.getBounds();
+      this.range.sw_Lat = bounds.getSouthWest().getLat();
+      this.range.sw_Lng = bounds.getSouthWest().getLng();
+    },
+    setNorthEast() {
+      var bounds = this.map.getBounds();
+      this.range.ne_Lat = bounds.getNorthEast().getLat();
+      this.range.ne_Lng = bounds.getNorthEast().getLng();
+    },
+    addMarker(pos) {
+      const coords = new kakao.maps.LatLng(pos.lat, pos.lng);
+      const marker = new kakao.maps.Marker({
+        map: this.map,
+        position: coords,
+      });
+      this.markers.push(marker);
+    },
+    sendListByRange() {
+      console.log(this.range);
+      this.markers.forEach((e) => e.setMap(null));
+      http
+        .get(
+          `/housedeal/boundary/${this.range.sw_Lat}/${this.range.sw_Lng}/${this.range.ne_Lat}/${this.range.ne_Lng}`,
+        )
+        .then((resp) => {
+          this.$EventBus.$emit("getListByLatLng", resp.data);
+          resp.data.forEach((e) => {
+            this.addMarker({ lat: e.lat, lng: e.lng });
+          });
+        });
+    },
+    sendCommercialByRange() {
+      // this.markers.forEach((e) => e.setMap(null));
+      // http
+      //   .get(
+      //     `/housedeal/commercial/boundary/${this.range.sw_Lat}/${this.range.sw_Lng}/${this.range.ne_Lat}/${this.range.ne_Lng}`,
+      //   )
+      //   .then((resp) => {
+      //     this.$EventBus.$emit("getListByLatLng", resp.data);
+      //     resp.data.forEach((e) => {
+      //       this.addMarker({ lat: e.lat, lng: e.lng });
+      //     });
+      //   });
+    },
+    selectOneItem(selectedItem) {
+      const myKeywords = { ...this.userKeyword };
+      myKeywords.sw_Lat = this.range.sw_Lat;
+      myKeywords.sw_Lng = this.range.sw_Lng;
+      myKeywords.ne_Lat = this.range.ne_Lat;
+      myKeywords.ne_Lng = this.range.ne_Lng;
+      myKeywords.selectedItem.lat = this.range.selectedItem.lat;
+      myKeywords.selectedItem.lng = this.range.selectedItem.lng;
+      console.log(this.range, selectedItem);
+      console.log(myKeywords);
+      if (!myKeywords) return;
+
+      http.get(`/housedeal/commercial`, myKeywords).then((resp) => {
+        console.log(resp.data);
+      });
+    },
   },
 };
 </script>
 
-<style scoped src="@/css/kakao.css"></style>
+<style scoped src="@/css/kakao.css">
+.wrap {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -144px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  line-height: 1.5;
+}
+.wrap * {
+  padding: 0;
+  margin: 0;
+}
+.wrap .info {
+  width: 286px;
+  height: 120px;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+.wrap .info:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.info .title {
+  padding: 5px 0 0 10px;
+  height: 30px;
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+}
+.info .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+  width: 17px;
+  height: 17px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+}
+.info .close:hover {
+  cursor: pointer;
+}
+.info .body {
+  position: relative;
+  overflow: hidden;
+}
+.info .desc {
+  position: relative;
+  margin: 13px 0 0 90px;
+  height: 75px;
+}
+.desc .ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.desc .jibun {
+  font-size: 11px;
+  color: #888;
+  margin-top: -2px;
+}
+.info .img {
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  width: 73px;
+  height: 71px;
+  border: 1px solid #ddd;
+  color: #888;
+  overflow: hidden;
+}
+.info:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: 0;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+.info .link {
+  color: #5085bb;
+}
+</style>

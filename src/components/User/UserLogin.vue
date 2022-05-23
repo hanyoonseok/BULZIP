@@ -55,7 +55,6 @@ export default {
     async login() {
       await this.userConfirm(this.user);
       const token = sessionStorage.getItem("access-token");
-      console.log(token, this.isLogin);
       if (this.isLogin) {
         await this.getUserInfo(token);
         this.$router.push("/");

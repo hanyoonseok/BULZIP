@@ -57,7 +57,7 @@
       <div id="main-container">
         <div id="rolling-container">
           <h1>
-            네가 찾던 집 <br />
+            네가 찾던 <b>집</b> <br />
             여기 다 있다.<br />
             <label>키워드를 통한 매물 추천 서비스<br />관심 등록 서비스</label>
           </h1>

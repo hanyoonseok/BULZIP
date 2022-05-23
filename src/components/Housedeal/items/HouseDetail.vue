@@ -65,6 +65,7 @@ export default {
   methods: {
     goback() {
       this.$emit("backToList");
+      this.$EventBus.$emit("closeKeywordTab");
     },
   },
   filters: {

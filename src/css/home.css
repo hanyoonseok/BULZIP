@@ -196,6 +196,9 @@ body {
   z-index: 10;
   font-weight: bold;
 }
+#rolling-container h1 b{
+  color:#292929;
+}
 
 #rolling-container h1 label{
   font-size: 18px;
