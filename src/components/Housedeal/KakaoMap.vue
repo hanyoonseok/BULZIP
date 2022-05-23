@@ -235,6 +235,7 @@ export default {
     },
     selectOneItem(selectedItem) {
       const myKeywords = {}; //{ ...this.userKeyword };
+      this.setMapCenter({ lat: selectedItem.lat, lng: selectedItem.lng });
       myKeywords.userKeyword = this.userKeyword;
       console.log("userKeyword", this.userKeyword);
       myKeywords.sw_lat = this.range.sw_Lat;
