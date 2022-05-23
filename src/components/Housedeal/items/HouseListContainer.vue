@@ -20,9 +20,15 @@
           :item="item"
           @selectOne="selectOne"
         />
-        <button id="moreBtn" v-if="keyword === ''" @click="getList">
+        <div class="list-item" v-if="items.length === 0">
+          <div class="list-item-detail">
+            <img src="@/assets/cry.png" class="cry-img" />
+            <h5>근처에 매물이 없어요 T ^ T</h5>
+          </div>
+        </div>
+        <!-- <button id="moreBtn" v-if="keyword === ''" @click="getList">
           더보기<i class="fa-solid fa-caret-down"></i>
-        </button>
+        </button> -->
       </div>
     </div>
 

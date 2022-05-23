@@ -161,6 +161,10 @@
   font-weight: 700;
 }
 
+.cry-img{
+  background-color: transparent;
+}
+
 .detail-main-img {
   width: 100%;
   height: 300px;

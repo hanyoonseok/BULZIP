@@ -5,8 +5,8 @@
         type="text"
         class="kakao-station-input"
         placeholder="역 검색"
-        :value="keyword"
-        @input="changeKeyword"
+        :value="stationKeyword"
+        @input="changeStationKeyword"
         @keyup="searchStation"
       />
       <div class="kakao-station-list" v-if="stations">
@@ -30,16 +30,23 @@
         ></font-awesome-icon>
       </div>
       <div class="kakao-keyword-list" v-if="isKeywordDetailOpen">
-        <div class="kakao-keyword-item">
+        <div
+          class="kakao-keyword-item"
+          v-for="(kw, i) in keywordValues"
+          :key="i"
+        >
           <input
             type="checkbox"
             class="hide-checkbox"
-            @change="toggle('R09')"
-            id="R09"
+            @change="toggle(getKeyByValue(kw))"
+            :id="getKeyByValue(kw)"
+            :checked="
+              userKeyword['keyword_' + getKeyByValue(kw)] === 1 ? true : false
+            "
           />
-          <label class="checkbox-btn" for="R09"
+          <label class="checkbox-btn" :for="getKeyByValue(kw)"
             ><font-awesome-icon icon="check"></font-awesome-icon></label
-          >기타
+          >{{ kw }}
         </div>
       </div>
     </div>
@@ -49,6 +56,7 @@
 <script>
 import http from "@/api/http.js";
 import { mapState } from "vuex";
+import { KEYWORD } from "@/constants/index.js";
 
 export default {
   name: "KakaoMap",
@@ -64,8 +72,10 @@ export default {
         ne_Lat: 0,
       },
       // template
-      keyword: "",
+      stationKeyword: "",
+      keywordValues: [],
       stations: [],
+      selectedKeywords: {},
       selectedStation: null,
       isKeywordOpen: false,
       isKeywordDetailOpen: false,
@@ -84,9 +94,17 @@ export default {
     this.$EventBus.$on("selectOneItem", (selectedItem) => {
       this.selectOneItem(selectedItem);
     });
+
+    this.selectedKeywords = this.userKeyword;
+    const keys = Object.keys(this.userKeyword);
+    keys.splice(0, 1);
+    keys.splice(0, 1);
+    this.keywordValues = keys.map((e) => {
+      const divByUnderBar = e.split("_");
+      return KEYWORD[divByUnderBar[1]];
+    });
   },
   mounted() {
-    //this.created();
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods: {
@@ -106,9 +124,12 @@ export default {
       });
 
       kakao.maps.event.addListener(this.map, "zoom_changed", () => {
-        const level = this.map.getLevel();
-        console.log(level);
+        this.setSouthWest();
+        this.setNorthEast();
+        this.sendListByRange();
       });
+
+      this.map.setMaxLevel(5);
     },
     addScript() {
       const script = document.createElement("script");
@@ -132,27 +153,31 @@ export default {
 
       this.sendListByRange();
     },
-    changeKeyword(e) {
-      this.keyword = e.target.value;
+    changeStationKeyword(e) {
+      stationKeyword = e.target.value;
     },
     searchStation() {
-      if (this.keyword === "") {
+      if (stationKeyword === "") {
         this.stations = [];
         return;
       }
-      http.get(`/housedeal/subway/search/${this.keyword}`).then((resp) => {
+      http.get(`/housedeal/subway/search/${stationKeyword}`).then((resp) => {
         this.stations = resp.data;
       });
     },
+    getKeyByValue(val) {
+      return Object.keys(KEYWORD).find((key) => KEYWORD[key] === val);
+    },
     toggle(key) {
-      // if (this.checkbox[key] === 0) {
-      //   this.checkbox[key] = 1;
-      //   this.checkedCnt++;
-      // } else if (this.checkbox[key] === 1) {
-      //   this.checkbox[key] = 0;
-      //   this.checkedCnt--;
-      // }
-      console.log(key); 
+      console.log(key, this.selectedKeywords["keyword_" + key]);
+      if (this.selectedKeywords["keyword_" + key] === 0) {
+        this.selectedKeywords["keyword_" + key] = 1;
+      } else if (this.selectedKeywords["keyword_" + key] === 1) {
+        this.selectedKeywords["keyword_" + key] = 0;
+      }
+
+      // 여기에 api 요청 보내는 로직 넣으면 됨.
+      console.log(this.selectedKeywords);
     },
     setMapCenter(pos) {
       console.log(pos);
