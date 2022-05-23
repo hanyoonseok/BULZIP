@@ -7,6 +7,7 @@ const memberStore = {
     isLogin: false,
     isLoginError: false,
     userInfo: null,
+    userKeyword: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -23,6 +24,9 @@ const memberStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+    },
+    SET_USER_KEYWORD: (state, keywords) => {
+      state.userKeyword = keywords;
     },
   },
   actions: {
@@ -46,6 +50,11 @@ const memberStore = {
         .then((response) => {
           if (response.data) {
             commit("SET_USER_INFO", response.data);
+            http
+              .get(`/user/keyword/detail/${response.data.userId}`)
+              .then((resp) => {
+                commit("SET_USER_KEYWORD", resp.data);
+              });
           } else {
             console.log("유저 정보 없음!!");
           }

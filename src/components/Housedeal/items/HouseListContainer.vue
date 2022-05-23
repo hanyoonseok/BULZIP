@@ -53,6 +53,9 @@ export default {
     };
   },
   created() {
+    this.$EventBus.$on("getListByLatLng", (range) => {
+      this.getListByLatLng(range);
+    });
     if (this.$route.params.keyword) {
       this.keyword = this.$route.params.keyword;
       this.getList(this.keyword);
@@ -64,7 +67,6 @@ export default {
     getList(keyword = "") {
       if (keyword) {
         http.post(`/housedeal/list/${keyword}`).then((resp) => {
-          console.log(resp);
           this.items = this.items.concat(resp.data);
           this.dataIdx = 0;
         });
@@ -72,9 +74,14 @@ export default {
         http.get(`/housedeal/list/${this.dataIdx}`).then((resp) => {
           this.items = this.items.concat(resp.data);
           this.dataIdx += 100;
+          // this.items.forEach((e) => {
+          //   this.$EventBus.$emit("addMarker", { lat: e.lat, lng: e.lng });
+          // });
         });
       }
-      console.log(this.items);
+    },
+    getListByLatLng(list) {
+      this.items = list;
     },
 
     search() {
@@ -85,6 +92,7 @@ export default {
     selectOne(selectedItem) {
       this.selectedItem = selectedItem;
       this.$EventBus.$emit("openKeywordTab");
+      this.$EventBus.$emit("selectOneItem", selectedItem);
     },
   },
   props: {
