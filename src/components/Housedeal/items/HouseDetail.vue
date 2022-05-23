@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       s1Open: true,
+      is_like: false, // 좋아요 눌러졌는지 아닌지 저장
     };
   },
   props: {
