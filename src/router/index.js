@@ -8,7 +8,6 @@ import AdminView from "@/views/AdminView.vue";
 import QnaView from "@/views/QnaView.vue";
 
 import CommercialInfo from "@/components/Housedeal/CommercialInfo.vue";
-import HousedealDetail from "@/components/Housedeal/HousedealDetail.vue";
 import HousedealList from "@/components/Housedeal/HousedealList.vue";
 
 import NoticeList from "@/components/Notice/NoticeList.vue";
@@ -169,15 +168,12 @@ const routes = [
         path: "list",
         name: "housedeallist",
         component: HousedealList,
-      },
-      {
-        path: "detail/:id",
-        name: "housedealdetail",
-        component: HousedealDetail,
+        beforeEnter: onlyAuthUser,
       },
       {
         path: "commercial",
         name: "housedealcommercial",
+        beforeEnter: onlyAuthUser,
         component: CommercialInfo,
       },
     ],

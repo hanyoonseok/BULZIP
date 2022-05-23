@@ -99,13 +99,15 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       kakao.maps.event.addListener(this.map, "mouseup", () => {
-        // const latlng = mouseEvent.latLng;
-        // console.log(latlng.getLat(), latlng.getLng());
-
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
         if (this.isKeywordOpen) this.sendCommercialByRange();
+      });
+
+      kakao.maps.event.addListener(this.map, "zoom_changed", () => {
+        const level = this.map.getLevel();
+        console.log(level);
       });
     },
     addScript() {
@@ -210,8 +212,8 @@ export default {
       myKeywords.sw_Lng = this.range.sw_Lng;
       myKeywords.ne_Lat = this.range.ne_Lat;
       myKeywords.ne_Lng = this.range.ne_Lng;
-      myKeywords.selectedItem.lat = this.range.selectedItem.lat;
-      myKeywords.selectedItem.lng = this.range.selectedItem.lng;
+      myKeywords.lat = selectedItem.lat;
+      myKeywords.lng = selectedItem.lng;
       console.log(this.range, selectedItem);
       console.log(myKeywords);
       if (!myKeywords) return;
