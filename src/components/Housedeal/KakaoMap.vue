@@ -152,7 +152,7 @@ export default {
       //   this.checkbox[key] = 0;
       //   this.checkedCnt--;
       // }
-      console.log(key); 
+      console.log(key);
     },
     setMapCenter(pos) {
       console.log(pos);
@@ -180,19 +180,21 @@ export default {
       this.markers.push(marker);
     },
     sendListByRange() {
-      console.log(this.range);
+      const whereis = {};
+      whereis.sw_lat = this.range.sw_Lat;
+      whereis.sw_lng = this.range.sw_Lng;
+      whereis.ne_lat = this.range.ne_Lat;
+      whereis.ne_lng = this.range.ne_Lng;
+      console.log("whereis", whereis);
       this.markers.forEach((e) => e.setMap(null));
-      http
-        .get(
-          `/housedeal/boundary/${this.range.sw_Lat}/${this.range.sw_Lng}/${this.range.ne_Lat}/${this.range.ne_Lng}`,
-        )
-        .then((resp) => {
-          this.$EventBus.$emit("getListByLatLng", resp.data);
-          resp.data.forEach((e) => {
-            this.addMarker({ lat: e.lat, lng: e.lng });
-          });
+      http.post(`/housedeal/boundry`, whereis).then((resp) => {
+        this.$EventBus.$emit("getListByLatLng", resp.data);
+        resp.data.forEach((e) => {
+          this.addMarker({ lat: e.lat, lng: e.lng });
         });
+      });
     },
+
     sendCommercialByRange() {
       // this.markers.forEach((e) => e.setMap(null));
       // http
@@ -207,18 +209,20 @@ export default {
       //   });
     },
     selectOneItem(selectedItem) {
-      const myKeywords = { ...this.userKeyword };
-      myKeywords.sw_Lat = this.range.sw_Lat;
-      myKeywords.sw_Lng = this.range.sw_Lng;
-      myKeywords.ne_Lat = this.range.ne_Lat;
-      myKeywords.ne_Lng = this.range.ne_Lng;
-      myKeywords.lat = selectedItem.lat;
-      myKeywords.lng = selectedItem.lng;
-      console.log(this.range, selectedItem);
-      console.log(myKeywords);
+      const myKeywords = {}; //{ ...this.userKeyword };
+      myKeywords.userKeyword = this.userKeyword;
+      console.log("userKeyword", this.userKeyword);
+      myKeywords.sw_lat = this.range.sw_Lat;
+      myKeywords.sw_lng = this.range.sw_Lng;
+      myKeywords.ne_lat = this.range.ne_Lat;
+      myKeywords.ne_lng = this.range.ne_Lng;
+      myKeywords.current_lat = selectedItem.lat;
+      myKeywords.current_lng = selectedItem.lng;
+      //console.log(this.range, selectedItem);
+      console.log("myKeywords", myKeywords);
       if (!myKeywords) return;
 
-      http.get(`/housedeal/commercial`, myKeywords).then((resp) => {
+      http.post(`/housedeal/commercial`, myKeywords).then((resp) => {
         console.log(resp.data);
       });
     },
