@@ -152,7 +152,7 @@ export default {
       //   this.checkbox[key] = 0;
       //   this.checkedCnt--;
       // }
-      console.log(key);
+      console.log(key); 
     },
     setMapCenter(pos) {
       console.log(pos);
