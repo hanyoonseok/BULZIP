@@ -304,7 +304,7 @@ export default {
       const myKeywords = {}; //{ ...this.userKeyword };
       this.setMapCenter({ lat: selectedItem.lat, lng: selectedItem.lng });
       myKeywords.userKeyword = this.selectedKeywords;
-      console.log("myKeywords.userKeyword", myKeywords.userKeyword);
+      console.log("myKeywords", myKeywords);
       myKeywords.sw_lat = this.range.sw_Lat;
       myKeywords.sw_lng = this.range.sw_Lng;
       myKeywords.ne_lat = this.range.ne_Lat;

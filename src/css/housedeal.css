@@ -120,6 +120,15 @@
   right: 1rem;
   font-size: 20px;
   cursor: pointer;
+  color:#eeeeee;
+}
+.unlikebtn{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 20px;
+  cursor: pointer;
+  color:red;
 }
 
 .list-item-detail {
