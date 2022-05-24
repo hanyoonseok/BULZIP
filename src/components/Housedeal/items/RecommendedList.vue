@@ -44,6 +44,7 @@ export default {
 
   created() {
     http.get(`/housedeal/recommend/${this.userInfo.userId}`).then((resp) => {
+      console.log("추천시스템리스트", resp.data);
       this.items = resp.data;
     });
   },
