@@ -48,6 +48,9 @@ export default {
       console.log("추천시스템리스트", resp.data);
       this.items = resp.data;
     });
+    this.$EventBus.$on("closeDetail", () => {
+      this.selectedItem = null;
+    });
   },
   methods: {
     selectOne(selectedItem) {

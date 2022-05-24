@@ -59,13 +59,13 @@
           max="1000"
           step="10"
           v-model="sliderValue"
-          @mouseup="selectOneItem()"
+          @mouseup="selectOneItem"
         />
         <span>{{ sliderValue }}m</span>
       </div>
 
       <!-- 병원 정보 조회 버튼 -->
-      <button class="hospital_button" @click="getHospitals()">
+      <button class="hospital_button" @click="getHospitals">
         주변 병원 보기
       </button>
     </div>
@@ -103,7 +103,6 @@ export default {
       // kakao
       map: Object,
       markers: [],
-      overlays: [],
       clusterer: null,
       range: {
         sw_Lat: 0,
@@ -152,13 +151,20 @@ export default {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods: {
+    setMapCenter(pos) {
+      const coords = new kakao.maps.LatLng(pos.lat, pos.lng);
+      this.map.setCenter(coords);
+      this.setNorthEast();
+      this.setSouthWest();
+    },
     getHospitals() {
       const hospitalmap = {};
-      const coords = new kakao.maps.LatLng(
-        this.selectedItem.lat,
-        this.selectedItem.lng,
-      );
-      this.map.setCenter(coords);
+      const coords = {
+        lat: this.selectedItem.lat,
+        lng: this.selectedItem.lng,
+      };
+      this.setMapCenter(coords);
+      // this.map.setCenter(coords);
 
       hospitalmap.current_lat = this.selectedItem.lat;
       hospitalmap.current_lng = this.selectedItem.lng;
@@ -166,7 +172,7 @@ export default {
       // 현재 매물 마커 찍기
       this.addMarker(
         { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
-        this.selectedItem.aptName,
+        this.selectedItem,
         0,
       );
 
@@ -176,8 +182,8 @@ export default {
         resp.data.forEach((e) => {
           this.addMarker(
             { lat: parseFloat(e.lat), lng: parseFloat(e.lon) },
-            e.dutyname,
-            1, // 병원용 마크 하나 다시 만들어야 함.
+            e,
+            3, // 병원용 마크 하나 다시 만들어야 함.
           );
         });
       });
@@ -192,26 +198,27 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       kakao.maps.event.addListener(this.map, "dragend", () => {
-        this.markers.forEach((e) => e.setMap(null));
+        this.deleteAllMarkers();
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
+        this.selectedItem = null;
+        this.isKeywordOpen = false;
+        this.$EventBus.$emit("closeDetail");
         // if (this.isKeywordOpen) this.sendCommercialByRange();
       });
 
       kakao.maps.event.addListener(this.map, "zoom_changed", () => {
-        this.markers.forEach((e) => e.setMap(null));
+        this.deleteAllMarkers();
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
       });
 
-      kakao.maps.event.addListener(this.map, "center_changed", () => {
-        this.deleteAllMarkers();
-        this.deleteAllOverlays();
-        this.setSouthWest();
-        this.setNorthEast();
-      });
+      // kakao.maps.event.addListener(this.map, "center_changed", () => {
+      //   this.setSouthWest();
+      //   this.setNorthEast();
+      // });
 
       this.map.setMaxLevel(5);
     },
@@ -310,7 +317,7 @@ export default {
       marker.setMap(this.map);
       this.markers.push(marker);
 
-      if (type === 2) return;
+      if (type >= 2) return;
 
       // 커스텀 오버레이를 생성합니다
       var customOverlay = new kakao.maps.CustomOverlay({
@@ -366,6 +373,7 @@ export default {
       //   });
     },
     selectOneItem() {
+      this.deleteAllMarkers();
       const myKeywords = {}; //{ ...this.userKeyword };
       const coords = new kakao.maps.LatLng(
         this.selectedItem.lat,
@@ -384,7 +392,7 @@ export default {
       myKeywords.sliderValue = this.sliderValue;
       this.addMarker(
         { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
-        this.selectedItem.aptName,
+        this.selectedItem,
         0,
       );
 
@@ -400,10 +408,6 @@ export default {
     deleteAllMarkers() {
       this.markers.forEach((e) => e.setMap(null));
       this.markers = [];
-    },
-    deleteAllOverlays() {
-      this.overlays.forEach((e) => e.setMap(null));
-      this.overlays = [];
     },
     getHouseOverlay(apt) {
       const overlayContainer = document.createElement("div");
