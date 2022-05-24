@@ -23,6 +23,7 @@
           v-for="(item, i) in items"
           :key="i"
           :item="item"
+          :border="'yellow'"
           @selectOne="selectOne"
         />
         <div class="list-item-detail" v-if="items.length === 0">
@@ -33,6 +34,7 @@
           더보기<i class="fa-solid fa-caret-down"></i>
         </button> -->
       </div>
+      <img src="@/assets/매물.png" class="float-img" />
     </div>
 
     <HouseDetail

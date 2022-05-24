@@ -1,6 +1,12 @@
 <template>
-  <div class="list-item" @click="selectOne(item.no)">
-    <div class="test yellowborder"></div>
+  <div class="list-item" @click="selectOne()">
+    <div
+      :class="{
+        test: true,
+        yellowborder: border === 'yellow',
+        blueborder: border === 'blue',
+      }"
+    ></div>
     <div class="list-item-detail">
       <label>아파트</label>
       <h5>{{ item.aptName }}</h5>
@@ -22,6 +28,7 @@ export default {
   },
   props: {
     item: Object,
+    border: String,
   },
   computed: {},
   filters: {

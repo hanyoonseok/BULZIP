@@ -72,6 +72,7 @@
 #main-list-container {
   width: 350px;
   height: 100%;
+  position:relative;
 }
 .yellowborder {
   border: 2px solid #fdb814;
@@ -85,6 +86,14 @@
 .main-list {
   width: 350px;
   height: 100%;
+}
+
+.float-img{
+  position:absolute;
+  top:-15px;
+  left:-15px;
+  width:50px;
+  height:50px;
 }
 
 #main-list {

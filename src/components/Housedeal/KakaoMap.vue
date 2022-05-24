@@ -57,7 +57,6 @@
         v-if="listContainerToggle"
       >
         <div class="kakao-flip-img apart1"></div>
-        <label class="kakao-flip-text">추천매물</label>
       </div>
       <div
         class="kakao-flip-relative"
@@ -65,7 +64,6 @@
         v-if="!listContainerToggle"
       >
         <div class="kakao-flip-img apart2"></div>
-        <label class="kakao-flip-text">전체매물</label>
       </div>
     </section>
   </div>
@@ -176,6 +174,8 @@ export default {
     toggleContainer(type) {
       this.listContainerToggle = type;
       this.$emit("toggleContainer", type);
+      this.isKeywordOpen = false;
+      this.selectedItem = null;
     },
     selectStation(station) {
       console.log(station);
