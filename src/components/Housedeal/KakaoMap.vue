@@ -50,6 +50,24 @@
         </div>
       </div>
     </div>
+    <section class="kakao-flip-container">
+      <div
+        class="kakao-flip-relative"
+        @click="toggleContainer(false)"
+        v-if="listContainerToggle"
+      >
+        <div class="kakao-flip-img apart1"></div>
+        <label class="kakao-flip-text">추천매물</label>
+      </div>
+      <div
+        class="kakao-flip-relative"
+        @click="toggleContainer(true)"
+        v-if="!listContainerToggle"
+      >
+        <div class="kakao-flip-img apart2"></div>
+        <label class="kakao-flip-text">전체매물</label>
+      </div>
+    </section>
   </div>
 </template>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -80,6 +98,7 @@ export default {
       selectedStation: null, //선택한 역
       isKeywordOpen: false, //내 키워드 열렸는지 여부
       isKeywordDetailOpen: false, //내 키워드에서 다운바 열렸는지 여부
+      listContainerToggle: true, //true일 때 추천매물, false일 때 전체매물
     };
   },
   computed: {
@@ -154,7 +173,10 @@ export default {
         "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=db837c20449f592fb6c253f478a766b8";
       document.head.appendChild(script);
     },
-
+    toggleContainer(type) {
+      this.listContainerToggle = type;
+      this.$emit("toggleContainer", type);
+    },
     selectStation(station) {
       console.log(station);
       this.selectedStation = station;
@@ -233,7 +255,6 @@ export default {
           imageOption,
         ),
         markerPosition = new kakao.maps.LatLng(pos.lat, pos.lng); // 마커가 표시될 위치입니다
-      console.log(imageSrc);
       // 마커를 생성합니다
       var marker = new kakao.maps.Marker({
         position: markerPosition,
@@ -269,7 +290,7 @@ export default {
       // ).parentNode;
 
       // 커스텀 오버레이를 지도에 표시합니다
-      customOverlay.setMap(this.map);
+      //customOverlay.setMap(this.map);
       this.overlays.push(customOverlay);
     },
     sendListByRange() {
@@ -278,8 +299,6 @@ export default {
       whereis.sw_lng = this.range.sw_Lng;
       whereis.ne_lat = this.range.ne_Lat;
       whereis.ne_lng = this.range.ne_Lng;
-      console.log("whereis", whereis);
-      this.markers.forEach((e) => e.setMap(null));
       http.post(`/housedeal/boundry`, whereis).then((resp) => {
         this.$EventBus.$emit("getListByLatLng", resp.data);
         resp.data.forEach((e) => {
