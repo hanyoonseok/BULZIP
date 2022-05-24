@@ -13,6 +13,11 @@
           <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
         </button>
       </form>
+      <div class="mylist-container">
+        <label @click="status = -1">
+          내 관심목록<i class="fa-solid fa-house-heart"></i>
+        </label>
+      </div>
       <div id="list-item-container">
         <HouseItem
           v-for="(item, i) in items"
@@ -38,7 +43,7 @@
       :item="selectedItem"
     />
 
-    <HouseLike v-if="status < 0" />
+    <HouseLike v-if="status < 0" @backToList="status = 0" />
   </article>
 </template>
 
