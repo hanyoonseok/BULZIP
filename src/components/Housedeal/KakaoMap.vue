@@ -50,6 +50,7 @@
           >{{ kw }}
         </div>
       </div>
+
       <!-- slider -->
       <div class="slider">
         <input
@@ -60,8 +61,13 @@
           v-model="sliderValue"
           @mouseup="selectOneItem()"
         />
-        <span>{{ sliderValue }}</span>
+        <span>{{ sliderValue }}m</span>
       </div>
+
+      <!-- 병원 정보 조회 버튼 -->
+      <button class="hospital_button" @click="getHospitals()">
+        주변 병원 보기
+      </button>
     </div>
 
     <section class="kakao-flip-container">
@@ -146,9 +152,37 @@ export default {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods: {
-    testaaa() {
-      console.log("111", 111);
+    getHospitals() {
+      const hospitalmap = {};
+      const coords = new kakao.maps.LatLng(
+        this.selectedItem.lat,
+        this.selectedItem.lng,
+      );
+      this.map.setCenter(coords);
+
+      hospitalmap.current_lat = this.selectedItem.lat;
+      hospitalmap.current_lng = this.selectedItem.lng;
+      hospitalmap.sliderValue = this.sliderValue;
+      // 현재 매물 마커 찍기
+      this.addMarker(
+        { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
+        this.selectedItem.aptName,
+        0,
+      );
+
+      if (!hospitalmap) return;
+      http.post(`/housedeal/hospital`, hospitalmap).then((resp) => {
+        console.log("병원 리스트", resp.data);
+        resp.data.forEach((e) => {
+          this.addMarker(
+            { lat: parseFloat(e.lat), lng: parseFloat(e.lon) },
+            e.dutyname,
+            1, // 병원용 마크 하나 다시 만들어야 함.
+          );
+        });
+      });
     },
+
     initMap() {
       var container = document.getElementById("map");
       var options = {
@@ -348,10 +382,16 @@ export default {
       myKeywords.current_lat = this.selectedItem.lat;
       myKeywords.current_lng = this.selectedItem.lng;
       myKeywords.sliderValue = this.sliderValue;
+      this.addMarker(
+        { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
+        this.selectedItem.aptName,
+        0,
+      );
+
       if (!myKeywords) return;
 
       http.post(`/housedeal/commercial`, myKeywords).then((resp) => {
-        console.log(resp.data);
+        console.log("상권리스트", resp.data);
         resp.data.forEach((e) => {
           this.addMarker({ lat: e.lat, lng: e.lng }, e, 1);
         });

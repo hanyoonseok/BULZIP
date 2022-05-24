@@ -18,16 +18,16 @@
       <button
         class="reply-btn"
         v-if="reply.user_id === userInfo.userId"
-        @click="isOpen = !isOpen"
+        @click="deleteReply"
       >
-        수정
+        삭제
       </button>
       <button
         class="reply-btn"
         v-if="reply.user_id === userInfo.userId"
-        @click="deleteReply"
+        @click="isOpen = !isOpen"
       >
-        삭제
+        수정
       </button>
     </div>
   </div>

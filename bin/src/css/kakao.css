@@ -131,15 +131,6 @@
   line-height: 2.5;
 }
 
-.kakao-overlay-container {
-  width: fit-content;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #fdb814;
-  color: #292929;
-  border-radius: 12px;
-  background-color: #fff;
-}
-
 .absolute {
   position: absolute;
   top: 1rem;
@@ -154,29 +145,29 @@
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
 }
 
-.kakao-flip-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size:cover;
+@keyframes vivid {
+  from {
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .apart1 {
-  background-image: url("@/assets/apart1.jpg");
+  background-color: #fdb814;
 }
 
 .apart2 {
-  background-image: url("@/assets/apart2.jpg");
+  background-color: #1cbaef;
 }
 
 .kakao-flip-relative {
@@ -185,16 +176,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position:relative;
+  position: relative;
+  border-radius: 120px;
+  font-family: "Nanum Pen Script", cursive;
+  font-size: 40px;
+  line-height: 1;
 }
 
-.kakao-flip-text{
-  position:absolute;
-  top:0;
-  left:1;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  color:red
+.slider {
+  width: 100%;
+  z-index: 9;
 }
