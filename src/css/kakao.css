@@ -168,7 +168,7 @@
   border-radius: 100%;
   background-position: center;
   background-repeat: no-repeat;
-  background-size:cover;
+  background-size: cover;
 }
 
 .apart1 {
@@ -185,16 +185,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position:relative;
+  position: relative;
 }
 
-.kakao-flip-text{
-  position:absolute;
-  top:0;
-  left:1;
-  display:flex;
+.kakao-flip-text {
+  position: absolute;
+  top: 0;
+  left: 1;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  color:red
+  color: red;
+}
+
+.slider {
+  /* overwrite slider styles */
+  /*width: 100%;*/
+  /* position: absolute;
+  top: 400px;
+  right: 20px; */
+  width: 210px;
+  z-index: 9;
 }

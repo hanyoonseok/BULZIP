@@ -21,9 +21,10 @@
         </li>
       </div>
     </div>
+
     <div class="kakao-keyword-container" v-if="isKeywordOpen">
       <div class="between">
-        <h1>내 키워드</h1>
+        <h1>상권 키워드</h1>
         <font-awesome-icon
           :icon="isKeywordDetailOpen ? 'angle-up' : 'angle-down'"
           @click="isKeywordDetailOpen = !isKeywordDetailOpen"
@@ -49,7 +50,21 @@
           >{{ kw }}
         </div>
       </div>
+      <!-- slider -->
+      <div class="slider">
+        <!--<label> 제목</label>-->
+        <input
+          type="range"
+          min="110"
+          max="1000"
+          step="10"
+          v-model="sliderValue"
+          @mouseup="selectOneItem()"
+        />
+        <span>{{ sliderValue }}</span>
+      </div>
     </div>
+
     <section class="kakao-flip-container">
       <div
         class="kakao-flip-relative"
@@ -75,11 +90,15 @@
 import http from "@/api/http.js";
 import { mapState } from "vuex";
 import { KEYWORD } from "@/constants/index.js";
+import RangeSlider from "vue-range-slider";
+import "vue-range-slider/dist/vue-range-slider.css";
 
 export default {
   name: "KakaoMap",
   data() {
     return {
+      // range slider
+      sliderValue: "300", // 초기값 300m
       // kakao
       map: Object,
       markers: [],
@@ -100,6 +119,9 @@ export default {
       isKeywordDetailOpen: false, //내 키워드에서 다운바 열렸는지 여부
       listContainerToggle: true, //true일 때 추천매물, false일 때 전체매물
     };
+  },
+  components: {
+    RangeSlider,
   },
   computed: {
     ...mapState("userStore", ["userKeyword"]),
@@ -140,6 +162,9 @@ export default {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods: {
+    testaaa() {
+      console.log("111", 111);
+    },
     initMap() {
       var container = document.getElementById("map");
       var options = {
@@ -334,6 +359,7 @@ export default {
       myKeywords.ne_lng = this.range.ne_Lng;
       myKeywords.current_lat = this.selectedItem.lat;
       myKeywords.current_lng = this.selectedItem.lng;
+      myKeywords.sliderValue = this.sliderValue;
       if (!myKeywords) return;
 
       http.post(`/housedeal/commercial`, myKeywords).then((resp) => {
