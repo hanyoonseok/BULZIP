@@ -1,5 +1,15 @@
 /* overlay */
 
+.flexcol {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexcenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @keyframes sizing {
   0% {
   }
@@ -9,13 +19,14 @@
 }
 .kakao-overlay-container {
   width: 250px;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   background-color: #fff;
   border-radius: 20px;
   color: #292929;
   animation: sizing 0.3s forwards;
+  z-index: 12;
 }
 
 .overlay-img {
@@ -30,33 +41,33 @@
   flex-direction: column;
 }
 
-.overlay-detail-container h3 {
+.overlay-detail-subtitle {
   font-size: 16px;
   color: gray;
+  margin-bottom: 0;
+  text-align: center;
 }
 
-.overlay-title-container {
+.overlay-title {
   display: flex;
   align-items: center;
   width: 100%;
-  position: relative;
-}
-
-.overlay-title-container h1 {
-  font-size: 24px;
-  margin-right: 22px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 0;
+  justify-content: center;
+  font-size: 20px;
+  flex-wrap: wrap;
 }
 
 .overlay-hit-container {
   position: absolute;
-  top: 0;
-  right: 10px;
+  top: 15px;
+  right: 20px;
   display: flex;
   align-items: center;
+  color: #fff;
+}
+
+.overlay-hit-container i {
+  margin-right: 4px;
 }
 
 .overlay-info-container {
@@ -68,7 +79,8 @@
 
 .overlay-info-item {
   flex: 1;
-  width:100%;
-  display:flex;
-  
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

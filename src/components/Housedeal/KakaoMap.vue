@@ -282,7 +282,7 @@ export default {
       var customOverlay = new kakao.maps.CustomOverlay({
         position: marker.getPosition(),
         yAnchor: 1,
-        xAnchor: 0.5,
+        xAnchor: 0.425,
         clickable: true,
       });
 
@@ -376,22 +376,20 @@ export default {
       const detailContainer = document.createElement("div");
       detailContainer.className = "overlay-detail-container";
 
-      const titleContainer = document.createElement("div");
-      titleContainer.className = "overlay-title-container";
-
-      const title = document.createElement("h1");
+      const title = document.createElement("div");
       title.innerHTML = apt.aptName;
+      title.className = "overlay-title";
 
       const hitContainer = document.createElement("div");
       const icon = document.createElement("i");
       const hit = document.createElement("label");
       hitContainer.className = "overlay-hit-container";
-      hit.innerHTML = apt.hit;
+      hit.innerHTML = `${apt.hit}`;
       icon.className = "fa-brands fa-gratipay";
       hitContainer.append(icon, hit);
 
       const price = document.createElement("h3");
-      price.className = "overlay-price";
+      price.className = "overlay-detail-subtitle";
       price.innerHTML = `${apt.dealAmount}만원`;
 
       const infoContainer = document.createElement("div");
@@ -406,12 +404,29 @@ export default {
       const infotitle1 = document.createElement("b");
       const infotitle2 = document.createElement("b");
       const infotitle3 = document.createElement("b");
+      const infocontent1 = document.createElement("label");
+      const infocontent2 = document.createElement("label");
+      const infocontent3 = document.createElement("label");
       infotitle1.innerHTML = "면적";
+      infotitle2.innerHTML = "층";
+      infotitle3.innerHTML = "동";
+      infocontent1.innerHTML = `${apt.area}m²`;
+      infocontent2.innerHTML = `${apt.floor}층`;
+      infocontent3.innerHTML = `${apt.dongName}`;
+      infotitle1.className = "flexcenter";
+      infotitle2.className = "flexcenter";
+      infotitle3.className = "flexcenter";
+      infocontent1.className = "flexcenter";
+      infocontent2.className = "flexcenter";
+      infocontent3.className = "flexcenter";
+
+      infoItem1.append(infotitle1, infocontent1);
+      infoItem2.append(infotitle2, infocontent2);
+      infoItem3.append(infotitle3, infocontent3);
 
       infoContainer.append(infoItem1, infoItem2, infoItem3);
-      titleContainer.append(title, hitContainer);
-      detailContainer.append(titleContainer, price, infoContainer);
-      overlayContainer.append(bigImg, detailContainer);
+      detailContainer.append(title, price, infoContainer);
+      overlayContainer.append(hitContainer, bigImg, detailContainer);
 
       return overlayContainer;
     },
@@ -419,30 +434,19 @@ export default {
       const overlayContainer = document.createElement("div");
       overlayContainer.className = "kakao-overlay-container";
 
-      const bigImg = document.createElement("img");
-      bigImg.setAttribute("src", require("@/assets/back1.jpg"));
-      bigImg.className = "overlay-img";
+      const title = document.createElement("div");
+      title.className = "overlay-title";
+      title.innerHTML = commercial.name;
 
-      const detailContainer = document.createElement("div");
-      detailContainer.className = "overlay-detail-container";
+      const boon = document.createElement("div");
+      boon.className = "overlay-detail-subtitle";
+      boon.innerHTML = commercial.sobun;
 
-      const titleContainer = document.createElement("div");
-      titleContainer.className = "overlay-title-container";
+      const addrContainer = document.createElement("div");
+      addrContainer.innerHTML = commercial.jibun_address;
+      addrContainer.className = "flexcenter";
 
-      const title = document.createElement("h1");
-      title.innerHTML = name;
-
-      const price = document.createElement("h3");
-      price.className = "overlay-price";
-
-      const infoContainer = document.createElement("div");
-      const infoItem1 = document.createElement("div");
-      const infoItem2 = document.createElement("div");
-      const infoItem3 = document.createElement("div");
-      infoContainer.append(infoItem1, infoItem2, infoItem3);
-      titleContainer.append(title);
-      detailContainer.append(titleContainer, price, infoContainer);
-      overlayContainer.append(bigImg, detailContainer);
+      overlayContainer.append(title, boon, addrContainer);
 
       return overlayContainer;
     },
