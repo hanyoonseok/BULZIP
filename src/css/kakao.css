@@ -130,3 +130,13 @@
   align-items: center;
   line-height: 2.5;
 }
+
+.kakao-overlay-container{
+  width:fit-content;
+  min-height: 50px;
+  padding:1rem 1rem;
+  border:1px solid #fdb814;
+  color:#292929;
+  border-radius: 12px;
+  background-color:#fff;
+}

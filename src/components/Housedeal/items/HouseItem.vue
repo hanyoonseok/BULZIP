@@ -27,6 +27,9 @@ export default {
         this.$emit("selectOne", this.selectedItem);
       });
     },
+    itemover() {
+      this.$EventBus.$emit("itemEnter", this.item);
+    },
   },
   props: {
     item: Object,

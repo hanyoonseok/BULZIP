@@ -94,6 +94,9 @@ export default {
     this.$EventBus.$on("selectOneItem", (selectedItem) => {
       this.selectOneItem(selectedItem);
     });
+    this.$EventBus.$on("itemEnter", (enterItem) => {
+      this.onEnterItem(enterItem);
+    });
 
     // this.selectedKeywords = this.userKeyword;
     // const keys = Object.keys(this.userKeyword);
@@ -126,6 +129,7 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       kakao.maps.event.addListener(this.map, "mouseup", () => {
+        this.markers = [];
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
@@ -133,6 +137,7 @@ export default {
       });
 
       kakao.maps.event.addListener(this.map, "zoom_changed", () => {
+        this.markers = [];
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
@@ -153,7 +158,6 @@ export default {
       console.log(station);
       this.selectedStation = station;
       this.stations = [];
-      this.markers = [];
       this.setSouthWest();
       this.setNorthEast();
       console.log(this.range);
@@ -163,7 +167,6 @@ export default {
         station.station,
         2,
       );
-      //this.addMarker({ lat: station.lat, lng: station.lon });
 
       this.sendListByRange();
     },
@@ -196,6 +199,8 @@ export default {
     },
     setMapCenter(pos) {
       console.log(pos);
+      this.markers = [];
+
       const coords = new kakao.maps.LatLng(pos.lat, pos.lng);
       this.map.setCenter(coords);
       this.setSouthWest();
@@ -237,6 +242,34 @@ export default {
 
       // 마커가 지도 위에 표시되도록 설정합니다
       marker.setMap(this.map);
+      this.markers.push(marker);
+
+      // custom overlay
+      var content = `
+      <div class="kakao-overlay-container" style="width:fit-content;min-height: 50px;padding:0.5rem 0.75rem;border:1px solid #fdb814;color:#292929;border-radius: 12px;background-color:#fff;display:flex; justify-content:center; align-items:center">
+        ${name}
+      </div>
+        `;
+
+      // 커스텀 오버레이가 표시될 위치입니다
+      var position = new kakao.maps.LatLng(pos.lat, pos.lng);
+      const copymap = this.map;
+
+      // 커스텀 오버레이를 생성합니다
+      var customOverlay = new kakao.maps.CustomOverlay({
+        map: copymap,
+        position: position,
+        content: content,
+        yAnchor: 2,
+        xAnchor: 0.3,
+      });
+      // 여기 작성하자
+      // const parent = document.querySelector(
+      //   ".kakao-overlay-container",
+      // ).parentNode;
+
+      // 커스텀 오버레이를 지도에 표시합니다
+      customOverlay.setMap(copymap);
     },
     sendListByRange() {
       const whereis = {};
@@ -286,101 +319,24 @@ export default {
         console.log(resp.data);
       });
     },
+    onEnterItem(enterItem) {
+      console.log(enterItem);
+      this.markers.forEach((e) => {
+        //La가 lng, Ma가 lat
+        const lat = e.getPosition().Ma;
+        const lng = e.getPosition().La;
+        if (enterItem.lat == lat && enterItem.lng == lng) {
+          const markerImage = new kakao.maps.MarkerImage(
+            require("@/assets/logo.png"),
+            new kakao.maps.Size(70, 70),
+            new kakao.maps.Point(13, 34),
+          );
+          e.setImage(markerImage);
+        }
+      });
+    },
   },
 };
 </script>
 
-<style scoped src="@/css/kakao.css">
-.wrap {
-  position: absolute;
-  left: 0;
-  bottom: 40px;
-  width: 288px;
-  height: 132px;
-  margin-left: -144px;
-  text-align: left;
-  overflow: hidden;
-  font-size: 12px;
-  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
-  line-height: 1.5;
-}
-.wrap * {
-  padding: 0;
-  margin: 0;
-}
-.wrap .info {
-  width: 286px;
-  height: 120px;
-  border-radius: 5px;
-  border-bottom: 2px solid #ccc;
-  border-right: 1px solid #ccc;
-  overflow: hidden;
-  background: #fff;
-}
-.wrap .info:nth-child(1) {
-  border: 0;
-  box-shadow: 0px 1px 2px #888;
-}
-.info .title {
-  padding: 5px 0 0 10px;
-  height: 30px;
-  background: #eee;
-  border-bottom: 1px solid #ddd;
-  font-size: 18px;
-  font-weight: bold;
-}
-.info .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #888;
-  width: 17px;
-  height: 17px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
-}
-.info .close:hover {
-  cursor: pointer;
-}
-.info .body {
-  position: relative;
-  overflow: hidden;
-}
-.info .desc {
-  position: relative;
-  margin: 13px 0 0 90px;
-  height: 75px;
-}
-.desc .ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.desc .jibun {
-  font-size: 11px;
-  color: #888;
-  margin-top: -2px;
-}
-.info .img {
-  position: absolute;
-  top: 6px;
-  left: 5px;
-  width: 73px;
-  height: 71px;
-  border: 1px solid #ddd;
-  color: #888;
-  overflow: hidden;
-}
-.info:after {
-  content: "";
-  position: absolute;
-  margin-left: -12px;
-  left: 50%;
-  bottom: 0;
-  width: 22px;
-  height: 12px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
-}
-.info .link {
-  color: #5085bb;
-}
-</style>
+<style scoped src="@/css/kakao.css"></style>
