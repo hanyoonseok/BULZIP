@@ -73,6 +73,14 @@
   width: 350px;
   height: 100%;
 }
+.yellowborder {
+  border: 2px solid #fdb814;
+  border-top-right-radius: 8px;
+}
+.blueborder {
+  border: 2px solid #1CBAEF;
+  border-top-right-radius: 8px;
+}
 
 .main-list {
   width: 350px;
@@ -90,14 +98,23 @@
   overflow-y: auto;
   padding-bottom: 100px;
   background-color: #fff;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#list-item-container::-webkit-scrollbar {
+  display: none;
 }
 
 /* house item */
 
 .test {
   height: 100%;
-  background-color: lightgray;
-  flex: 0.3;
+  background-image: url("@/assets/back3.jpg");
+  background-position: cecnter;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex: 0.9;
 }
 .list-item {
   display: flex;
@@ -105,12 +122,14 @@
   height: 160px;
   padding: 1rem 1rem;
   position: relative;
+  border-bottom: #eeeeee;
 }
 @keyframes bgcolor {
   from {
   }
   to {
-    background-color: lightgray;
+    background-color: #eeeeee;
+    transform: scale(1.03);
   }
 }
 .list-item:hover {
@@ -153,7 +172,7 @@
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
-  flex: 0.7;
+  flex: 1;
 }
 .list-item-detail h3 {
   color: rgb(34, 34, 34);
@@ -162,10 +181,14 @@
   font-size: 18px;
   line-height: 23px;
   text-align: left;
+  font-weight: 600;
 }
 .list-item-detail h5 {
-  display: flex;
-  flex-wrap: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   font-weight: bold;
 }
 .list-item-detail label {

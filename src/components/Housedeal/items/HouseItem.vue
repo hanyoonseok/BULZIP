@@ -1,6 +1,6 @@
 <template>
   <div class="list-item" @click="selectOne(item.no)">
-    <div class="test"></div>
+    <div class="test yellowborder"></div>
     <div class="list-item-detail">
       <label>아파트</label>
       <h5>{{ item.aptName }}</h5>

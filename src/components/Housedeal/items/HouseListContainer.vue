@@ -1,5 +1,5 @@
 <template>
-  <article id="main-list-container">
+  <article id="main-list-container" class="yellowborder">
     <div class="main-list" v-if="status === 0 && !selectedItem">
       <form id="filter-container" v-on:submit.prevent="search">
         <input
@@ -15,7 +15,7 @@
       </form>
       <div class="mylist-container">
         <label @click="status = -1">
-          내 관심목록<i class="fa-solid fa-house-heart"></i>
+          내 관심목록 <i class="fa-solid fa-house-heart"></i>
         </label>
       </div>
       <div id="list-item-container">
@@ -25,11 +25,9 @@
           :item="item"
           @selectOne="selectOne"
         />
-        <div class="list-item" v-if="items.length === 0">
-          <div class="list-item-detail">
-            <img src="@/assets/cry.png" class="cry-img" />
-            <h5>근처에 매물이 없어요 T ^ T</h5>
-          </div>
+        <div class="list-item-detail" v-if="items.length === 0">
+          <img src="@/assets/cry.png" class="cry-img" />
+          <h5 style="text-align: center">근처에 매물이 없어요..</h5>
         </div>
         <!-- <button id="moreBtn" v-if="keyword === ''" @click="getList">
           더보기<i class="fa-solid fa-caret-down"></i>

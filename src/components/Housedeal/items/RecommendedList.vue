@@ -1,6 +1,6 @@
 <template>
-  <article id="main-list-container">
-    <div class="main-list" v-if="status === -1 && !items">
+  <article id="main-list-container" class="blueborder">
+    <div class="main-list">
       <div id="list-item-container">
         <HouseItem
           v-for="(item, i) in items"
@@ -8,11 +8,9 @@
           :item="item"
           @selectOne="selectOne"
         />
-        <div class="list-item" v-if="items.length === 0">
-          <div class="list-item-detail">
-            <img src="@/assets/cry.png" class="cry-img" />
-            <h5>추천 매물이 없습니다.</h5>
-          </div>
+        <div class="list-item-detail" v-if="items.length === 0">
+          <img src="@/assets/cry.png" class="cry-img" />
+          <h5 style="text-align: center">추천 매물이 없어요..</h5>
         </div>
       </div>
     </div>
@@ -24,7 +22,7 @@
 </template>
 
 <script>
-import http from "@/api/http.js";
+// import http from "@/api/http.js";
 import HouseItem from "@/components/Housedeal/items/HouseItem.vue";
 // import HouseLike from "@/components/Housedeal/items/HouseLike.vue";
 // import HouseDetail from "@/components/Housedeal/items/HouseDetail.vue";
@@ -43,9 +41,9 @@ export default {
   },
 
   created() {
-    http.get(`/housedeal/recommend/${this.userInfo.userId}`).then((resp) => {
-      this.items = resp.data;
-    });
+    // http.get(`/housedeal/recommend/${this.userInfo.userId}`).then((resp) => {
+    //   this.items = resp.data;
+    // });
   },
   methods: {
     selectOne(selectedItem) {
