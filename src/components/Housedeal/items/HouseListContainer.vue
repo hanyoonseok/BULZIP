@@ -102,7 +102,6 @@ export default {
     },
     selectOne(selectedItem) {
       this.selectedItem = selectedItem;
-      this.$EventBus.$emit("openKeywordTab");
       this.$EventBus.$emit("selectOneItem", selectedItem);
     },
   },

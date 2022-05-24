@@ -65,6 +65,7 @@ export default {
       // kakao
       map: Object,
       markers: [],
+      overlays: [],
       range: {
         sw_Lat: 0,
         sw_Lng: 0,
@@ -85,14 +86,14 @@ export default {
     ...mapState("userStore", ["userKeyword"]),
   },
   created() {
-    this.$EventBus.$on("openKeywordTab", () => {
-      this.isKeywordOpen = true;
-    });
     this.$EventBus.$on("closeKeywordTab", () => {
       this.isKeywordOpen = false;
+      this.selectedItem = null;
     });
     this.$EventBus.$on("selectOneItem", (selectedItem) => {
-      this.selectOneItem(selectedItem);
+      this.isKeywordOpen = true;
+      this.selectedItem = selectedItem;
+      this.selectOneItem();
     });
     this.$EventBus.$on("itemEnter", (enterItem) => {
       this.onEnterItem(enterItem);
@@ -129,7 +130,7 @@ export default {
       this.map = new kakao.maps.Map(container, options);
 
       kakao.maps.event.addListener(this.map, "mouseup", () => {
-        this.markers = [];
+        this.markers.forEach((e) => e.setMap(null));
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
@@ -137,7 +138,7 @@ export default {
       });
 
       kakao.maps.event.addListener(this.map, "zoom_changed", () => {
-        this.markers = [];
+        this.markers.forEach((e) => e.setMap(null));
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
@@ -195,11 +196,13 @@ export default {
         delete this.selectedKeywords["keyword_" + key];
       }
 
+      this.selectOneItem();
       console.log(this.selectedKeywords);
     },
     setMapCenter(pos) {
       console.log(pos);
-      this.markers = [];
+      this.markers.forEach((e) => e.setMap(null));
+      this.overlays.forEach((e) => e.setMap(null));
 
       const coords = new kakao.maps.LatLng(pos.lat, pos.lng);
       this.map.setCenter(coords);
@@ -220,11 +223,8 @@ export default {
       var imageSrc = require(`@/assets/${
           type === 0 ? "home" : type === 1 ? "shop" : "subway"
         }.png`), // 마커이미지의 주소입니다
-        imageSize = new kakao.maps.Size(
-          type === 0 ? 100 : 70,
-          type === 0 ? 100 : 70,
-        ), // 마커이미지의 크기입니다
-        imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
+        imageOption = { offset: new kakao.maps.Point(0, 0) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
       // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
       var markerImage = new kakao.maps.MarkerImage(
@@ -233,7 +233,7 @@ export default {
           imageOption,
         ),
         markerPosition = new kakao.maps.LatLng(pos.lat, pos.lng); // 마커가 표시될 위치입니다
-
+      console.log(imageSrc);
       // 마커를 생성합니다
       var marker = new kakao.maps.Marker({
         position: markerPosition,
@@ -246,7 +246,7 @@ export default {
 
       // custom overlay
       var content = `
-      <div class="kakao-overlay-container" style="width:fit-content;min-height: 50px;padding:0.5rem 0.75rem;border:1px solid #fdb814;color:#292929;border-radius: 12px;background-color:#fff;display:flex; justify-content:center; align-items:center">
+      <div class="kakao-overlay-container" style="width:fit-content;padding:0.5rem 0.75rem;border:1.5px solid #fdb814;color:#292929;border-radius: 12px;background-color:#fff;display:flex; justify-content:center; align-items:center; font-size:12px; font-weight:bold">
         ${name}
       </div>
         `;
@@ -257,11 +257,11 @@ export default {
 
       // 커스텀 오버레이를 생성합니다
       var customOverlay = new kakao.maps.CustomOverlay({
-        map: copymap,
+        map: this.map,
         position: position,
         content: content,
-        yAnchor: 2,
-        xAnchor: 0.3,
+        yAnchor: 1,
+        xAnchor: 0.25,
       });
       // 여기 작성하자
       // const parent = document.querySelector(
@@ -269,7 +269,8 @@ export default {
       // ).parentNode;
 
       // 커스텀 오버레이를 지도에 표시합니다
-      customOverlay.setMap(copymap);
+      customOverlay.setMap(this.map);
+      this.overlays.push(customOverlay);
     },
     sendListByRange() {
       const whereis = {};
@@ -300,23 +301,27 @@ export default {
       //     });
       //   });
     },
-    selectOneItem(selectedItem) {
+    selectOneItem() {
       const myKeywords = {}; //{ ...this.userKeyword };
-      this.setMapCenter({ lat: selectedItem.lat, lng: selectedItem.lng });
+      this.setMapCenter({
+        lat: this.selectedItem.lat,
+        lng: this.selectedItem.lng,
+      });
       myKeywords.userKeyword = this.selectedKeywords;
       console.log("myKeywords", myKeywords);
       myKeywords.sw_lat = this.range.sw_Lat;
       myKeywords.sw_lng = this.range.sw_Lng;
       myKeywords.ne_lat = this.range.ne_Lat;
       myKeywords.ne_lng = this.range.ne_Lng;
-      myKeywords.current_lat = selectedItem.lat;
-      myKeywords.current_lng = selectedItem.lng;
-      //console.log(this.range, selectedItem);
-      console.log("myKeywords", myKeywords);
+      myKeywords.current_lat = this.selectedItem.lat;
+      myKeywords.current_lng = this.selectedItem.lng;
       if (!myKeywords) return;
 
       http.post(`/housedeal/commercial`, myKeywords).then((resp) => {
         console.log(resp.data);
+        resp.data.forEach((e) => {
+          this.addMarker({ lat: e.lat, lng: e.lng }, e.name, 1);
+        });
       });
     },
     onEnterItem(enterItem) {

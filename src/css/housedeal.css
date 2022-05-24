@@ -88,6 +88,8 @@
 #list-item-container {
   height: 100%;
   overflow-y: auto;
+  padding-bottom: 100px;
+  background-color: #fff;
 }
 
 /* house item */
@@ -120,29 +122,29 @@
   right: 1rem;
   font-size: 20px;
   cursor: pointer;
-  color:#eeeeee;
+  color: #eeeeee;
 }
-.unlikebtn{
+.unlikebtn {
   position: absolute;
   top: 1rem;
   right: 1rem;
   font-size: 20px;
   cursor: pointer;
-  color:red;
+  color: red;
 }
 
-.mylist-container{
-  width:100%;
-  display:flex;
+.mylist-container {
+  width: 100%;
+  display: flex;
   align-items: center;
-  justify-content: flex-end;  
+  justify-content: flex-end;
   padding: 0.5rem 1rem;
   font-weight: 600;
 }
 
-.mylist-container label{
-  cursor:pointer;
-  width:fit-content
+.mylist-container label {
+  cursor: pointer;
+  width: fit-content;
 }
 
 .list-item-detail {
@@ -184,7 +186,7 @@
   font-weight: 700;
 }
 
-.cry-img{
+.cry-img {
   background-color: transparent;
 }
 

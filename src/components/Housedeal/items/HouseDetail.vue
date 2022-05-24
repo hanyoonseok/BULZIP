@@ -20,7 +20,7 @@
     <article class="detail-article">
       <section class="info-section">
         <label class="info-hit-label"
-          >현재까지 {{ item.hit }}명의 사용자가 본 매물입니다.</label
+          >현재까지 {{ item.hit }}명의 관심을 받은 매물입니다.</label
         >
         <h3 class="info-price-title">매매 {{ item.dealAmount | toWon }}원</h3>
       </section>

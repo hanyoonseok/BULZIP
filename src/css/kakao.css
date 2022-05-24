@@ -84,8 +84,8 @@
   align-items: center;
 }
 
-.between svg{
-  cursor:pointer;
+.between svg {
+  cursor: pointer;
 }
 
 .kakao-keyword-list {
@@ -122,31 +122,30 @@
 
 .hide-checkbox:checked + label svg {
   padding-bottom: 20px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.kakao-keyword-item{
-  display:flex;
+.kakao-keyword-item {
+  display: flex;
   align-items: center;
   line-height: 2.5;
 }
 
-.kakao-overlay-container{
-  width:fit-content;
-  min-height: 50px;
-  padding:1rem 1rem;
-  border:1px solid #fdb814;
-  color:#292929;
+.kakao-overlay-container {
+  width: fit-content;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #fdb814;
+  color: #292929;
   border-radius: 12px;
-  background-color:#fff;
+  background-color: #fff;
 }
 
-.absolute{
+.absolute {
   position: absolute;
   top: 1rem;
   right: 1rem;
   font-size: 20px;
   cursor: pointer;
-  height:fit-content;
-  cursor:pointer;
+  height: fit-content;
+  cursor: pointer;
 }

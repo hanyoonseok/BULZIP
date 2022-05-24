@@ -14,29 +14,16 @@
 </template>
 
 <script>
-import http from "@/api/http.js";
-
 export default {
-  data() {
-    return {
-      selectedItem: null,
-    };
-  },
   methods: {
-    selectOne(no) {
-      http.get(`/housedeal/read/${no}`).then((resp) => {
-        this.selectedItem = resp.data;
-        console.log(this.selectedItem);
-        this.$emit("selectOne", this.selectedItem);
-      });
-    },
-    itemover() {
-      this.$EventBus.$emit("itemEnter", this.item);
+    selectOne() {
+      this.$emit("selectOne", this.item);
     },
   },
   props: {
     item: Object,
   },
+  computed: {},
   filters: {
     toWon(num) {
       num = num.replace(",", "");
