@@ -154,13 +154,19 @@
   color: #fff;
 }
 
+@keyframes vivid {
+  from {
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .apart1 {
-  /* background-image: url("@/assets/apart1.jpg"); */
   background-color: #fdb814;
 }
 
 .apart2 {
-  /* background-image: url("@/assets/apart2.jpg"); */
   background-color: #1cbaef;
 }
 
@@ -175,4 +181,9 @@
   font-family: "Nanum Pen Script", cursive;
   font-size: 40px;
   line-height: 1;
+}
+
+.slider {
+  width: 100%;
+  z-index: 9;
 }

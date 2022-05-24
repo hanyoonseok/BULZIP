@@ -1,4 +1,12 @@
 /* overlay */
+
+@keyframes sizing {
+  0% {
+  }
+  30% {
+    transform: scale(1.05);
+  }
+}
 .kakao-overlay-container {
   width: 250px;
   padding: 1rem;
@@ -7,6 +15,7 @@
   background-color: #fff;
   border-radius: 20px;
   color: #292929;
+  animation: sizing 0.3s forwards;
 }
 
 .overlay-img {
