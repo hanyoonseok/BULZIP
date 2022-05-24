@@ -21,9 +21,10 @@
         </li>
       </div>
     </div>
+
     <div class="kakao-keyword-container" v-if="isKeywordOpen">
       <div class="between">
-        <h1>내 키워드</h1>
+        <h1>상권 키워드</h1>
         <font-awesome-icon
           :icon="isKeywordDetailOpen ? 'angle-up' : 'angle-down'"
           @click="isKeywordDetailOpen = !isKeywordDetailOpen"
@@ -49,23 +50,35 @@
           >{{ kw }}
         </div>
       </div>
+      <!-- slider -->
+      <div class="slider">
+        <!--<label> 제목</label>-->
+        <input
+          type="range"
+          min="110"
+          max="1000"
+          step="10"
+          v-model="sliderValue"
+          @mouseup="selectOneItem()"
+        />
+        <span>{{ sliderValue }}m</span>
+      </div>
     </div>
+
     <section class="kakao-flip-container">
       <div
-        class="kakao-flip-relative"
+        class="kakao-flip-relative apart1"
         @click="toggleContainer(false)"
         v-if="listContainerToggle"
       >
-        <div class="kakao-flip-img apart1"></div>
-        <label class="kakao-flip-text">추천매물</label>
+        추천<br />서비스
       </div>
       <div
-        class="kakao-flip-relative"
+        class="kakao-flip-relative apart2"
         @click="toggleContainer(true)"
         v-if="!listContainerToggle"
       >
-        <div class="kakao-flip-img apart2"></div>
-        <label class="kakao-flip-text">전체매물</label>
+        매물
       </div>
     </section>
   </div>
@@ -75,15 +88,20 @@
 import http from "@/api/http.js";
 import { mapState } from "vuex";
 import { KEYWORD } from "@/constants/index.js";
+import RangeSlider from "vue-range-slider";
+import "vue-range-slider/dist/vue-range-slider.css";
 
 export default {
   name: "KakaoMap",
   data() {
     return {
+      // range slider
+      sliderValue: "300", // 초기값 300m
       // kakao
       map: Object,
       markers: [],
       overlays: [],
+      clusterer: null,
       range: {
         sw_Lat: 0,
         sw_Lng: 0,
@@ -100,6 +118,9 @@ export default {
       isKeywordDetailOpen: false, //내 키워드에서 다운바 열렸는지 여부
       listContainerToggle: true, //true일 때 추천매물, false일 때 전체매물
     };
+  },
+  components: {
+    RangeSlider,
   },
   computed: {
     ...mapState("userStore", ["userKeyword"]),
@@ -118,15 +139,6 @@ export default {
       this.onEnterItem(enterItem);
     });
 
-    // this.selectedKeywords = this.userKeyword;
-    // const keys = Object.keys(this.userKeyword);
-    // keys.splice(0, 1);
-    // keys.splice(0, 1);
-    // this.keywordValues = keys.map((e) => {
-    //   const divByUnderBar = e.split("_");
-    //   return KEYWORD[divByUnderBar[1]];
-    // });
-
     const keys = Object.keys(this.userKeyword);
     keys.splice(0, 1);
     keys.splice(0, 1);
@@ -140,6 +152,9 @@ export default {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods: {
+    testaaa() {
+      console.log("111", 111);
+    },
     initMap() {
       var container = document.getElementById("map");
       var options = {
@@ -148,12 +163,12 @@ export default {
       };
       this.map = new kakao.maps.Map(container, options);
 
-      kakao.maps.event.addListener(this.map, "mouseup", () => {
+      kakao.maps.event.addListener(this.map, "dragend", () => {
         this.markers.forEach((e) => e.setMap(null));
         this.setSouthWest();
         this.setNorthEast();
         this.sendListByRange();
-        if (this.isKeywordOpen) this.sendCommercialByRange();
+        // if (this.isKeywordOpen) this.sendCommercialByRange();
       });
 
       kakao.maps.event.addListener(this.map, "zoom_changed", () => {
@@ -163,6 +178,13 @@ export default {
         this.sendListByRange();
       });
 
+      kakao.maps.event.addListener(this.map, "center_changed", () => {
+        this.deleteAllMarkers();
+        this.deleteAllOverlays();
+        this.setSouthWest();
+        this.setNorthEast();
+      });
+
       this.map.setMaxLevel(5);
     },
     addScript() {
@@ -170,12 +192,14 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=db837c20449f592fb6c253f478a766b8";
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=db837c20449f592fb6c253f478a766b8&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     },
     toggleContainer(type) {
       this.listContainerToggle = type;
       this.$emit("toggleContainer", type);
+      this.isKeywordOpen = false;
+      this.selectedItem = null;
     },
     selectStation(station) {
       console.log(station);
@@ -184,7 +208,8 @@ export default {
       this.setSouthWest();
       this.setNorthEast();
       console.log(this.range);
-      this.setMapCenter({ lat: station.lat, lng: station.lon });
+      const coords = new kakao.maps.LatLng(station.lat, station.lng);
+      this.map.setCenter(coords);
       this.addMarker(
         { lat: station.lat, lng: station.lon },
         station.station,
@@ -221,16 +246,6 @@ export default {
       this.selectOneItem();
       console.log(this.selectedKeywords);
     },
-    setMapCenter(pos) {
-      console.log(pos);
-      this.markers.forEach((e) => e.setMap(null));
-      this.overlays.forEach((e) => e.setMap(null));
-
-      const coords = new kakao.maps.LatLng(pos.lat, pos.lng);
-      this.map.setCenter(coords);
-      this.setSouthWest();
-      this.setNorthEast();
-    },
     setSouthWest() {
       var bounds = this.map.getBounds();
       this.range.sw_Lat = bounds.getSouthWest().getLat();
@@ -261,37 +276,63 @@ export default {
         image: markerImage, // 마커이미지 설정
       });
 
-      // 마커가 지도 위에 표시되도록 설정합니다
-      marker.setMap(this.map);
-      this.markers.push(marker);
-
-      // custom overlay
-      var content = `
-      <div class="kakao-overlay-container" style="width:fit-content;padding:0.5rem 0.75rem;border:1.5px solid #fdb814;color:#292929;border-radius: 12px;background-color:#fff;display:flex; justify-content:center; align-items:center; font-size:12px; font-weight:bold">
-        ${name}
-      </div>
-        `;
-
-      // 커스텀 오버레이가 표시될 위치입니다
-      var position = new kakao.maps.LatLng(pos.lat, pos.lng);
-      const copymap = this.map;
+      //this.clusterer.addMarkers(this.markers);
 
       // 커스텀 오버레이를 생성합니다
       var customOverlay = new kakao.maps.CustomOverlay({
-        map: this.map,
-        position: position,
-        content: content,
+        position: marker.getPosition(),
         yAnchor: 1,
         xAnchor: 0.25,
+        clickable: true,
       });
-      // 여기 작성하자
-      // const parent = document.querySelector(
-      //   ".kakao-overlay-container",
-      // ).parentNode;
 
-      // 커스텀 오버레이를 지도에 표시합니다
-      //customOverlay.setMap(this.map);
-      this.overlays.push(customOverlay);
+      // <--- make custom overlay
+      const overlayContainer = document.createElement("div");
+      overlayContainer.className = "kakao-overlay-container";
+
+      const bigImg = document.createElement("img");
+      bigImg.setAttribute("src", require("@/assets/back1.jpg"));
+      bigImg.className = "overlay-img";
+
+      const detailContainer = document.createElement("div");
+      detailContainer.className = "overlay-detail-container";
+
+      const titleContainer = document.createElement("div");
+      titleContainer.className = "overlay-title-container";
+
+      const title = document.createElement("h1");
+      title.innerHTML = name;
+
+      const price = document.createElement("h3");
+      price.className = "overlay-price";
+
+      const infoContainer = document.createElement("div");
+      const infoItem1 = document.createElement("div");
+      const infoItem2 = document.createElement("div");
+      const infoItem3 = document.createElement("div");
+      infoContainer.append(infoItem1, infoItem2, infoItem3);
+      titleContainer.append(title);
+      detailContainer.append(titleContainer, price, infoContainer);
+      overlayContainer.append(bigImg, detailContainer);
+
+      customOverlay.setContent(overlayContainer);
+      //----> make custom overlay
+      kakao.maps.event.addListener(marker, "click", () => {
+        if (this.clickedOveray) {
+          this.clickedOveray.setMap(null);
+        }
+        customOverlay.setMap(this.map);
+        this.clickedOveray = customOverlay;
+      });
+
+      kakao.maps.event.addListener(this.map, "click", () => {
+        customOverlay.setMap(null);
+      });
+
+      // 마커가 지도 위에 표시되도록 설정합니다
+      marker.setMap(this.map);
+      this.markers.push(marker);
+      // this.overlays.push(customOverlay);
     },
     sendListByRange() {
       const whereis = {};
@@ -322,10 +363,12 @@ export default {
     },
     selectOneItem() {
       const myKeywords = {}; //{ ...this.userKeyword };
-      this.setMapCenter({
-        lat: this.selectedItem.lat,
-        lng: this.selectedItem.lng,
-      });
+      const coords = new kakao.maps.LatLng(
+        this.selectedItem.lat,
+        this.selectedItem.lng,
+      );
+      this.map.setCenter(coords);
+
       myKeywords.userKeyword = this.selectedKeywords;
       console.log("myKeywords", myKeywords);
       myKeywords.sw_lat = this.range.sw_Lat;
@@ -334,6 +377,7 @@ export default {
       myKeywords.ne_lng = this.range.ne_Lng;
       myKeywords.current_lat = this.selectedItem.lat;
       myKeywords.current_lng = this.selectedItem.lng;
+      myKeywords.sliderValue = this.sliderValue;
       if (!myKeywords) return;
 
       http.post(`/housedeal/commercial`, myKeywords).then((resp) => {
@@ -343,24 +387,17 @@ export default {
         });
       });
     },
-    onEnterItem(enterItem) {
-      console.log(enterItem);
-      this.markers.forEach((e) => {
-        //La가 lng, Ma가 lat
-        const lat = e.getPosition().Ma;
-        const lng = e.getPosition().La;
-        if (enterItem.lat == lat && enterItem.lng == lng) {
-          const markerImage = new kakao.maps.MarkerImage(
-            require("@/assets/logo.png"),
-            new kakao.maps.Size(70, 70),
-            new kakao.maps.Point(13, 34),
-          );
-          e.setImage(markerImage);
-        }
-      });
+    deleteAllMarkers() {
+      this.markers.forEach((e) => e.setMap(null));
+      this.markers = [];
+    },
+    deleteAllOverlays() {
+      this.overlays.forEach((e) => e.setMap(null));
+      this.overlays = [];
     },
   },
 };
 </script>
 
 <style scoped src="@/css/kakao.css"></style>
+<style src="@/css/kakaoOverlay.css"></style>
