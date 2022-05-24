@@ -7,7 +7,14 @@
         @click="goback"
       ></font-awesome-icon>
       {{ item.aptName }}
-      <font-awesome-icon icon="heart" class="likebtn"></font-awesome-icon>
+      <i
+        :class="{
+          'fa-solid fa-heart': true,
+          unlikebtn: isLike,
+          likebtn: !isLike,
+        }"
+        @click="toggleLike"
+      ></i>
     </section>
     <img src="@/assets/back.jpg" class="detail-main-img" />
     <article class="detail-article">
@@ -15,7 +22,7 @@
         <label class="info-hit-label"
           >현재까지 {{ item.hit }}명의 사용자가 본 매물입니다.</label
         >
-        <h3 class="info-price-title">매매 {{ item.dealAmount | toWon }}</h3>
+        <h3 class="info-price-title">매매 {{ item.dealAmount | toWon }}원</h3>
       </section>
       <section class="header-section vertical-center">
         상세정보
@@ -51,13 +58,31 @@
 
 <script>
 import BarChart from "@/components/Charts/BarChart.vue";
+import http from "@/api/http.js";
+import { mapState } from "vuex";
+
 export default {
   components: { BarChart },
   data() {
     return {
       s1Open: true,
-      is_like: false, // 좋아요 눌러졌는지 아닌지 저장
+      isLike: null, // 좋아요 눌러졌는지 아닌지 저장
     };
+  },
+  computed: {
+    ...mapState("userStore", ["userInfo"]),
+  },
+  created() {
+    http
+      .get(
+        `/user/interested/detail/${this.userInfo.userId.toString()}/${
+          this.item.no
+        }`,
+      )
+      .then((resp) => {
+        if (resp.data) this.isLike = resp.data;
+        console.log(resp.data);
+      });
   },
   props: {
     item: Object,
@@ -66,6 +91,36 @@ export default {
     goback() {
       this.$emit("backToList");
       this.$EventBus.$emit("closeKeywordTab");
+    },
+    toggleLike() {
+      if (this.isLike) {
+        http
+          .delete(`/user/interested/delete/${this.isLike.no}`)
+          .then((resp) => {
+            console.log(resp.data);
+            if (resp.data === "success") this.isLike = null;
+          });
+      } else {
+        http
+          .post(`/user/interested/insert`, {
+            user_id: this.userInfo.userId,
+            housedeal_id: this.item.no,
+          })
+          .then((resp) => {
+            console.log(resp.data);
+            if (resp.data === "success") {
+              http
+                .get(
+                  `/user/interested/detail/${this.userInfo.userId}/
+                ${this.item.no}`,
+                )
+                .then((response) => {
+                  if (response.data) this.isLike = response.data;
+                });
+            }
+          });
+      }
+      console.log(this.isLike);
     },
   },
   filters: {

@@ -4,9 +4,12 @@
     <div class="list-item-detail">
       <label>아파트</label>
       <h5>{{ item.aptName }}</h5>
-      <h3>{{ item.dealAmount | toWon }}만원</h3>
+      <h3>{{ item.dealAmount | toWon }}원</h3>
     </div>
-    <font-awesome-icon icon="heart" class="likebtn"></font-awesome-icon>
+    <div class="absolute">
+      <i class="fa-brands fa-gratipay"></i>
+      {{ item.hit }}
+    </div>
   </div>
 </template>
 
@@ -54,7 +57,7 @@ export default {
         rest += "0";
       }
 
-      if (rest !== "0000") danwi += rest;
+      if (rest !== "0000") danwi += rest + "만";
 
       return danwi;
     },
