@@ -351,11 +351,17 @@ export default {
       whereis.sw_lng = this.range.sw_Lng;
       whereis.ne_lat = this.range.ne_Lat;
       whereis.ne_lng = this.range.ne_Lng;
+
+      let posDatas = {
+        positions: [],
+      };
       http.post(`/housedeal/boundry`, whereis).then((resp) => {
         this.$EventBus.$emit("getListByLatLng", resp.data);
         resp.data.forEach((e) => {
           this.addMarker({ lat: e.lat, lng: e.lng }, e, 0);
+          posDatas.positions.push({ lat: e.lat, lng: e.lng });
         });
+        console.log(posDatas);
       });
     },
 
