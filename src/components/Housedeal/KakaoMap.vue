@@ -115,7 +115,6 @@ export default {
       keywordValues: [], //내 키워드 체크박스 텍스트용 배열
       stations: [], //역 검색시의 결과 역 리스트
       selectedKeywords: {}, //내 키워드의 객체 형태 (선택반영)
-      selectedStation: null, //선택한 역
       isKeywordOpen: false, //내 키워드 열렸는지 여부
       isKeywordDetailOpen: false, //내 키워드에서 다운바 열렸는지 여부
       listContainerToggle: true, //true일 때 추천매물, false일 때 전체매물
@@ -128,6 +127,10 @@ export default {
     this.$EventBus.$on("closeKeywordTab", () => {
       this.isKeywordOpen = false;
       this.selectedItem = null;
+      this.deleteAllMarkers();
+      this.setSouthWest();
+      this.setNorthEast();
+      this.sendListByRange();
     });
     this.$EventBus.$on("selectOneItem", (selectedItem) => {
       this.isKeywordOpen = true;
@@ -191,6 +194,7 @@ export default {
 
     initMap() {
       var container = document.getElementById("map");
+
       var options = {
         center: new kakao.maps.LatLng(37.5666805, 126.9784147),
         level: 3,
@@ -215,12 +219,22 @@ export default {
         this.sendListByRange();
       });
 
-      // kakao.maps.event.addListener(this.map, "center_changed", () => {
-      //   this.setSouthWest();
-      //   this.setNorthEast();
-      // });
-
       this.map.setMaxLevel(5);
+
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          this.setMapCenter({ lat, lng });
+          var marker = new kakao.maps.Marker({
+            map: this.map,
+            position: new kakao.maps.LatLng(lat, lng),
+          });
+          this.markers.push(marker);
+          this.sendListByRange();
+        });
+      }
     },
     addScript() {
       const script = document.createElement("script");
@@ -238,13 +252,9 @@ export default {
     },
     selectStation(station) {
       console.log(station);
-      this.selectedStation = station;
       this.stations = [];
-      this.setSouthWest();
-      this.setNorthEast();
-      console.log(this.range);
-      const coords = new kakao.maps.LatLng(station.lat, station.lng);
-      this.map.setCenter(coords);
+      this.setMapCenter({ lat: station.lat, lng: station.lon });
+
       this.addMarker(
         { lat: station.lat, lng: station.lon },
         station.station,
@@ -296,7 +306,7 @@ export default {
           type === 0 ? "home" : type === 1 ? "shop" : "subway"
         }.png`), // 마커이미지의 주소입니다
         imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
-        imageOption = { offset: new kakao.maps.Point(0, 0) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        imageOption = { offset: new kakao.maps.Point(25, 25) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
       // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
       var markerImage = new kakao.maps.MarkerImage(
@@ -339,6 +349,8 @@ export default {
         }
         customOverlay.setMap(this.map);
         this.clickedOveray = customOverlay;
+
+        if (type === 0) this.$EventBus.$emit("onMarkerClick", obj);
       });
 
       kakao.maps.event.addListener(this.map, "click", () => {
@@ -361,7 +373,6 @@ export default {
           this.addMarker({ lat: e.lat, lng: e.lng }, e, 0);
           posDatas.positions.push({ lat: e.lat, lng: e.lng });
         });
-        console.log(posDatas);
       });
     },
 
@@ -381,11 +392,16 @@ export default {
     selectOneItem() {
       this.deleteAllMarkers();
       const myKeywords = {}; //{ ...this.userKeyword };
-      const coords = new kakao.maps.LatLng(
-        this.selectedItem.lat,
-        this.selectedItem.lng,
-      );
-      this.map.setCenter(coords);
+      const pos = {
+        lat: this.selectedItem.lat,
+        lng: this.selectedItem.lng,
+      };
+      // const coords = new kakao.maps.LatLng(
+      //   this.selectedItem.lat,
+      //   this.selectedItem.lng,
+      // );
+      // this.map.setCenter(coords);
+      this.setMapCenter(pos);
 
       myKeywords.userKeyword = this.selectedKeywords;
       console.log("myKeywords", myKeywords);
@@ -396,11 +412,7 @@ export default {
       myKeywords.current_lat = this.selectedItem.lat;
       myKeywords.current_lng = this.selectedItem.lng;
       myKeywords.sliderValue = this.sliderValue;
-      this.addMarker(
-        { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
-        this.selectedItem,
-        0,
-      );
+      this.addMarker(pos, this.selectedItem, 0);
 
       if (!myKeywords) return;
 
