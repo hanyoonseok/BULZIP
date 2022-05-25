@@ -82,6 +82,7 @@ const routes = [
       {
         path: "list",
         name: "qnaList",
+        beforeEnter: onlyAuthUser,
         component: QnaList,
       },
       {

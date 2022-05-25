@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  z-index:999;
+  z-index: 999;
 }
 
 #main-header ul {
@@ -71,4 +71,12 @@
 }
 .header-bottom-area .li:hover > .header-hover-text {
   animation: textHover 0.3s forwards;
+}
+
+.li label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
 }

@@ -63,7 +63,7 @@ export default {
         .post(`/user/findpw/${this.id}/${this.name}/${this.phone}`)
         .then((resp) => {
           if (resp.data !== "fail") {
-            alert("비밀번호 변경 성공");
+            alert("비밀번호 발급 성공");
             this.tempPw = resp.data;
           } else {
             alert("일치하는 정보가 없습니다.");

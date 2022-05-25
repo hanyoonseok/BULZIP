@@ -60,6 +60,7 @@
   flex-direction: column;
   color:#292929;
   font-size: 42px;
+  padding-right: 10%;
 }
 
 .right-container-noback label{
