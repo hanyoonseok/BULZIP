@@ -70,6 +70,9 @@ export default {
     this.$EventBus.$on("closeDetail", () => {
       this.selectedItem = null;
     });
+    this.$EventBus.$on("onMarkerClick", (selectedItem) => {
+      this.selectOne(selectedItem);
+    });
     if (this.$route.params.keyword) {
       this.keyword = this.$route.params.keyword;
       this.getList(this.keyword);
@@ -85,13 +88,10 @@ export default {
           this.dataIdx = 0;
         });
       } else {
-        http.get(`/housedeal/list/${this.dataIdx}`).then((resp) => {
-          this.items = this.items.concat(resp.data);
-          this.dataIdx += 100;
-          // this.items.forEach((e) => {
-          //   this.$EventBus.$emit("addMarker", { lat: e.lat, lng: e.lng });
-          // });
-        });
+        // http.get(`/housedeal/list/${this.dataIdx}`).then((resp) => {
+        //   this.items = this.items.concat(resp.data);
+        //   this.dataIdx += 100;
+        // });
       }
     },
     getListByLatLng(list) {
