@@ -142,7 +142,6 @@ export default {
   methods: {
     ...mapActions("userStore", ["getUserInfo"]),
     update() {
-      console.log(this.user);
       console.log(this.checkbox, this.checkedCnt);
       if (this.checkedCnt < 10) {
         alert("키워드를 10개 이상 체크해주세요!.");
@@ -151,7 +150,7 @@ export default {
         alert("새 비밀번호가 일치하지 않습니다");
         return;
       }
-
+      console.log(this.user);
       http.put(`/user/update`, this.user).then((resp) => {
         if (resp.data === "success") {
           console.log(this.checkbox);

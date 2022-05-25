@@ -53,19 +53,20 @@ export default {
       id: "",
       name: "",
       phone: "",
-      tempPw: "1",
+      tempPw: "",
     };
   },
   methods: {
     findpw() {
+      console.log(this.id, this.name, this.phone);
       http
         .post(`/user/findpw/${this.id}/${this.name}/${this.phone}`)
         .then((resp) => {
-          if (resp.data == "success") {
+          if (resp.data !== "fail") {
             alert("비밀번호 변경 성공");
             this.tempPw = resp.data;
           } else {
-            alert(resp.data);
+            alert("일치하는 정보가 없습니다.");
             this.$refs.id.focus();
           }
         });
