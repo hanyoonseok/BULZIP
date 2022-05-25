@@ -243,7 +243,7 @@ export default {
       this.setSouthWest();
       this.setNorthEast();
       console.log(this.range);
-      const coords = new kakao.maps.LatLng(station.lat, station.lng);
+      const coords = new kakao.maps.LatLng(station.lat, station.lon);
       this.map.setCenter(coords);
       this.addMarker(
         { lat: station.lat, lng: station.lon },
@@ -352,11 +352,6 @@ export default {
       whereis.ne_lat = this.range.ne_Lat;
       whereis.ne_lng = this.range.ne_Lng;
 
-      // let posDatas = {
-      //   positions: [],
-      // };
-      var positions = [];
-
       // 클러스터 부분
       // 마커 클러스터러를 생성합니다
       const clusterer = new kakao.maps.MarkerClusterer({
@@ -371,17 +366,7 @@ export default {
         this.$EventBus.$emit("getListByLatLng", resp.data);
         resp.data.forEach((e) => {
           this.addMarker({ lat: e.lat, lng: e.lng }, e, 0);
-
-          // positions.push(
-          //   new kakao.maps.Marker({
-          //     position: new kakao.maps.LatLng(e.lat, e.lng),
-          //   }),
-          // );
         });
-
-        //console.log(posDatas);
-        // 클러스터러에 마커들을 추가합니다
-        console.log("positions", positions);
         clusterer.addMarkers(this.markers);
       });
     },

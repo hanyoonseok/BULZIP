@@ -67,6 +67,9 @@ export default {
     this.$EventBus.$on("getListByLatLng", (range) => {
       this.getListByLatLng(range);
     });
+    this.$EventBus.$on("closeDetail", () => {
+      this.selectedItem = null;
+    });
     if (this.$route.params.keyword) {
       this.keyword = this.$route.params.keyword;
       this.getList(this.keyword);
