@@ -3,7 +3,18 @@
     <div class="left-container all-center">
       <h1>회원정보</h1>
       <input type="text" class="user-input" v-model="user.userId" disabled />
-      <input type="password" class="user-input" value="***" disabled />
+      <input
+        type="password"
+        class="user-input"
+        placeholder="비밀번호"
+        v-model="user.password"
+      />
+      <input
+        type="password"
+        class="user-input"
+        placeholder="비밀번호 확인"
+        v-model="user.newpassword"
+      />
       <input type="text" class="user-input" v-model="user.name" />
       <input type="text" class="user-input" v-model="user.phone" />
       <button class="form-btn" @click="update">회원정보 수정</button>
@@ -31,7 +42,15 @@ import CheckBox from "@/components/User/item/CheckBox.vue";
 export default {
   data() {
     return {
-      user: { id: "", userId: "", password: "", name: "", phone: "", role: "" },
+      user: {
+        id: "",
+        userId: "",
+        password: "",
+        newpassword: "",
+        name: "",
+        phone: "",
+        role: "",
+      },
       checkbox: {
         keyword_N01: 0,
         keyword_D06: 0,
@@ -106,6 +125,8 @@ export default {
         alert("정보 로드 실패");
       } else {
         this.user = resp.data;
+        this.user.password = "";
+        this.user.newpassword = "";
       }
     });
     if (this.userKeyword) {
@@ -126,7 +147,11 @@ export default {
       if (this.checkedCnt < 10) {
         alert("키워드를 10개 이상 체크해주세요!.");
         return;
+      } else if (this.user.password !== this.user.newpassword) {
+        alert("새 비밀번호가 일치하지 않습니다");
+        return;
       }
+
       http.put(`/user/update`, this.user).then((resp) => {
         if (resp.data === "success") {
           console.log(this.checkbox);
@@ -138,8 +163,7 @@ export default {
             } else {
               alert("에러 발생");
             }
-            const currentLocation = location.href;
-            location.href = currentLocation;
+            this.$router.push("/");
           });
         } else {
           alert("정보 수정 실패");

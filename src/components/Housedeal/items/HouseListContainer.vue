@@ -30,9 +30,19 @@
           :border="'yellow'"
           @selectOne="selectOne"
         />
-        <div class="list-item-detail" v-if="items.length === 0">
-          <img src="@/assets/cry.png" class="cry-img" />
-          <h5 style="text-align: center">근처에 매물이 없어요..</h5>
+        <div class="all-center" style="flex-direction: column">
+          <img src="@/assets/loading.gif" class="cry-img" v-if="isLoading" />
+          <img
+            src="@/assets/cry.png"
+            class="cry-img"
+            v-if="!isLoading && items.length === 0"
+          />
+          <h5
+            style="text-align: center"
+            v-if="!isLoading && items.length === 0"
+          >
+            근처에 매물이 없습니다.
+          </h5>
         </div>
       </div>
       <img src="@/assets/매물.png" class="float-img" />
@@ -40,7 +50,10 @@
 
     <HouseDetail
       v-if="selectedItem"
-      @backToList="selectedItem = null"
+      @backToList="
+        selectedItem = null;
+        isLoading = true;
+      "
       :item="selectedItem"
     />
 
@@ -63,13 +76,17 @@ export default {
       keyword: "",
       status: 0, //0=전체목록, -1=관심목록, > 1 상세조회
       isKeywordSearch: false,
+      isLoading: false,
     };
   },
   created() {
+    this.isLoading = true;
     this.$EventBus.$on("getListByLatLng", (range) => {
+      this.isLoading = true;
       console.log("receive", range);
       this.isKeywordSearch = false;
       this.items = range;
+      this.isLoading = false;
     });
     this.$EventBus.$on("closeDetail", () => {
       this.selectedItem = null;
@@ -80,11 +97,13 @@ export default {
   },
   methods: {
     getList(keyword) {
+      this.isLoading = true;
       console.log(this.dataIdx);
       if (keyword) {
         http.post(`/housedeal/list/${keyword}/${this.dataIdx}`).then((resp) => {
           this.items = this.items.concat(resp.data);
           this.dataIdx += 20;
+          this.isLoading = false;
         });
       }
     },

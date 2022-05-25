@@ -248,6 +248,7 @@ export default {
       this.$emit("toggleContainer", type);
       this.isKeywordOpen = false;
       this.selectedItem = null;
+      if (type) this.sendListByRange();
     },
     selectStation(station) {
       console.log(station);
