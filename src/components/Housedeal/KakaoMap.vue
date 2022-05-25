@@ -175,7 +175,7 @@ export default {
       this.addMarker(
         { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
         this.selectedItem,
-        0,
+        3,
       );
 
       if (!hospitalmap) return;
@@ -303,11 +303,13 @@ export default {
       this.range.ne_Lng = bounds.getNorthEast().getLng();
     },
     addMarker(pos, obj, type) {
-      var imageSrc = require(`@/assets/${
-          type === 0 ? "home" : type === 1 ? "shop" : "subway"
-        }.png`), // 마커이미지의 주소입니다
-        imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
-        imageOption = { offset: new kakao.maps.Point(25, 25) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      var imageSrc = "";
+      if (type === 0) imageSrc = require("@/assets/home.png");
+      if (type === 1) imageSrc = require("@/assets/commercial.png");
+      if (type === 2) imageSrc = require("@/assets/subway.png");
+      if (type === 3) imageSrc = require("@/assets/hospital.png");
+      const imageSize = new kakao.maps.Size(type === 2 ? 34 : 32, 47); // 마커이미지의 크기입니다
+      const imageOption = { offset: new kakao.maps.Point(25, 25) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
       // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
       var markerImage = new kakao.maps.MarkerImage(
@@ -333,8 +335,8 @@ export default {
       // 커스텀 오버레이를 생성합니다
       var customOverlay = new kakao.maps.CustomOverlay({
         position: marker.getPosition(),
-        yAnchor: 1,
-        xAnchor: 0.425,
+        yAnchor: 1.1,
+        xAnchor: 0.5,
         clickable: true,
       });
 
