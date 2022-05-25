@@ -16,9 +16,14 @@
           :item="item"
           @selectOne="selectOne"
         />
-        <div class="list-item-detail" v-if="items.length === 0">
-          <img src="@/assets/cry.png" class="cry-img" />
-          <h5>관심 매물을 등록해보세요</h5>
+        <div class="all-center" style="flex-direction: column">
+          <img src="@/assets/loading.gif" class="cry-img" v-if="isLoading" />
+          <h5
+            style="text-align: center"
+            v-if="!isLoading && items.length === 0"
+          >
+            관심매물을 등록해보세요.
+          </h5>
         </div>
       </div>
     </div>
@@ -41,15 +46,18 @@ export default {
     return {
       items: [],
       selectedItem: null,
+      isLoading: false,
     };
   },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
   created() {
+    this.isLoading = true;
     http.get(`/user/interested/list/${this.userInfo.userId}`).then((resp) => {
       console.log(resp.data);
       this.items = resp.data;
+      this.isLoading = false;
     });
   },
   methods: {

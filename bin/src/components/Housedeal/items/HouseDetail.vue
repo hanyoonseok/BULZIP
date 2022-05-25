@@ -20,7 +20,7 @@
     <article class="detail-article">
       <section class="info-section">
         <label class="info-hit-label"
-          >현재까지 {{ item.hit }}명의 관심을 받은 매물입니다.</label
+          >현재까지 {{ likeCnt }}명의 관심을 받은 매물입니다.</label
         >
         <h3 class="info-price-title">매매 {{ item.dealAmount | toWon }}원</h3>
       </section>
@@ -67,6 +67,7 @@ export default {
     return {
       s1Open: true,
       isLike: null, // 좋아요 눌러졌는지 아닌지 저장
+      likeCnt: this.item.hit,
     };
   },
   computed: {
@@ -94,6 +95,7 @@ export default {
     },
     toggleLike() {
       if (this.isLike) {
+        this.likeCnt -= 1;
         http
           .delete(`/user/interested/delete/${this.isLike.no}`)
           .then((resp) => {
@@ -101,6 +103,7 @@ export default {
             if (resp.data === "success") this.isLike = null;
           });
       } else {
+        this.likeCnt += 1;
         http
           .post(`/user/interested/insert`, {
             user_id: this.userInfo.userId,

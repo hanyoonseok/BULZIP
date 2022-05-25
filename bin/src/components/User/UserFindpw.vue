@@ -11,22 +11,20 @@
         ref="id"
       />
       <input
-        type="password"
+        type="text"
         class="user-input"
-        placeholder="비밀번호"
+        placeholder="이름"
         required
-        v-model="pw"
+        v-model="name"
       />
       <input
-        type="password"
+        type="text"
         class="user-input"
-        placeholder="새 비밀번호"
+        placeholder="전화번호"
         required
-        v-model="newpw"
+        v-model="phone"
       />
-      <p class="text-danger" v-show="!isValid">
-        아이디 혹은 비밀번호가 일치하지 않습니다
-      </p>
+
       <input type="submit" class="form-btn" value="비밀번호 찾기" />
 
       <span class="small-text-container">
@@ -38,7 +36,11 @@
         >
       </span>
     </form>
-    <section class="right-container"></section>
+    <section class="right-container" v-if="tempPw === ''"></section>
+    <section class="right-container-noback" v-if="tempPw !== ''">
+      아래 임시 비밀번호로 로그인 해주세요. <br />
+      <label>{{ tempPw }}</label>
+    </section>
   </div>
 </template>
 
@@ -49,28 +51,25 @@ export default {
   data() {
     return {
       id: "",
-      pw: "",
-      newpw: "",
-      isValid: true,
+      name: "",
+      phone: "",
+      tempPw: "",
     };
   },
   methods: {
     findpw() {
-      if (this.pw !== this.newpw) {
-        this.isValid = false;
-      } else {
-        http
-          .post(`/user/findpw/${this.id}/${this.pw}/${this.newpw}`)
-          .then((resp) => {
-            if (resp.data == "success") {
-              alert("비밀번호 변경 성공");
-              this.$router.push("/user/login");
-            } else {
-              alert(resp.data);
-              this.$refs.id.focus();
-            }
-          });
-      }
+      console.log(this.id, this.name, this.phone);
+      http
+        .post(`/user/findpw/${this.id}/${this.name}/${this.phone}`)
+        .then((resp) => {
+          if (resp.data !== "fail") {
+            alert("비밀번호 변경 성공");
+            this.tempPw = resp.data;
+          } else {
+            alert("일치하는 정보가 없습니다.");
+            this.$refs.id.focus();
+          }
+        });
 
       return false;
     },
