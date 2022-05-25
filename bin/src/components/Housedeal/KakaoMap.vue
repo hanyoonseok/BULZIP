@@ -50,9 +50,9 @@
           >{{ kw }}
         </div>
       </div>
+
       <!-- slider -->
       <div class="slider">
-        <!--<label> 제목</label>-->
         <input
           type="range"
           min="110"
@@ -63,6 +63,11 @@
         />
         <span>{{ sliderValue }}m</span>
       </div>
+
+      <!-- 병원 정보 조회 버튼 -->
+      <button class="hospital_button" @click="getHospitals()">
+        주변 병원 보기
+      </button>
     </div>
 
     <section class="kakao-flip-container">
@@ -88,8 +93,6 @@
 import http from "@/api/http.js";
 import { mapState } from "vuex";
 import { KEYWORD } from "@/constants/index.js";
-import RangeSlider from "vue-range-slider";
-import "vue-range-slider/dist/vue-range-slider.css";
 
 export default {
   name: "KakaoMap",
@@ -118,9 +121,6 @@ export default {
       isKeywordDetailOpen: false, //내 키워드에서 다운바 열렸는지 여부
       listContainerToggle: true, //true일 때 추천매물, false일 때 전체매물
     };
-  },
-  components: {
-    RangeSlider,
   },
   computed: {
     ...mapState("userStore", ["userKeyword"]),
@@ -152,9 +152,37 @@ export default {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods: {
-    testaaa() {
-      console.log("111", 111);
+    getHospitals() {
+      const hospitalmap = {};
+      const coords = new kakao.maps.LatLng(
+        this.selectedItem.lat,
+        this.selectedItem.lng,
+      );
+      this.map.setCenter(coords);
+
+      hospitalmap.current_lat = this.selectedItem.lat;
+      hospitalmap.current_lng = this.selectedItem.lng;
+      hospitalmap.sliderValue = this.sliderValue;
+      // 현재 매물 마커 찍기
+      this.addMarker(
+        { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
+        this.selectedItem.aptName,
+        0,
+      );
+
+      if (!hospitalmap) return;
+      http.post(`/housedeal/hospital`, hospitalmap).then((resp) => {
+        console.log("병원 리스트", resp.data);
+        resp.data.forEach((e) => {
+          this.addMarker(
+            { lat: parseFloat(e.lat), lng: parseFloat(e.lon) },
+            e.dutyname,
+            1, // 병원용 마크 하나 다시 만들어야 함.
+          );
+        });
+      });
     },
+
     initMap() {
       var container = document.getElementById("map");
       var options = {
@@ -256,7 +284,7 @@ export default {
       this.range.ne_Lat = bounds.getNorthEast().getLat();
       this.range.ne_Lng = bounds.getNorthEast().getLng();
     },
-    addMarker(pos, name, type) {
+    addMarker(pos, obj, type) {
       var imageSrc = require(`@/assets/${
           type === 0 ? "home" : type === 1 ? "shop" : "subway"
         }.png`), // 마커이미지의 주소입니다
@@ -278,42 +306,23 @@ export default {
 
       //this.clusterer.addMarkers(this.markers);
 
+      // 마커가 지도 위에 표시되도록 설정합니다
+      marker.setMap(this.map);
+      this.markers.push(marker);
+
+      if (type === 2) return;
+
       // 커스텀 오버레이를 생성합니다
       var customOverlay = new kakao.maps.CustomOverlay({
         position: marker.getPosition(),
         yAnchor: 1,
-        xAnchor: 0.25,
+        xAnchor: 0.425,
         clickable: true,
       });
 
       // <--- make custom overlay
-      const overlayContainer = document.createElement("div");
-      overlayContainer.className = "kakao-overlay-container";
-
-      const bigImg = document.createElement("img");
-      bigImg.setAttribute("src", require("@/assets/back1.jpg"));
-      bigImg.className = "overlay-img";
-
-      const detailContainer = document.createElement("div");
-      detailContainer.className = "overlay-detail-container";
-
-      const titleContainer = document.createElement("div");
-      titleContainer.className = "overlay-title-container";
-
-      const title = document.createElement("h1");
-      title.innerHTML = name;
-
-      const price = document.createElement("h3");
-      price.className = "overlay-price";
-
-      const infoContainer = document.createElement("div");
-      const infoItem1 = document.createElement("div");
-      const infoItem2 = document.createElement("div");
-      const infoItem3 = document.createElement("div");
-      infoContainer.append(infoItem1, infoItem2, infoItem3);
-      titleContainer.append(title);
-      detailContainer.append(titleContainer, price, infoContainer);
-      overlayContainer.append(bigImg, detailContainer);
+      const overlayContainer =
+        type === 0 ? this.getHouseOverlay(obj) : this.getCommercialOverlay(obj);
 
       customOverlay.setContent(overlayContainer);
       //----> make custom overlay
@@ -328,11 +337,6 @@ export default {
       kakao.maps.event.addListener(this.map, "click", () => {
         customOverlay.setMap(null);
       });
-
-      // 마커가 지도 위에 표시되도록 설정합니다
-      marker.setMap(this.map);
-      this.markers.push(marker);
-      // this.overlays.push(customOverlay);
     },
     sendListByRange() {
       const whereis = {};
@@ -343,7 +347,7 @@ export default {
       http.post(`/housedeal/boundry`, whereis).then((resp) => {
         this.$EventBus.$emit("getListByLatLng", resp.data);
         resp.data.forEach((e) => {
-          this.addMarker({ lat: e.lat, lng: e.lng }, e.aptName, 0);
+          this.addMarker({ lat: e.lat, lng: e.lng }, e, 0);
         });
       });
     },
@@ -378,12 +382,18 @@ export default {
       myKeywords.current_lat = this.selectedItem.lat;
       myKeywords.current_lng = this.selectedItem.lng;
       myKeywords.sliderValue = this.sliderValue;
+      this.addMarker(
+        { lat: this.selectedItem.lat, lng: this.selectedItem.lng },
+        this.selectedItem.aptName,
+        0,
+      );
+
       if (!myKeywords) return;
 
       http.post(`/housedeal/commercial`, myKeywords).then((resp) => {
-        console.log(resp.data);
+        console.log("상권리스트", resp.data);
         resp.data.forEach((e) => {
-          this.addMarker({ lat: e.lat, lng: e.lng }, e.name, 1);
+          this.addMarker({ lat: e.lat, lng: e.lng }, e, 1);
         });
       });
     },
@@ -394,6 +404,91 @@ export default {
     deleteAllOverlays() {
       this.overlays.forEach((e) => e.setMap(null));
       this.overlays = [];
+    },
+    getHouseOverlay(apt) {
+      const overlayContainer = document.createElement("div");
+      overlayContainer.className = "kakao-overlay-container";
+
+      const bigImg = document.createElement("img");
+      bigImg.setAttribute("src", require("@/assets/back1.jpg"));
+      bigImg.className = "overlay-img";
+
+      const detailContainer = document.createElement("div");
+      detailContainer.className = "overlay-detail-container";
+
+      const title = document.createElement("div");
+      title.innerHTML = apt.aptName;
+      title.className = "overlay-title";
+
+      const hitContainer = document.createElement("div");
+      const icon = document.createElement("i");
+      const hit = document.createElement("label");
+      hitContainer.className = "overlay-hit-container";
+      hit.innerHTML = `${apt.hit}`;
+      icon.className = "fa-brands fa-gratipay";
+      hitContainer.append(icon, hit);
+
+      const price = document.createElement("h3");
+      price.className = "overlay-detail-subtitle";
+      price.innerHTML = `${apt.dealAmount}만원`;
+
+      const infoContainer = document.createElement("div");
+      const infoItem1 = document.createElement("div");
+      const infoItem2 = document.createElement("div");
+      const infoItem3 = document.createElement("div");
+      infoContainer.className = "overlay-info-container";
+      infoItem1.className = "overlay-info-item";
+      infoItem2.className = "overlay-info-item";
+      infoItem3.className = "overlay-info-item";
+
+      const infotitle1 = document.createElement("b");
+      const infotitle2 = document.createElement("b");
+      const infotitle3 = document.createElement("b");
+      const infocontent1 = document.createElement("label");
+      const infocontent2 = document.createElement("label");
+      const infocontent3 = document.createElement("label");
+      infotitle1.innerHTML = "면적";
+      infotitle2.innerHTML = "층";
+      infotitle3.innerHTML = "동";
+      infocontent1.innerHTML = `${apt.area}m²`;
+      infocontent2.innerHTML = `${apt.floor}층`;
+      infocontent3.innerHTML = `${apt.dongName}`;
+      infotitle1.className = "flexcenter";
+      infotitle2.className = "flexcenter";
+      infotitle3.className = "flexcenter";
+      infocontent1.className = "flexcenter";
+      infocontent2.className = "flexcenter";
+      infocontent3.className = "flexcenter";
+
+      infoItem1.append(infotitle1, infocontent1);
+      infoItem2.append(infotitle2, infocontent2);
+      infoItem3.append(infotitle3, infocontent3);
+
+      infoContainer.append(infoItem1, infoItem2, infoItem3);
+      detailContainer.append(title, price, infoContainer);
+      overlayContainer.append(hitContainer, bigImg, detailContainer);
+
+      return overlayContainer;
+    },
+    getCommercialOverlay(commercial) {
+      const overlayContainer = document.createElement("div");
+      overlayContainer.className = "kakao-overlay-container";
+
+      const title = document.createElement("div");
+      title.className = "overlay-title";
+      title.innerHTML = commercial.name;
+
+      const boon = document.createElement("div");
+      boon.className = "overlay-detail-subtitle";
+      boon.innerHTML = commercial.sobun;
+
+      const addrContainer = document.createElement("div");
+      addrContainer.innerHTML = commercial.jibun_address;
+      addrContainer.className = "flexcenter";
+
+      overlayContainer.append(title, boon, addrContainer);
+
+      return overlayContainer;
     },
   },
 };

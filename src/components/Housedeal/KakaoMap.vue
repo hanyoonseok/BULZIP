@@ -220,7 +220,7 @@ export default {
       //   this.setNorthEast();
       // });
 
-      this.map.setMaxLevel(5);
+      this.map.setMaxLevel(6);
     },
     addScript() {
       const script = document.createElement("script");
@@ -352,16 +352,37 @@ export default {
       whereis.ne_lat = this.range.ne_Lat;
       whereis.ne_lng = this.range.ne_Lng;
 
-      let posDatas = {
-        positions: [],
-      };
+      // let posDatas = {
+      //   positions: [],
+      // };
+      var positions = [];
+
+      // 클러스터 부분
+      // 마커 클러스터러를 생성합니다
+      const clusterer = new kakao.maps.MarkerClusterer({
+        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 4, // 클러스터 할 최소 지도 레벨
+        //calculator: [20, 30, 40],
+      });
+
+      // 매물 데이터 가져오는 부분
       http.post(`/housedeal/boundry`, whereis).then((resp) => {
         this.$EventBus.$emit("getListByLatLng", resp.data);
         resp.data.forEach((e) => {
           this.addMarker({ lat: e.lat, lng: e.lng }, e, 0);
-          posDatas.positions.push({ lat: e.lat, lng: e.lng });
+
+          // positions.push(
+          //   new kakao.maps.Marker({
+          //     position: new kakao.maps.LatLng(e.lat, e.lng),
+          //   }),
+          // );
         });
-        console.log(posDatas);
+
+        //console.log(posDatas);
+        // 클러스터러에 마커들을 추가합니다
+        console.log("positions", positions);
+        clusterer.addMarkers(this.markers);
       });
     },
 

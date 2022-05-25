@@ -72,14 +72,14 @@
 #main-list-container {
   width: 350px;
   height: 100%;
-  position:relative;
+  position: relative;
 }
 .yellowborder {
   border: 2px solid #fdb814;
   border-top-right-radius: 8px;
 }
 .blueborder {
-  border: 2px solid #1CBAEF;
+  border: 2px solid #1cbaef;
   border-top-right-radius: 8px;
 }
 
@@ -88,12 +88,18 @@
   height: 100%;
 }
 
-.float-img{
-  position:absolute;
-  top:-15px;
-  left:-15px;
-  width:50px;
-  height:50px;
+.float-img {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 50px;
+  height: 50px;
+}
+
+.absolute {
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 #main-list {

@@ -18,6 +18,10 @@
   overflow-y: auto;
 }
 
+.kakao-station-list::-webkit-scrollbar {
+  display: none;
+}
+
 .kakao-station-input {
   width: 100%;
   border-radius: 12px;
@@ -30,6 +34,8 @@
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .kakao-station-item {
@@ -68,6 +74,12 @@
   padding: 0.75rem 0.75rem;
   border-radius: 20px;
   overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.kakao-keyword-container::-webkit-scrollbar {
+  display: none;
 }
 
 .kakao-keyword-container h1 {
@@ -94,6 +106,12 @@
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.kakao-keyword-list::-webkit-scrollbar {
+  display: none;
 }
 
 .hide-checkbox {
@@ -186,4 +204,44 @@
 .slider {
   width: 100%;
   z-index: 9;
+}
+
+/* 여기서부터 병원 버튼 */
+.hospital_button {
+  background: #1aab8a;
+  color: #fff;
+  border: none;
+  position: relative;
+  height: 30px;
+  font-size: 0.8em;
+  padding: 0 2em;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+}
+.hospital_button:hover {
+  background: #fff;
+  color: #1aab8a;
+}
+.hospital_button:before,
+.hospital_button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: #1aab8a;
+  transition: 400ms ease all;
+}
+.hospital_button:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+.hospital_button:hover:before,
+.hospital_button:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
 }
