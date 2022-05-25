@@ -199,11 +199,13 @@
   font-family: "Nanum Pen Script", cursive;
   font-size: 40px;
   line-height: 1;
+  cursor:pointer;
 }
 
 .slider {
   width: 100%;
   z-index: 9;
+  padding-top: 12px;
 }
 
 /* 여기서부터 병원 버튼 */

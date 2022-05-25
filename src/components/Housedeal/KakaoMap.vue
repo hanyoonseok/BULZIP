@@ -252,6 +252,7 @@ export default {
     selectStation(station) {
       console.log(station);
       this.stations = [];
+
       this.setMapCenter({ lat: station.lat, lng: station.lon });
 
       this.addMarker(
