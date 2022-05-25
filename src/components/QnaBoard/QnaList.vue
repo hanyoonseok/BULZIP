@@ -24,22 +24,22 @@ export default {
       http.get(`/qna/list/${page}`).then((resp) => {
         this.items = resp.data.qnaList; // service에서 map에 저장된 이름으로 호출
         console.log(this.items);
-        let el = "";
-        if (resp.data.startPage > 1) {
-          el += `<a href="#" class="pageList" @click="getList(${
-            resp.data.startPage - 1
-          })">[이전]</a>`;
-        }
-        for (let i = resp.data.startPage; i <= resp.data.endPage; i++) {
-          el += `<a href="#" class="pageList" @click="getList(${i})">[${i}]</a>`;
-        }
+        // let el = "";
+        // if (resp.data.startPage > 1) {
+        //   el += `<a href="#" class="pageList" @click="getList(${
+        //     resp.data.startPage - 1
+        //   })">[이전]</a>`;
+        // }
+        // for (let i = resp.data.startPage; i <= resp.data.endPage; i++) {
+        //   el += `<a href="#" class="pageList" @click="getList(${i})">[${i}]</a>`;
+        // }
 
-        if (resp.data.endPage < resp.data.totalPage) {
-          el += `<a href="#" class="pageList" @click="getList(${
-            resp.data.endPage + 1
-          })">[다음]</a>`;
-        }
-        this.pages = el;
+        // if (resp.data.endPage < resp.data.totalPage) {
+        //   el += `<a href="#" class="pageList" @click="getList(${
+        //     resp.data.endPage + 1
+        //   })">[다음]</a>`;
+        // }
+        // this.pages = el;
       });
       this.page = page;
     },

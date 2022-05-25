@@ -196,9 +196,9 @@
 .list-item-detail {
   margin-left: 0.5rem;
   display: flex;
-  width: 100%;
+  width: 150px;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   flex: 1;
 }
 .list-item-detail h3 {

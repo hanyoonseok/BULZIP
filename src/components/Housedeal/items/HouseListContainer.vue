@@ -18,7 +18,11 @@
           내 관심목록 <i class="fa-solid fa-house-heart"></i>
         </label>
       </div>
-      <div id="list-item-container">
+      <div
+        id="list-item-container"
+        @scroll="handleScroll"
+        ref="list-item-container"
+      >
         <HouseItem
           v-for="(item, i) in items"
           :key="i"
@@ -30,9 +34,6 @@
           <img src="@/assets/cry.png" class="cry-img" />
           <h5 style="text-align: center">근처에 매물이 없어요..</h5>
         </div>
-        <!-- <button id="moreBtn" v-if="keyword === ''" @click="getList">
-          더보기<i class="fa-solid fa-caret-down"></i>
-        </button> -->
       </div>
       <img src="@/assets/매물.png" class="float-img" />
     </div>
@@ -61,11 +62,14 @@ export default {
       dataIdx: 0,
       keyword: "",
       status: 0, //0=전체목록, -1=관심목록, > 1 상세조회
+      isKeywordSearch: false,
     };
   },
   created() {
     this.$EventBus.$on("getListByLatLng", (range) => {
-      this.getListByLatLng(range);
+      console.log("receive", range);
+      this.isKeywordSearch = false;
+      this.items = range;
     });
     this.$EventBus.$on("closeDetail", () => {
       this.selectedItem = null;
@@ -73,39 +77,33 @@ export default {
     this.$EventBus.$on("onMarkerClick", (selectedItem) => {
       this.selectOne(selectedItem);
     });
-    if (this.$route.params.keyword) {
-      this.keyword = this.$route.params.keyword;
-      this.getList(this.keyword);
-    } else {
-      this.getList();
-    }
   },
   methods: {
-    getList(keyword = "") {
+    getList(keyword) {
+      console.log(this.dataIdx);
       if (keyword) {
-        http.post(`/housedeal/list/${keyword}`).then((resp) => {
+        http.post(`/housedeal/list/${keyword}/${this.dataIdx}`).then((resp) => {
           this.items = this.items.concat(resp.data);
-          this.dataIdx = 0;
+          this.dataIdx += 20;
         });
-      } else {
-        // http.get(`/housedeal/list/${this.dataIdx}`).then((resp) => {
-        //   this.items = this.items.concat(resp.data);
-        //   this.dataIdx += 100;
-        // });
       }
     },
-    getListByLatLng(list) {
-      this.items = list;
-    },
-
     search() {
-      const keyword = this.keyword;
       this.items = [];
-      this.getList(keyword);
+      this.isKeywordSearch = true;
+      this.dataIdx = 0;
+      this.getList(this.keyword);
     },
     selectOne(selectedItem) {
       this.selectedItem = selectedItem;
       this.$EventBus.$emit("selectOneItem", selectedItem);
+    },
+    handleScroll(e) {
+      if (!this.isKeywordSearch) return;
+      const { scrollHeight, scrollTop, clientHeight } = e.target;
+      const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
+      // 일정 한도 밑으로 내려오면 함수 실행
+      if (isAtTheBottom) this.getList(this.keyword);
     },
   },
   props: {

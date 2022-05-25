@@ -167,7 +167,6 @@ export default {
         lng: this.selectedItem.lng,
       };
       this.setMapCenter(coords);
-      // this.map.setCenter(coords);
 
       hospitalmap.current_lat = this.selectedItem.lat;
       hospitalmap.current_lng = this.selectedItem.lng;
@@ -364,14 +363,9 @@ export default {
       whereis.ne_lat = this.range.ne_Lat;
       whereis.ne_lng = this.range.ne_Lng;
 
-      // let posDatas = {
-      //   positions: [],
-      // };
-      var positions = [];
-
       // 클러스터 부분
       // 마커 클러스터러를 생성합니다
-      const clusterer = new kakao.maps.MarkerClusterer({
+      this.clusterer = new kakao.maps.MarkerClusterer({
         map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
         minLevel: 4, // 클러스터 할 최소 지도 레벨
@@ -383,32 +377,11 @@ export default {
         this.$EventBus.$emit("getListByLatLng", resp.data);
         resp.data.forEach((e) => {
           this.addMarker({ lat: e.lat, lng: e.lng }, e, 0);
-
-          // positions.push(
-          //   new kakao.maps.Marker({
-          //     position: new kakao.maps.LatLng(e.lat, e.lng),
-          //   }),
-          // );
         });
 
         // 클러스터러에 마커들을 추가합니다
-        console.log("positions", positions);
-        clusterer.addMarkers(this.markers);
+        this.clusterer.addMarkers(this.markers);
       });
-    },
-
-    sendCommercialByRange() {
-      // this.markers.forEach((e) => e.setMap(null));
-      // http
-      //   .get(
-      //     `/housedeal/commercial/boundary/${this.range.sw_Lat}/${this.range.sw_Lng}/${this.range.ne_Lat}/${this.range.ne_Lng}`,
-      //   )
-      //   .then((resp) => {
-      //     this.$EventBus.$emit("getListByLatLng", resp.data);
-      //     resp.data.forEach((e) => {
-      //       this.addMarker({ lat: e.lat, lng: e.lng });
-      //     });
-      //   });
     },
     selectOneItem() {
       this.deleteAllMarkers();
@@ -417,11 +390,7 @@ export default {
         lat: this.selectedItem.lat,
         lng: this.selectedItem.lng,
       };
-      // const coords = new kakao.maps.LatLng(
-      //   this.selectedItem.lat,
-      //   this.selectedItem.lng,
-      // );
-      // this.map.setCenter(coords);
+
       this.setMapCenter(pos);
 
       myKeywords.userKeyword = this.selectedKeywords;
@@ -445,6 +414,7 @@ export default {
       });
     },
     deleteAllMarkers() {
+      this.clusterer.removeMarkers(this.markers);
       this.markers.forEach((e) => e.setMap(null));
       this.markers = [];
     },
