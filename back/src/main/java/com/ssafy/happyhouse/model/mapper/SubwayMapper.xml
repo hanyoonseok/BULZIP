@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.model.mapper.SubwayMapper">
+
+	<select id="detailSubway" parameterType="int" resultType="com.ssafy.happyhouse.model.dto.SubwayDto">
+		select *
+		from subway
+		where station_id = #{station_id}
+	</select>
+	
+	<select id="selectSubwayList" parameterType="String" resultType="com.ssafy.happyhouse.model.dto.SubwayDto">
+		SELECT *
+		FROM subway 
+		WHERE station LIKE CONCAT('%', #{word}, '%')
+	</select>
+	
+	<select id="selectAllSubway" resultType="com.ssafy.happyhouse.model.dto.SubwayDto">
+		SELECT *
+		FROM subway 
+	</select>
+
+</mapper>

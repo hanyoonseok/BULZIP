@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HousedealMapper">
+	
+	
+	<select id="selectOne" parameterType="long" resultType="HousedealDto">
+		select *
+		from housedeal2022
+		where no = #{no}
+	</select>
+	
+	<!-- 동이름 또는 아파트 이름으로 검색 가능 -->
+	<select id="ListByWord" resultType="HousedealDto">
+		select *
+		from housedeal2022
+		WHERE aptName LIKE CONCAT('%', #{word}, '%') OR dongName LIKE CONCAT('%', #{word}, '%')
+		order by hit desc
+		LIMIT #{idx},20
+	</select>
+	
+	<!-- 좋아요 수 수정     -->
+	<update id="housedealHitUpdate">
+		UPDATE housedeal2022 SET hit = hit + #{num}
+		WHERE no = #{no}
+	</update>
+	
+	<!-- 특정 아파트 코드와 층 수 입력해서 해당 아파트 시계열 매물 기록 가져오기  -->
+	<select id="timeSeriesList" resultType="HousedealDto">
+		select *
+		from housedeal_main
+		where aptCode=#{aptCode} and floor=#{floor}
+		order by dealYear, dealMonth, dealDay;
+	</select>
+	
+	<select id="ListByMapBounds" resultType="HousedealDto">
+		select * 
+		from housedeal2022 
+		where (lat between #{sw_lat} and #{ne_lat}) and (lng between #{sw_lng} and #{ne_lng})
+		order by hit desc;
+	</select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.model.mapper.KeywordMapper">
+	<insert id="insertKeyword" parameterType="KeywordDto" keyProperty="no" useGeneratedKeys="true">
+		INSERT INTO interestedkeyword (user_id, keyword_N01,keyword_D06,keyword_F11,keyword_D10,keyword_N07,keyword_Q05,keyword_F09,
+		keyword_R10,keyword_O02,keyword_N02,keyword_O05,keyword_Q10,keyword_Q15,keyword_Q04,keyword_D08,keyword_F06,keyword_D02,keyword_F02,keyword_N04,
+		keyword_P02,keyword_P03,keyword_D09,keyword_Q06,keyword_N03,keyword_N05,keyword_D14,keyword_R08,keyword_D11,keyword_Q09,keyword_D01,keyword_Q13,keyword_D05,
+		keyword_D20,keyword_F01,keyword_Q03,keyword_Q08,keyword_D03,keyword_F16,keyword_Q02,keyword_D13,keyword_D21,keyword_D04,keyword_O03,keyword_Q12,keyword_Q07,
+		keyword_R13,keyword_R01,keyword_R04,keyword_R07,keyword_R05,keyword_R03,keyword_R02,keyword_R06,keyword_R09,keyword_Q01,keyword_O01,keyword_D16)
+		VALUES(#{user_id}, #{keyword_N01},#{keyword_D06},#{keyword_F11},#{keyword_D10},#{keyword_N07},#{keyword_Q05},#{keyword_F09},
+		#{keyword_R10},#{keyword_O02},#{keyword_N02},#{keyword_O05},#{keyword_Q10},#{keyword_Q15},#{keyword_Q04},#{keyword_D08},#{keyword_F06},#{keyword_D02},#{keyword_F02},#{keyword_N04},
+		#{keyword_P02},#{keyword_P03},#{keyword_D09},#{keyword_Q06},#{keyword_N03},#{keyword_N05},#{keyword_D14},#{keyword_R08},#{keyword_D11},#{keyword_Q09},#{keyword_D01},#{keyword_Q13},#{keyword_D05},
+		#{keyword_D20},#{keyword_F01},#{keyword_Q03},#{keyword_Q08},#{keyword_D03},#{keyword_F16},#{keyword_Q02},#{keyword_D13},#{keyword_D21},#{keyword_D04},#{keyword_O03},#{keyword_Q12},#{keyword_Q07},
+		#{keyword_R13},#{keyword_R01},#{keyword_R04},#{keyword_R07},#{keyword_R05},#{keyword_R03},#{keyword_R02},#{keyword_R06},#{keyword_R09},#{keyword_Q01},#{keyword_O01},#{keyword_D16})
+	</insert>
+	
+	<select id="detailKeyword" parameterType="String" resultType="KeywordDto">
+		select *
+		from interestedkeyword
+		where user_id = #{user_id}
+	</select>
+	
+	<select id="listKeyword" resultType="KeywordDto">
+		SELECT * FROM interestedkeyword
+	</select>
+	
+	<update id="updateKeyword" parameterType="KeywordDto">
+		UPDATE interestedkeyword SET keyword_N01=#{keyword_N01},keyword_D06=#{keyword_D06},keyword_F11=#{keyword_F11},keyword_D10=#{keyword_D10},keyword_N07=#{keyword_N07},keyword_Q05=#{keyword_Q05},keyword_F09=#{keyword_F09},
+		keyword_R10=#{keyword_R10},keyword_O02=#{keyword_O02},keyword_N02=#{keyword_N02},keyword_O05=#{keyword_O05},keyword_Q10=#{keyword_Q10},keyword_Q15=#{keyword_Q15},keyword_Q04=#{keyword_Q04},keyword_D08=#{keyword_D08},keyword_F06=#{keyword_F06},keyword_D02=#{keyword_D02},keyword_F02=#{keyword_F02},keyword_N04=#{keyword_N04},
+		keyword_P02=#{keyword_P02},keyword_P03=#{keyword_P03},keyword_D09=#{keyword_D09},keyword_Q06=#{keyword_Q06},keyword_N03=#{keyword_N03},keyword_N05=#{keyword_N05},keyword_D14=#{keyword_D14},keyword_R08=#{keyword_R08},keyword_D11=#{keyword_D11},keyword_Q09=#{keyword_Q09},keyword_D01=#{keyword_D01},keyword_Q13=#{keyword_Q13},keyword_D05=#{keyword_D05},
+		keyword_D20=#{keyword_D20},keyword_F01=#{keyword_F01},keyword_Q03=#{keyword_Q03},keyword_Q08=#{keyword_Q08},keyword_D03=#{keyword_D03},keyword_F16=#{keyword_F16},keyword_Q02=#{keyword_Q02},keyword_D13=#{keyword_D13},keyword_D21=#{keyword_D21},keyword_D04=#{keyword_D04},keyword_O03=#{keyword_O03},keyword_Q12=#{keyword_Q12},keyword_Q07=#{keyword_Q07},
+		keyword_R13=#{keyword_R13},keyword_R01=#{keyword_R01},keyword_R04=#{keyword_R04},keyword_R07=#{keyword_R07},keyword_R05=#{keyword_R05},keyword_R03=#{keyword_R03},keyword_R02=#{keyword_R02},keyword_R06=#{keyword_R06},keyword_R09=#{keyword_R09},keyword_Q01=#{keyword_Q01},keyword_O01=#{keyword_O01},keyword_D16=#{keyword_D16}
+		WHERE user_id = #{user_id};
+	</update>
+	
+	<delete id="deleteKeyword">
+		delete from interestedkeyword
+		where user_id = #{user_id}
+	</delete>
+
+
+</mapper>

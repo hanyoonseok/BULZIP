@@ -1,0 +1,243 @@
+body{
+	width:100%;
+	height:100%;
+}
+
+#modal-login {
+  padding:5% 5%;
+  position:relative;
+  margin:10% 30%;
+  box-shadow: 0 8px 32px 0 rgba(46, 31, 31, 0.37);  
+  backdrop-filter: blur(13.5px);
+  -webkit-backdrop-filter: blur(13.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  display: flex;
+  z-index: 999;
+
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.modal-login-window {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#login_xmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: grey;
+}
+
+#img_logo {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+}
+
+#modal-login .modal-login-title {
+  display: inline;
+  color: rgb(90, 90, 90);
+  text-shadow: 1px 1px 2px gray;
+  margin-bottom: 40px;
+}
+
+#modal-login .login-content {
+  padding: 0px 10px;
+  text-shadow: 1px 1px 2px gray;
+  color: white;
+  margin-bottom: 40px;
+}
+
+.member_login_input input {
+  width: 200px;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid rgb(202, 202, 202);
+}
+
+.blueBtn-l{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:nowrap;
+	width:200px;
+  height: 35px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  margin:0.5rem;
+}
+
+#login_email,
+#login_new_pw {
+  display: none;
+}
+
+#login_btn {
+  width: 200px;
+  height: 35px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+#loginform{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+}
+
+#find_pw_btn {
+  width: 200px;
+  height: 35px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+
+  margin-bottom: 20px;
+}
+
+#find_account_btn {
+  width: 200px;
+  height: 35px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+  display: none;
+}
+
+#change_pw_btn {
+  width: 200px;
+  height: 35px;
+  background-color: #002efda2;
+  color: #fff;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  display: none;
+}
+
+.blueBtn{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:nowrap;
+	width:200px;
+  height: 35px;
+  width:100px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  margin:0.5rem;
+}
+
+#log_content {
+  font-size: 13px;
+  color: grey;
+}
+#logup_btn {
+  width: 200px;
+  height: 35px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+}
+
+#img_logo {
+  width: 50px;
+  height: 50px;
+  margin: 20px;
+}
+
+#back{
+	position:absolute;
+	top:2rem;
+	left:2rem;
+	font-size:26px;
+	cursor:pointer;
+}
+
+/* 회원가입 모달창 */
+#registerform{
+	display:none;
+}
+
+/* 회원정보수정 모달창 */
+#modifyform {
+display:none;
+}
+
+.modal-editProfile-window {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#editProfile_xmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: grey;
+}
+
+#modal-editProfile .modal-editProfile-title {
+  display: inline;
+  color: rgb(90, 90, 90);
+  text-shadow: 1px 1px 2px gray;
+  margin-bottom: 40px;
+}
+
+.member_editProfile_input input {
+  width: 200px;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid rgb(202, 202, 202);
+}
+
+#editProfile_content {
+  text-align: left;
+  font-size: 13px;
+  color: grey;
+  margin-left: 10px;
+}
+
+.member_editProfile_input #editProfile_name {
+  width: 200px;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 13px;
+  border: 2px solid rgb(145, 145, 145);
+}
+
+#editProfile_btn {
+  width: 200px;
+  height: 30px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+}

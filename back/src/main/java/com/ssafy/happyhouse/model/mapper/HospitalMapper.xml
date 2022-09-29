@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HospitalMapper">
+
+	<select id="selectHospitalList" parameterType="String" resultType="HospitalDto">
+		SELECT NO, DUTYINF, DUTYTEL, LAT, LON, DUTYNAME, DUTYADDR
+		FROM hospital 
+		WHERE DUTYADDR LIKE CONCAT('%', #{dongName}, '%')
+	</select>
+	
+	<select id="selectAllHospitalList" resultType="HospitalDto">
+		SELECT NO, DUTYINF, DUTYTEL, LAT, LON, DUTYNAME, DUTYADDR
+		FROM hospital 
+	</select>
+	
+	<select id="ListByMapBounds" resultType="HousedealDto">
+		select * 
+		from hospital 
+		where (lat between #{sw_lat} and #{ne_lat}) and (lon between #{sw_lng} and #{ne_lng});
+	</select>
+	
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnaMapper">
+	<insert id="insert" parameterType="QnaDto" useGeneratedKeys="true" keyProperty="qna_id">
+		INSERT INTO
+		qna_board(qna_title, qna_content, user_id, qna_date)
+		VALUES(#{qna_title},#{qna_content},#{user_id}, DATE_FORMAT(now(),'%Y-%m-%d'));
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM qna_board WHERE qna_id = #{qna_id};
+	</delete>
+	
+	<update id="updateQna" parameterType="QnaDto">
+		UPDATE qna_board SET qna_title=#{qna_title}, qna_content=#{qna_content}, qna_date=DATE_FORMAT(now(),'%Y-%m-%d')
+		WHERE qna_id = #{qna_id};
+	</update>
+
+	<select id="selectList" resultType="QnaDto">
+		SELECT *
+		FROM qna_board
+		order by qna_id desc limit #{start},#{count};
+	</select>
+	
+	<select id="selectTotalCount" resultType="int">
+		select count(*)
+		from qna_board;
+	</select>
+
+	<select id="detailQna" resultType="QnaDto">
+		SELECT * FROM qna_board
+		WHERE qna_id = #{qna_id}
+	</select>
+
+</mapper>

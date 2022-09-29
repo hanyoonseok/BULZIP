@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+}
+button {
+  cursor: pointer;
+  border: none;
+}
+a {
+  cursor: pointer;
+}
+body {
+  width: 100%;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+label {
+  /* line-height: 1 !important; */
+  margin: 0 !important;
+}
+header {
+  width: 100%;
+  height: 80px;
+  display: flex !important;
+  justify-content: space-between;
+  padding: 1rem 3%;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  position: relative;
+  align-items: center;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+}
+.header-left img {
+  width: 40px;
+  height: 40px;
+}
+.header-left li {
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  color: rgb(34, 34, 34);
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.53;
+  letter-spacing: normal;
+}
+
+.profile-area {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 170px;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 28%;
+  right: 10%;
+  z-index: 999;
+  display: flex;
+}
+
+.profile-area li {
+  padding: 0.5rem 0.5rem;
+}
+
+.user-box {
+  text-align: center;
+  display:flex;
+}
+
+#arrow_up {
+  display: none;
+}
+
+#account_li {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#edit_profile_btn {
+  width: 100px;
+  height: 35px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+}
+
+
+.blueBtn{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:nowrap;
+	width:200px;
+  height: 35px;
+  width:100px;
+  background-color: #002efda2;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  margin:0.5rem;
+}
+
+#filter-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+}
+#search-filter {
+  width: 100%;
+  height: 50px;
+  border: none;
+  padding: 1rem 1rem;
+}
+#search-filter:focus {
+  outline: none;
+}
+#filter-btn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #002efda2;
+
+  font-size: 1.2rem;
+  color: #fff;
+}

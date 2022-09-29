@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssafy.happyhouse.model.mapper.InterestedMapper">
+	
+	<insert id="insertInterested" parameterType="com.ssafy.happyhouse.model.dto.InterestedDto" keyProperty="no" useGeneratedKeys="true">
+		INSERT INTO interesteddeal (user_id, housedeal_id)
+		VALUES(#{user_id}, #{housedeal_id})
+	</insert>
+	
+	<select id="detailInterestedbyNo" resultType="com.ssafy.happyhouse.model.dto.InterestedDto">
+		select *
+		from interesteddeal
+		where no = #{no}
+	</select>
+	
+	<select id="detailInterested" resultType="com.ssafy.happyhouse.model.dto.InterestedDto">
+		select *
+		from interesteddeal
+		where user_id = #{user_id} and housedeal_id = #{housedeal_id}
+	</select>
+
+	<select id="listInterested" resultType="com.ssafy.happyhouse.model.dto.InterestedDto">
+		SELECT * FROM interesteddeal where user_id = #{user_id}
+	</select>
+	
+	
+	<delete id="deleteInterested">
+		delete from interesteddeal
+		where no = #{no}
+	</delete>
+</mapper>

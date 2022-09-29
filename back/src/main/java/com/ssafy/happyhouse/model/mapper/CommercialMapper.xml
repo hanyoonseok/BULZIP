@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssafy.happyhouse.model.mapper.CommercialMapper">
+	
+	<select id="detailCommercialList" parameterType="int" resultType="com.ssafy.happyhouse.model.dto.CommercialDto">
+		select *
+		from commercial_500k
+		where no = #{no}
+	</select>
+	
+	<!-- 동이름으로 검색  
+	<select id="searchCommercial_legalDong" resultType="com.ssafy.happyhouse.model.dto.CommercialDto">
+		select *
+		from commercial_500k
+		WHERE Legal_dong LIKE CONCAT('%', #{dongName}, '%')
+	</select> -->
+	
+	<!-- 동이름과 중분류 코드로 검색  -->
+	<select id="searchCommercial_joongbun" resultType="com.ssafy.happyhouse.model.dto.CommercialDto">
+		SELECT *
+		FROM commercial_500k 
+		WHERE Legal_dong LIKE CONCAT('%', #{dongName}, '%') AND joongbun_code = #{joongbun_code}
+	</select>
+	
+	<select id="ListByMapBounds" parameterType="HashMap" resultType="com.ssafy.happyhouse.model.dto.CommercialDto">
+		select * 
+		from commercial_500k 
+		where (lat between #{sw_lat} and #{ne_lat}) and (lng between #{sw_lng} and #{ne_lng}) 
+		and joongbun_code in 
+        <foreach collection="userKeyword" item="each" index="key" open="(" close=")" separator=",">
+            #{key}
+         </foreach>
+	</select>
+	
+</mapper>

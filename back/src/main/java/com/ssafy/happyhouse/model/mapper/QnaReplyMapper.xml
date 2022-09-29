@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnaReplyMapper">
+
+	<insert id="qnaReplyInsert" parameterType="QnareplyDto" useGeneratedKeys="true" keyProperty="comment_id">
+		INSERT INTO
+		qna_reply(qna_id, user_id, comment_content, comment_date)
+		VALUES( #{qna_id}, #{user_id}, #{comment_content}, DATE_FORMAT(now(),'%Y-%m-%d'));
+	</insert>
+
+	<delete id="deleteQnaReply">
+		DELETE FROM qna_reply WHERE comment_id = #{comment_id};
+	</delete>
+	
+	<update id="updateQnaReply" parameterType="QnareplyDto">
+		UPDATE qna_reply SET comment_content=#{comment_content}, comment_date=DATE_FORMAT(now(),'%Y-%m-%d')
+		WHERE comment_id = #{comment_id};
+	</update>
+	
+	<select id="selectList" resultType="QnareplyDto">
+		SELECT *
+		FROM qna_reply
+		WHERE qna_id = #{qna_id}
+		order by comment_id desc limit #{start},#{count};
+	</select>
+	
+	<resultMap type="com.ssafy.happyhouse.model.dto.QnareplyDto" id="a">
+		<result column="comment_id" property="comment_id"/> 
+		<result column="qna_id" property="qna_id"/> 
+		<result column="user_id" property="user_id"/> 
+		<result column="comment_content" property="qna_content"/> 
+		<result column="comment_date" property="qna_date"/> 
+	</resultMap>
+
+	
+	<select id="selectTotalCount" resultType="int">
+		select count(*)
+		from qna_reply
+		WHERE qna_id = #{qna_id};
+	</select>
+	
+	<select id="detailReply" resultType="QnareplyDto">
+		SELECT * FROM qna_reply
+		WHERE comment_id = #{comment_id};
+	</select>
+	
+</mapper>
